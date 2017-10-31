@@ -6,4 +6,4 @@ The number of the groups is known and for each group has a certain capacity.
 _The distribution should be to performed optimally._
 
 ## Links
-* [Wiki](wiki)
+* [Wiki](https://github.com/eranhd/anymatch/wiki)

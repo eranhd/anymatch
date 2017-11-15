@@ -1,0 +1,39 @@
+//Require mongoose package
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt-nodejs');
+
+//Define SchoolSchema with title, 
+const UserSchema = mongoose.Schema({
+    local: {
+        username: String,
+        password: String
+    }
+});
+
+
+
+UserSchema.methods.generateHash = function (password) {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+};
+
+UserSchema.methods.validPassword = function (password) {
+    return bcrypt.compareSync(password, this.local.password);
+};
+
+const User = module.exports = mongoose.model('User', UserSchema);
+
+module.exports.getAll = (callback) => {
+    User.find(callback);
+}
+
+//newList.save is used to insert the document into MongoDB
+module.exports.add = (newUser, callback) => {
+    newUser.save(callback);
+}
+
+
+//Here we need to pass an id parameter to BUcketList.remove
+module.exports.deleteById = (id, callback) => {
+    let query = { _id: id };
+    User.remove(query, callback);
+}

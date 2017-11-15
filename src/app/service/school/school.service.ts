@@ -15,8 +15,13 @@ export class SchoolService extends ControlerService {
     return this.http.post(this.path + this.CREATE, body);
   }
 
+
   public getAll() {
     return this.http.get(this.path + this.ALL);
+  }
+
+  public addUser(id: string){
+    
   }
 
 }

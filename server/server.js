@@ -59,7 +59,7 @@ app.post('/signup', (req, res, next) => {
             if (loginErr) {
                 return next(loginErr);
             }
-            return res.send({ success: true, message: 'authentication succeeded' });
+            return res.send({ success: true, user: user, message: 'authentication succeeded' });
         });
     })(req, res, next);
 
@@ -79,7 +79,7 @@ app.post('/login', (req, res, next) => {
             if (err) {
                 return res.send({ success: false, code: 2, message: 'authentication failed' });
             }
-            return res.send({ success: true, message: 'authentication succeeded' });
+            return res.send({ success: true, message: 'authentication succeeded', user: user });
         });
     })(req, res, next);
 

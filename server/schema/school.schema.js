@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 //Define SchoolSchema with title, 
 const SchoolSchema = mongoose.Schema({
     name: String,
-    email: String,
+    code: String,
     layersId: String,
     usersId: String
 });
@@ -16,7 +16,6 @@ module.exports.getAll = (callback) => {
 
 //newList.save is used to insert the document into MongoDB
 module.exports.add = (newSchool, callback) => {
-    console.log(newSchool)
     let item = new School(newSchool);
     item.save(callback);
 }

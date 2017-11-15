@@ -43,7 +43,7 @@ module.exports = function (passport) {
 
                 // find a user whose username is the same as the forms username
                 // we are checking to see if the user trying to login already exists
-                User.findOne({ 'local.username': username }, function (err, user) {
+                User.findOne({ 'username': username }, function (err, user) {
                     // if there are any errors, return the error
                     if (err)
                         return done(err);
@@ -53,13 +53,13 @@ module.exports = function (passport) {
                         return done(null, false, req.flash('signupMessage', 'That username is already taken.'));
                     } else {
 
-                        // if there is no user with that username
+                        // if there is no user withlocal that username
                         // create the user
                         var newUser = new User();
 
                         // set the user's local credentials
-                        newUser.local.username = username;
-                        newUser.local.password = newUser.generateHash(password);
+                        newUser.username = username;
+                        newUser.password = newUser.generateHash(password);
 
                         // save the user
                         newUser.save(function (err) {
@@ -86,7 +86,7 @@ module.exports = function (passport) {
     
             // find a user whose username is the same as the forms username
             // we are checking to see if the user trying to login already exists
-            User.findOne({ 'local.username' :  username }, function(err, user) {
+            User.findOne({ 'username' :  username }, function(err, user) {
                 // if there are any errors, return the error before anything else
                 if (err)
                     return done(err);

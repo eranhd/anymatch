@@ -4,10 +4,10 @@ const bcrypt = require('bcrypt-nodejs');
 
 //Define SchoolSchema with title, 
 const UserSchema = mongoose.Schema({
-    local: {
-        username: String,
-        password: String
-    }
+
+    username: String,
+    password: String,
+    schoolId: String
 });
 
 
@@ -17,7 +17,7 @@ UserSchema.methods.generateHash = function (password) {
 };
 
 UserSchema.methods.validPassword = function (password) {
-    return bcrypt.compareSync(password, this.local.password);
+    return bcrypt.compareSync(password, this.password);
 };
 
 const User = module.exports = mongoose.model('User', UserSchema);
@@ -31,6 +31,10 @@ module.exports.add = (newUser, callback) => {
     newUser.save(callback);
 }
 
+module.exports.update = (user, callback) => {
+    let u = new User(user);
+    User.findOneAndUpdate({ _id: u._id }, u, { upsert: true }, callback);
+}
 
 //Here we need to pass an id parameter to BUcketList.remove
 module.exports.deleteById = (id, callback) => {

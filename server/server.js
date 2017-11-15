@@ -99,6 +99,15 @@ app.use(express.static(path.join(__dirname, '../dist')));
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname + "/index.html"));
 })
+
+// const DIST_FOLDER = path.join(process.cwd(), 'dist');
+// console.log(DIST_FOLDER)
+
+// app.get('*', (req, res) => {
+//     res.render(join(DIST_FOLDER, 'browser', 'index.html'), { req });
+// });
+
+
 app.listen(3000, () => { console.log("listen to 3000") });
 
 

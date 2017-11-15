@@ -41,3 +41,9 @@ module.exports.deleteById = (id, callback) => {
     let query = { _id: id };
     User.remove(query, callback);
 }
+
+module.exports.findById = (id, callback) => {
+    let query = { _id: id };
+    User.find(query, callback);
+}
+

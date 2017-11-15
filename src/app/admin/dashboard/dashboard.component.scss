@@ -1,0 +1,30 @@
+.dashboard{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    // align-items: stretch; 
+    .statistic, .line{
+        width: 98%;
+        height: 20%;
+        margin: 1%;
+    }
+
+    .lists{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        height: 30%;
+        
+    }
+
+    mat-card{
+        width: 98%;
+        height: 100%;  
+        margin: 0 1%;
+        box-sizing: border-box;
+    }
+}
+

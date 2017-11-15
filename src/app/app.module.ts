@@ -9,10 +9,22 @@ import { AppComponent } from './app.component';
 import { HttpService, SchoolService, AuthService } from "./service";
 
 import { MaterialModule } from "./material/material.module";
+import { LoginComponent } from './login/login.component';
+
+import { RouterModule } from "@angular/router";
+import { routes } from "./app.route";
+
+
+
+
+/**need to remove */
+import { DashboardComponent } from "./admin/dashboard/dashboard.component";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -20,7 +32,8 @@ import { MaterialModule } from "./material/material.module";
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    RouterModule.forRoot(routes)
   ],
   providers: [
     HttpService,

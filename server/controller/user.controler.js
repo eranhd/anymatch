@@ -32,6 +32,6 @@ router.post("/update/", (req, res, next) => {
 router.delete('/:id', (req, res, next) => {
     res.send("DELETE");
 
-})
+});
 
 module.exports = router;

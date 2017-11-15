@@ -66,6 +66,12 @@ export class AuthService {
 
   }
 
+  public isAuth() {
+    return new Promise((res, rej) => {
+      res(!!this._user);
+    })
+  }
+
 
 
 

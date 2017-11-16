@@ -24,7 +24,7 @@ import { DashboardComponent } from "./admin/dashboard/dashboard.component";
   declarations: [
     AppComponent,
     LoginComponent,
-    DashboardComponent
+    // DashboardComponent
   ],
   imports: [
     BrowserModule,

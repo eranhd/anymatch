@@ -7,16 +7,16 @@ const passport = require('passport');
 const flash = require('connect-flash');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
-require('./config/passport')(passport); // pass passport for configuration
+require('./server/config/passport')(passport); // pass passport for configuration
 
 const app = express();
 //Middleware for CORS
 
 let useControler = () => {
-    const school = require("./controller/school.controler");
-    const layer = require("./controller/layer.controller");
-    const student = require("./controller/student.controler");
-    const user = require("./controller/user.controler");
+    const school = require("./server/controller/school.controler");
+    const layer = require("./server/controller/layer.controller");
+    const student = require("./server/controller/student.controler");
+    const user = require("./server/controller/user.controler");
 
     app.use("/school", school);
     app.use("/layer", layer);
@@ -40,8 +40,8 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-const config = require("./config/database");
-mongoose.connect(config.database);
+const config = require("./server/config/database");
+mongoose.connect(config.database + "anymatch");
 
 useControler();
 
@@ -94,11 +94,11 @@ app.get('/logout', (req, res) => {
 /*express.static is a built in middleware function to serve static files.
  We are telling express server public folder is the place to look for the static files
 */
-app.use(express.static(path.join(__dirname, '../dist')));
+app.use(express.static(path.join(__dirname, 'dist')));
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname + "/index.html"));
-})
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist/index.html'));
+});
 
 // const DIST_FOLDER = path.join(process.cwd(), 'dist');
 // console.log(DIST_FOLDER)

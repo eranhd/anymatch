@@ -4,9 +4,7 @@ const mongoose = require('mongoose');
 //Define SchoolSchema with title, 
 const SchoolSchema = mongoose.Schema({
     name: String,
-    code: String,
-    layersId: String,
-    usersId: String
+    code: String
 });
 
 const School = module.exports = mongoose.model('School', SchoolSchema);

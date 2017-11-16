@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from "../http/http.service";
 import { ControlerService } from "../controlerService.model";
-import { User } from "../../models"
+import { User } from "../../models";
+import { path } from "../path.enum";
 
 const SIGNUP: string = "signup"
 const LOGIN: string = "login"
@@ -17,7 +18,7 @@ export class AuthService {
   }
 
   public async signup(user, id: string) {
-    let u = await this.http.post(SIGNUP, user);
+    let u = await this.http.post(path.SIGNUP, user);
     if (u["success"]) {
       u["user"].schoolId = id;
       this._user = u["user"];
@@ -39,13 +40,14 @@ export class AuthService {
     });
   }
 
-  public getUser(): Promise<User> {
-    return new Promise((res, rej) => {
-      if (this._user)
-        res(this._user)
-      else
-        res(null);
-    })
+  public getUser() {
+    return this._user;
+  }
+
+  public get id() {
+    if (this._user)
+      return this._user._id;
+    return "";
   }
 
   private update() {

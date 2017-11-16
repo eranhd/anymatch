@@ -45,8 +45,8 @@ export class LoginComponent {
   }
 
   public async login() {
-    this.router.navigate(["/admin"])
-    /*let u = {};
+
+    let u = {};
     u["username"] = this.form.controls.login["controls"].username.value;
     u["password"] = this.form.controls.login["controls"].pass.value.password;
     let user = await this.authService.login(u);
@@ -61,7 +61,7 @@ export class LoginComponent {
     }
     else
       this.router.navigate(["/admin"])
-*/
+    this.router.navigate(["/admin"])
   }
 
   public async signup() {

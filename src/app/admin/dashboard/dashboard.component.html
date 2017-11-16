@@ -1,13 +1,15 @@
 <div class="dashboard">
   <div class="line statistic">
     <mat-card>
-      
+      <div>Name: {{schoolService.school?.name}}</div> 
+      <div>Code: {{schoolService.school?.code}}</div>
+      {{schoolService.school | json}}
     </mat-card>
   </div>
 
   <div class="lists line">
     <mat-card>
-
+      <button mat-button (click)="update()">update</button>
     </mat-card>
     <mat-card>
 

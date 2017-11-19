@@ -10,14 +10,33 @@
         width: 98%;
         height: 20%;
         margin: 1%;
+        mat-card{
+            mat-card-content{
+                display: flex;
+                justify-content: space-around;
+
+            }
+            .major{
+                font-weight: bold;
+                color: #afafaf;
+                margin: 0 8px;
+            }
+        }
     }
 
     .lists{
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        height: 30%;
-        
+        height: auto;
+        align-items: stretch;
+        mat-card{
+            height: 100%;  
+            mat-card-content{
+                display: flex;
+                flex-direction: column;
+            }
+        }
     }
 
     mat-card{
@@ -25,6 +44,9 @@
         height: 100%;  
         margin: 0 1%;
         box-sizing: border-box;
+        mat-card-header mat-card-title{
+            font-weight: bold;
+        }
     }
 }
 

@@ -1,21 +1,99 @@
 <div class="dashboard">
   <div class="line statistic">
     <mat-card>
-      <div>Name: {{schoolService.school?.name}}</div> 
-      <div>Code: {{schoolService.school?.code}}</div>
-      {{schoolService.school | json}}
+      <mat-card-header>
+        <mat-card-title>School Data</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div>
+          <span class="major">Name</span>
+          <span> {{schoolService.school?.name}}</span>
+        </div>
+        <div>
+          <span class="major">Code</span>
+          <span>{{schoolService.school?.code}}</span>
+        </div>
+        <!-- {{schoolService.school | json}} -->
+        <div>
+          <span class="major">Num Of Students:</span>
+          <span>0</span>
+        </div>
+        <div></div>
+        <div>
+          <span class="major">Num Of Layer</span>
+          <span>0</span>
+        </div>
+        <div>
+          <span class="major">Num Of Classes</span>
+          <span>0</span>
+        </div>
+        <div>
+          <span class="major">Num Of Matchs</span>
+          <span>0</span>
+        </div>
+      </mat-card-content>
     </mat-card>
   </div>
 
-  <div class="lists line">
-    <mat-card>
-      <button mat-button (click)="update()">update</button>
-    </mat-card>
-    <mat-card>
+  <form [formGroup]="form" class="lists line">
 
+    <mat-card formGroupName="addLayer">
+      <mat-card-header>
+        <mat-card-title>Add Layers</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field>
+          <input matInput text="text" formControlName="name" placeholder="Layer Name" />
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button (click)="addLayer()">Add</button>
+        <button mat-button>Clear</button>
+      </mat-card-actions>
     </mat-card>
-    <mat-card>
 
+    <mat-card formGroupName="addClass">
+      <mat-card-header>
+
+        <mat-card-title>Add Class</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field>
+          <input matInput text="text" placeholder="Layer Name" formControlName="layerName" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput text="text" placeholder="Class Name" formControlName="name" />
+        </mat-form-field>
+
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button (click)="update()">Add</button>
+        <button mat-button>Clear</button>
+      </mat-card-actions>
     </mat-card>
-  </div>
+
+    <mat-card formGroupName="addUser">
+      <mat-card-header>
+        <mat-card-title>Add User</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field>
+          <input matInput text="text" placeholder="Layer Name" formControlName="layerName" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput text="text" placeholder="Class Name" formControlName="ClassName" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput text="text" placeholder="User Name" formControlName="name" />
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button (click)="update()">Add</button>
+        <button mat-button>Clear</button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+
+
+
 </div>

@@ -46,21 +46,21 @@ export class LoginComponent {
 
   public async login() {
 
-    let u = {};
-    u["username"] = this.form.controls.login["controls"].username.value;
-    u["password"] = this.form.controls.login["controls"].pass.value.password;
-    let user = await this.authService.login(u);
-    console.log(user);
-    if (!user["success"]) {
-      if (user["code"] == 1) {
-        console.log("not found");
-      }
-      else {
-        console.log("password invalid");
-      }
-    }
-    else
-      this.router.navigate(["/admin"])
+    // let u = {};
+    // u["username"] = this.form.controls.login["controls"].username.value;
+    // u["password"] = this.form.controls.login["controls"].pass.value.password;
+    // let user = await this.authService.login(u);
+    // console.log(user);
+    // if (!user["success"]) {
+    //   if (user["code"] == 1) {
+    //     console.log("not found");
+    //   }
+    //   else {
+    //     console.log("password invalid");
+    //   }
+    // }
+    // else
+    //   this.router.navigate(["/admin"])
     this.router.navigate(["/admin"])
   }
 

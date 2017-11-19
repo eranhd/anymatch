@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
-import { HttpService, SchoolService, AuthService } from "./service";
+import { HttpService, SchoolService, AuthService, ClassService, LayerService, UserService } from "./service";
 
 import { MaterialModule } from "./material/material.module";
 import { LoginComponent } from './login/login.component';
@@ -38,7 +38,10 @@ import { DashboardComponent } from "./admin/dashboard/dashboard.component";
   providers: [
     HttpService,
     SchoolService,
-    AuthService
+    AuthService,
+    ClassService,
+    LayerService,
+    UserService
   ],
   bootstrap: [AppComponent]
 })

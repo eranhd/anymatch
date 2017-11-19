@@ -38,9 +38,9 @@ export class SchoolService extends ControlerService {
 
   }
 
-  public get school(){
-    if(this._school)
-      return this._school[0];
+  public get school() {
+    if (this._school)
+      return this._school;
     return null;
   }
 
@@ -49,14 +49,27 @@ export class SchoolService extends ControlerService {
     return this.http.get(this.path + this.ALL);
   }
 
-  public addUser(id: string) {
+
+
+  public update() {
+    this.http.post(this.path + path.UPDATE, this._school).then(res => {
+      this._school = res[0];
+    });
+  }
+
+  public addLayer(id: string) {
+    if(!this._school.layersId)
+      this._school.layersId = [];
+    this._school.layersId.push(id);
+    this.update();
+  }
+
+  public addClass() {
 
   }
 
-  public update(){
-    this.http.post(this.path + path.UPDATE, this._school).then(res=>{
-      this._school = res[0];
-    });
+  public addUser() {
+    
   }
 
 }

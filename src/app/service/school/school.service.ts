@@ -3,31 +3,28 @@ import { HttpService } from "../http/http.service";
 import { ControlerService } from "../controlerService.model";
 import { path } from "../path.enum";
 import { School } from "../../models";
+import { LayerService } from "../layer/layer.service";
 
 @Injectable()
 export class SchoolService extends ControlerService {
 
-  private CREATE: string = "create";
-  private ALL: string = "all";
-
   private _school: School;
 
-  constructor(private http: HttpService) {
-    super("school");
+  constructor(http: HttpService,
+    private layerService: LayerService) {
+    super("school", http);
   }
 
-  public createSchool(body) {
-    return this.http.post(this.path + this.CREATE, body);
+  public createSchool(body): Promise<School> {
+    return this.create(body);
   }
 
   public async initSchool(id: string) {
-    const s = await this.http.post(this.path + "getById"/*path.GETBYID*/, { id: id });
-    if (s["success"]) {
-      this._school = s["school"];
-      return this._school;
-    }
-    else
-      return null;
+    // console.log(id)
+    const s = await this.getById(id);
+    this._school = s;
+    return this._school;
+
   }
 
   public async getSchool(id: string) {
@@ -44,32 +41,32 @@ export class SchoolService extends ControlerService {
     return null;
   }
 
-
-  public getAll() {
-    return this.http.get(this.path + this.ALL);
-  }
-
-
-
-  public update() {
-    this.http.post(this.path + path.UPDATE, this._school).then(res => {
-      this._school = res[0];
+  public updateSchool() {
+    this.update<School>(this._school).then(res => {
+      this._school = res;
     });
   }
 
   public addLayer(id: string) {
-    if(!this._school.layersId)
+    if (!this._school.layersId)
       this._school.layersId = [];
     this._school.layersId.push(id);
-    this.update();
+    this.updateSchool();
   }
+
+
+  public addUser(id: string) {
+    if (!this._school.usersId)
+      this._school.usersId = [];
+    this._school.usersId.push(id);
+    this.updateSchool();
+  }
+
 
   public addClass() {
 
   }
 
-  public addUser() {
-    
-  }
+
 
 }

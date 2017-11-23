@@ -8,24 +8,24 @@ export class HttpService {
 
   private path: string = "http://localhost:3000/";
   private header: Headers;
-
+  private options;
   constructor(private http: Http) {
     this.header = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: this.header });
+    this.options = new RequestOptions({ headers: this.header });
   }
 
-  public post<T>(url, body: T, options?) {
+  public post<T>(url, body: T, options?): Promise<T> {
     return new Promise((res, rej) => {
-      this.http.post(this.path + url, body, options).subscribe(response => {
+      this.http.post(this.path + url, body, this.options).subscribe(response => {
         res(response.json());
       });
     });
 
   }
 
-  public get<T>(url, options?) {
+  public get<T>(url, options?): Promise<T> {
     return new Promise((res, rej) => {
-      this.http.get(this.path + url, options).subscribe(response => {
+      this.http.get(this.path + url, this.options).subscribe(response => {
         res(response.json());
       });
     });

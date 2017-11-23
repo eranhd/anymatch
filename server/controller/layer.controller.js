@@ -6,16 +6,12 @@ const DB = require("../db/db");
 
 const collection = "layers";
 
-//GET HTTP method to /bucketlist
-router.get('/', (req, res) => {
-    layer.getAll((err, list) => {
-        if (err)
-            res.json({ success: false, message: `Failed to load all lists. Error: ${err}` });
-        else
-            res.write(JSON.stringify({ success: true, lists: list }, null, 2));
-        res.end();
-    })
 
+router.post('/all/', (req, res, next) => {
+    let db = new DB(req.body.id);
+    db.getAll(collection).then(doc => {
+        res.send(doc);
+    });
 });
 
 //POST HTTP method to /bucketlist
@@ -26,9 +22,20 @@ router.post('/', (req, res, next) => {
 });
 
 router.post("/create/", (req, res, next) => {
-    console.log(req.body.schoolId +", "+ collection);
+    // console.log(req.body.schoolId +", "+ collection);
     let db = new DB(req.body.schoolId);
     db.save(req.body.layer, collection).then(resolve => {
+        res.send(resolve);
+    });
+
+});
+
+router.post("/update/", (req, res, next) => {
+    // console.log(req.body);
+    let db = new DB(req.body.schoolId);
+    db.save(req.body.layer, collection).then(resolve => {
+        // console.log("in saveee");
+        // console.log(res olve);
         res.send(resolve);
     });
 

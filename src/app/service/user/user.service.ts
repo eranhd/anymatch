@@ -6,8 +6,11 @@ import { path } from "../path.enum";
 @Injectable()
 export class UserService extends ControlerService {
 
-  constructor(private http: HttpService) {
-    super("user");
+  constructor(http: HttpService) {
+    super("user", http);
   }
 
+  public addUser(user, schoolId) {
+    return this.create({ schoolId: schoolId, user: user });
+  }
 }

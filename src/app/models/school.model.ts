@@ -1,9 +1,9 @@
 import { Item } from "./Item.model";
 export class School extends Item {
-    name: String;
-    code: String;
-    layersId: String[];
-    usersId: String[];
+    name: string;
+    code: string;
+    layersId: string[];
+    usersId: string[];
 }
 
 export class SchoolViewModel extends School {

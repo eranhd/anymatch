@@ -1,7 +1,11 @@
-import { Component, OnInit, ViewEncapsulation, Inject } from '@angular/core';
-import { SchoolService, AuthService, LayerService } from "../../service";
-import { School } from "../../models";
+import { Component, OnInit, ViewEncapsulation, Inject, ViewChild, AfterViewInit } from '@angular/core';
+import { SchoolService, AuthService, LayerService, ClassService, UserService } from "../../service";
+import { School, Class, User, Layer } from "../../models";
 import { FormBuilder, FormGroup, Validators, Validator } from "@angular/forms";
+import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { DialogNewLayer } from "./dialog new layer/dialog-new-layer.conponent"
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+
 
 
 @Component({
@@ -10,31 +14,28 @@ import { FormBuilder, FormGroup, Validators, Validator } from "@angular/forms";
   styleUrls: ['./dashboard.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, AfterViewInit {
 
   public form: FormGroup;
   school;
-  constructor(public schoolService: SchoolService, 
-    private authService: AuthService, 
-    @Inject(FormBuilder) fb: FormBuilder,
-    private layerService: LayerService) {
-    // this.schoolService.getSchool(this.authService.getUser().schoolId);
-    // console.log(this.school);
 
-    this.form = fb.group({
-      addLayer: fb.group({
-        name: ["", Validators.required]
-      }),
-      addClass: fb.group({
-        name: ["", Validators.required],
-        layerName: ["", Validators.required]
-      }),
-      addUser: fb.group({
-        name: ["", Validators.required],
-        layerName: ["", Validators.required],
-        ClassName: ["", Validators.required]
-      })
-    });
+  displayedColumns = ['position', 'name', 'class_rooms', 'students'];
+  dataSource;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  constructor(public schoolService: SchoolService,
+    private authService: AuthService,
+    @Inject(FormBuilder) fb: FormBuilder,
+    public layerService: LayerService,
+    private classService: ClassService,
+    private userService: UserService,
+    public dialog: MatDialog) {
+
+    this.layerService.layers.subscribe(res => {
+      this.dataSource = new MatTableDataSource<Layer>(res);
+    })
+
   }
 
   public update() {
@@ -42,17 +43,41 @@ export class DashboardComponent implements OnInit {
   }
 
   public addLayer() {
-    this.layerService.addLayer(this.form.controls.addLayer.value, this.schoolService.school._id).then(res=>{
-      this.schoolService.addLayer(res["layer"]._id);
-    })
+
+
+    let dialogRef = this.dialog.open(DialogNewLayer, {
+      width: '250px'
+      
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (result && result.success)
+        this.layerService.addLayer(result.layer, this.authService.getUser().schoolId).then(res => {
+        });
+    });
   }
 
   public addClass() {
-
+    let c = new Class();
+    c.name = this.form.controls.addClass["controls"].name.value;
+    let lId = this.layerService.getIdByName(this.form.controls.addClass["controls"].name.value)
+    this.classService.addClass(c, this.authService.getUser().schoolId)
+      .then(
+      res => {
+        this.layerService.addClass(res._id, lId);
+        console.log(res)
+      });
   }
 
   public addUser() {
-    
+    let u = new User();
+    u.username = this.form.controls.addUser["controls"].name.value;
+    u.schoolId = this.authService.getUser().schoolId;
+    u.password = "pass" + u.username;
+    this.authService.adduser(u, u.schoolId).then(user => {
+      this.schoolService.addUser(user._id);
+    })
   }
 
 
@@ -60,4 +85,10 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+
 }
+
+

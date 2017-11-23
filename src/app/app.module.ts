@@ -13,6 +13,7 @@ import { LoginComponent } from './login/login.component';
 
 import { RouterModule } from "@angular/router";
 import { routes } from "./app.route";
+import { AuthGuard } from "./guard/auth.guard";
 
 
 
@@ -41,7 +42,8 @@ import { DashboardComponent } from "./admin/dashboard/dashboard.component";
     AuthService,
     ClassService,
     LayerService,
-    UserService
+    UserService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

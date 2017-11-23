@@ -1,9 +1,9 @@
 //Require the express package and use express.Router()
 const express = require('express');
 const router = express.Router();
-const user = require("../schema/user.schema");
+const DB = require("../db/db");
 
-const collection = "users";
+const collection = "classes";
 
 router.post('/all/', (req, res, next) => {
     let db = new DB(req.body.id);
@@ -11,6 +11,7 @@ router.post('/all/', (req, res, next) => {
         res.send(doc);
     });
 });
+
 //POST HTTP method to /bucketlist
 
 router.post('/', (req, res, next) => {
@@ -18,21 +19,19 @@ router.post('/', (req, res, next) => {
 
 });
 
-router.post("/update/", (req, res, next) => {
-    console.log(req.body);
-    user.update(req.body, (err, doc) => {
-        if (err)
-            res.json({ success: false, message: `Failed to update user. Error: ${err}` });
-        else
-            res.write(JSON.stringify({ success: true, user: doc }, null, 2));
-        res.end();
+router.post("/create/", (req, res, next) => {
+    // console.log(req.body.schoolId +", "+ collection);
+    let db = new DB(req.body.schoolId);
+    db.save(req.body.layer, collection).then(resolve => {
+        res.send(resolve);
     });
+
 });
 
 //DELETE HTTP method to /bucketlist. Here, we pass in a params which is the object id.
 router.delete('/:id', (req, res, next) => {
     res.send("DELETE");
 
-});
+})
 
 module.exports = router;

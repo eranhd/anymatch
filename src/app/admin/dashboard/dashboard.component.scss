@@ -50,3 +50,17 @@
     }
 }
 
+
+
+
+.example-container {
+    display: flex;
+    flex-direction: column;
+    width: 96%;
+    margin: 2%;
+  }
+  
+  .mat-table {
+    overflow: auto;
+    max-height: 500px;
+  }

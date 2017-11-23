@@ -3,13 +3,12 @@ const mongoose = require('mongoose');
 
 //Define SchoolSchema with title, 
 const LayerSchema = mongoose.Schema({
-    name: String,
-    passwod: String
+    name: String
 });
 
 const Layer = module.exports = mongoose.model('layer', LayerSchema);
 module.exports.getAll = (callback) => {
-    School.find(callback);
+    Layer.find(callback);
 }
 
 //newList.save is used to insert the document into MongoDB

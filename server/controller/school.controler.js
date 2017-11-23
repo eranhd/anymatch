@@ -5,46 +5,47 @@ const DB = require("../db/db");
 
 
 
-router.get('/all/', (req, res) => {
-    school.getAll((err, list) => {
-        if (err)
-            res.json({ success: false, message: `Failed to load all lists. Error: ${err}` });
-        else
-            res.write(JSON.stringify({ success: true, lists: list }, null, 2));
-        res.end();
-    })
-
+router.post('/all/', (req, res, next) => {
+    let db = new DB();
+    db.getAll("data").then(s => {
+        res.send(s);
+    });
 });
 
 
 
 router.post('/create/', (req, res, next) => {
-    school.add(req.body, (err, list) => {
-        if (err)
-            res.json({ success: false, message: `Failed to load all lists. Error: ${err}` });
-        else
-            res.write(JSON.stringify({ success: true, lists: list }, null, 2));
-        res.end();
+    let anyDb = new DB();
+
+    anyDb.save(req.body, "schools").then(school => {
+        // console.log(school);
+        let db = new DB(school._id);
+        db.save(school, "data").then(s => {
+            res.send(school);
+        })
+
     });
 });
 
 router.post("/getById/", (req, res, next) => {
-    school.findById(req.body, (err, list) => {
-        if (err)
-            res.json({ success: false, message: `Failed to load all lists. Error: ${err}` });
-        else
-            res.write(JSON.stringify({ success: true, school: list }, null, 2));
-        res.end();
+
+    let db = new DB(req.body._id);
+    // console.log(req.body._id);
+    db.findOne(req.body, "data").then(resolve => {
+        console.log(resolve);
+        res.send(resolve);
     });
 });
 
 router.post("/update/", (req, res, next) => {
-    // console.log(req.session);
-    let db = new DB("test", "school");
-    db.save({ "test": "test" }).then(resolve=>{
+    // console.log(req.body);
+    let db = new DB(req.body._id);
+    db.save(req.body, "data").then(resolve => {
+        // console.log("in saveee");
+        // console.log(res olve);
         res.send(resolve);
     });
-    
+
 });
 
 

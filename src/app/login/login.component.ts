@@ -46,22 +46,22 @@ export class LoginComponent {
 
   public async login() {
 
-    // let u = {};
-    // u["username"] = this.form.controls.login["controls"].username.value;
-    // u["password"] = this.form.controls.login["controls"].pass.value.password;
-    // let user = await this.authService.login(u);
+    let u = {};
+    u["username"] = this.form.controls.login["controls"].username.value;
+    u["password"] = this.form.controls.login["controls"].pass.value.password;
+    let user = await this.authService.login(u);
     // console.log(user);
-    // if (!user["success"]) {
-    //   if (user["code"] == 1) {
-    //     console.log("not found");
-    //   }
-    //   else {
-    //     console.log("password invalid");
-    //   }
-    // }
-    // else
-    //   this.router.navigate(["/admin"])
-    this.router.navigate(["/admin"])
+    if (!user["success"]) {
+      if (user["code"] == 1) {
+        console.log("not found");
+      }
+      else {
+        console.log("password invalid");
+      }
+    }
+    else
+      this.router.navigate(["/admin"])
+    // this.router.navigate(["/admin"])
   }
 
   public async signup() {
@@ -71,7 +71,7 @@ export class LoginComponent {
       let user = {};
       user["username"] = this.form.controls.login["controls"].username.value;
       user["password"] = this.form.controls.login["controls"].pass.value.password;
-      await this.authService.signup(user, school["lists"]._id);
+      await this.authService.signup(user, school._id);
       this.login();
       // await this.authService.addSchool(school["_id"]);
     }

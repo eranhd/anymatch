@@ -1,8 +1,13 @@
 <mat-card class="card-student">
-  <i class="material-icons">person</i>
+  <div class="img">
+      <img width="100%" matTooltip="תמונת התלמיד" src="http://excadetsforum.com/profile_images/no_img.png" />
+    <i *ngIf="user?.isLogin" matTooltip="משתמש ביצע כניסה ראשונית" class="material-icons">verified_user</i>
+  </div>
+  
   <div class="data">
     <div class="title">
-      {{user.fname}} {{user.lname}}, {{user.username}}
+      <div>{{user.fname}} {{user.lname}}</div>
+      <div>{{user.username}}</div>
     </div>
     <div class="prefer">
       <div class="positive_prefer">

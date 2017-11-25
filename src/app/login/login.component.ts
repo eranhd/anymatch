@@ -41,7 +41,7 @@ export class LoginComponent {
 
   public changeCreateSchool() {
     this._createNewSchool = true;
-    this.title = "Sign Up";
+    this.title = "הרשמה";
   }
 
   public async login() {
@@ -59,21 +59,23 @@ export class LoginComponent {
         console.log("password invalid");
       }
     }
-    else
-      this.router.navigate(["/admin"])
-    // this.router.navigate(["/admin"])
+    else {
+      let permiossion = user["user"].permission;
+      if (permiossion === "student")
+        this.router.navigate(["/client"])
+      else
+        this.router.navigate(["/admin"])
+    }
   }
 
   public async signup() {
     if (this.form.status === "VALID") {
-      // console.log(this.form);
       let school = await this.schoolService.createSchool(this.form.controls.newSchool.value);
       let user = {};
       user["username"] = this.form.controls.login["controls"].username.value;
       user["password"] = this.form.controls.login["controls"].pass.value.password;
       await this.authService.signup(user, school._id);
       this.login();
-      // await this.authService.addSchool(school["_id"]);
     }
   }
 

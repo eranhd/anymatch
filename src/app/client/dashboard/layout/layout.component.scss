@@ -1,0 +1,27 @@
+.spacer{
+    flex: 1 1 auto;
+}
+
+.toolbar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.first_class{
+    width: 100vw;
+    justify-content: center;
+    display: flex;
+    height: 70vh;
+    overflow: scroll;
+    padding: 34px 0;
+    mat-card{
+        display: flex;
+        flex-direction: column;
+        width: 30vw;
+        align-self: center;
+        div{
+            text-align: center;
+        }
+    }
+}

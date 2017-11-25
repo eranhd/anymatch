@@ -5,13 +5,19 @@
     mat-card-content{
         display: flex;
     }
+    
+    h2{
+        background-color: #504c66;
+        color: white;
+    }
 
     .div_card_student{
+        
         margin: 8px 0;
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: start;
         div{
             margin: 8px;
             width: 17vw;

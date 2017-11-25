@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
 import { Layer, User } from "../../models";
 import { SchoolService, AuthService, LayerService, ClassService, UserService } from "../../service";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 @Component({
   selector: 'app-layer',
@@ -16,11 +17,21 @@ export class LayerComponent implements OnInit {
   public addStudentButtonText = "הוסף תלמיד";
 
   private _students: User[];
+  public form: FormGroup;
 
   constructor(private activatedRoute: ActivatedRoute,
     private layerService: LayerService,
     public userService: UserService,
+    @Inject(FormBuilder) fb: FormBuilder,
     private authService: AuthService) {
+
+
+      this.form = fb.group({
+        username: ["", Validators.required],
+        fname: "",
+        lname: ""
+      })
+
 
     this.activatedRoute.params.subscribe(res => {
       this._layer = this.layerService.getLayerById(res["id"]);
@@ -29,10 +40,12 @@ export class LayerComponent implements OnInit {
 
         if (users)
           this._students = users.filter(u => {
-            console.log(u.layerId + " ," + res["id"])
+            // console.log(u.layerId + " ," + res["id"])
             return u.layerId === res["id"];
-          });
-        console.log(this._students);
+          }).sort((a, b) => {
+            return a.username.localeCompare(b.username)
+          })
+        // console.log(this._students);
       })
     });
 
@@ -59,24 +72,25 @@ export class LayerComponent implements OnInit {
     this._addStudentFlag = !this._addStudentFlag;
   }
 
-  addStudent(name: string) {
+  addStudent(name: string, fname: string, lname: string) {
 
     let user = new User();
     user.schoolId = this.authService.getUser().schoolId;
     user.username = name;
     user.layerId = this._layer._id;
-    
+
     this.userService.addUser(user, user.schoolId).then(res => {
-      
+
       if (res["user"]) {
         let u = res["user"];
         u.schoolId = this.authService.schoolId;
         u.layerId = this._layer._id;
+        u.fname = fname;
+        u.lname = lname;
         u.permission = "student";
-        this.userService.updateUser(u).then(ret => {
-          // console.log(retUser);
-
-        })
+        this.userService.updateUser(u).then(ret => { 
+          this.form.reset();
+        });
       }
     })
   }

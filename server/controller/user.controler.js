@@ -13,11 +13,11 @@ const collection = "users";
 
 router.post('/all/', (req, res, next) => {
     let db = new DB();
-    console.log({ schoolId: mongojs.ObjectId(req.user.schoolId) })
-    console.log("aa: " + mongojs.ObjectId(req.user[0].schoolId))
-    db.find( collection, { schoolId: req.user[0].schoolId }).then(doc => {
+    // console.log({ schoolId: mongojs.ObjectId(req.user.schoolId) })
+    // console.log("aa: " + mongojs.ObjectId(req.user[0].schoolId))
+    db.find(collection, { schoolId: req.user[0].schoolId }).then(doc => {
         if (doc) {
-           
+
             res.send(doc);
         }
         else
@@ -36,6 +36,8 @@ router.post("/update/", (req, res, next) => {
     // let db = new DB();
 
     // console.log(req.body);
+    if (!req.body.isLogin)
+        req.body.isLogin = false;
     user.update(req.body, (err, doc) => {
         if (err)
             res.json({ success: false, message: `Failed to update user. Error: ${err}` });
@@ -45,6 +47,26 @@ router.post("/update/", (req, res, next) => {
     });
 });
 
+router.post("/changePassword/", (req, res, next) => {
+    let u = new user(req.body.user);
+    if (u.validPassword(req.body.password)) {
+        u.isLogin = true;
+        u.password = u.generateHash(req.body.newPassword);
+        user.update(u, (err, doc) => {
+            if (err)
+                res.json({ success: false, message: `Failed to update user. Error: ${err}` });
+            else
+                res.write(JSON.stringify({ success: true, user: doc }, null, 2));
+            res.end();
+        });
+
+    }
+    else {
+        res.send({ code: 1, success: false });
+    }
+
+});
+
 router.post('/create/', (req, res, next) => {
 
 
@@ -52,7 +74,7 @@ router.post('/create/', (req, res, next) => {
     user.password = user.username;
     user.permmision = "student";
     req.body = user;
-    
+
     passport.authenticate('local-signup', (err, user, info) => {
         // console.log(info);
         if (err) {

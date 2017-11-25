@@ -1,13 +1,19 @@
-<mat-toolbar color="primary" >
+<mat-toolbar color="primary">
   <mat-toolbar-row class="toolbar">
-    <span>Any Match</span>
-
+    <div>
+      <button matTooltip="חזור לאחור" mat-icon-button [routerLink]="['../']">
+        <i class="material-icons">keyboard_arrow_right</i>
+      </button>
+      <span>Any Match</span>
+    </div>
     <mat-form-field>
       <input matInput placeholder="חפש" type="text">
-      <button mat-icon-button><i class="material-icons">search</i></button>
+      <button mat-icon-button>
+        <i class="material-icons">search</i>
+      </button>
     </mat-form-field>
-    
-    
+
+
     <i class="material-icons">menu</i>
   </mat-toolbar-row>
 </mat-toolbar>

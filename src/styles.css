@@ -4,6 +4,7 @@
 body{
     margin: 0;
     direction: rtl;
+    font-family: "Calibri";
 }
 
 ::-webkit-scrollbar{
@@ -15,4 +16,8 @@ body{
     font-weight: bold;
     color: #afafaf;
     margin: 0 8px;
+}
+
+input{
+    text-align: right;
 }

@@ -9,7 +9,7 @@ const UserSchema = mongoose.Schema({
     password: String,
     schoolId: String,
     layerId: String,
-    fnmae: String,
+    fname: String,
     lname: String,
     permission: String,
     isLogin: Boolean,

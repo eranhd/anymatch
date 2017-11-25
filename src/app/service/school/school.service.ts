@@ -4,6 +4,7 @@ import { ControlerService } from "../controlerService.model";
 import { path } from "../path.enum";
 import { School } from "../../models";
 import { LayerService } from "../layer/layer.service";
+import { UserService } from "../user/user.service";
 
 @Injectable()
 export class SchoolService extends ControlerService {
@@ -11,7 +12,8 @@ export class SchoolService extends ControlerService {
   private _school: School;
 
   constructor(http: HttpService,
-    private layerService: LayerService) {
+    private layerService: LayerService,
+    private userService: UserService) {
     super("school", http);
   }
 
@@ -21,6 +23,7 @@ export class SchoolService extends ControlerService {
 
   public async initSchool(id: string) {
     // console.log(id)
+    this.userService.getAllUsers(id).then(res=>{});
     const s = await this.getById(id);
     this._school = s;
     return this._school;

@@ -27,7 +27,7 @@ export class AuthService {
     }
   }
 
-  public async adduser(user, id: string): Promise<User>{
+  public async adduser(user, id: string): Promise<User> {
     let u = await this.http.post(path.SIGNUP, user);
     if (u["success"]) {
       await this.update();
@@ -42,6 +42,7 @@ export class AuthService {
         if (u["success"]) {
           this._user = u["user"];
           localStorage.setItem("auth", JSON.stringify(user));
+          console.log(this._user)
         }
         res(u);
       });
@@ -50,6 +51,12 @@ export class AuthService {
 
   public getUser() {
     return this._user;
+  }
+
+  public get schoolId() {
+    if (this._user)
+      return this._user.schoolId;
+    return null;
   }
 
   public get id() {

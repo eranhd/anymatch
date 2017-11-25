@@ -10,3 +10,9 @@ body{
     visibility: hidden;
     display: none;
 }
+
+.major{
+    font-weight: bold;
+    color: #afafaf;
+    margin: 0 8px;
+}

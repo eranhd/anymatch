@@ -92,8 +92,12 @@ export class LayerService extends ControlerService {
   }
 
   public updateLayer(l: Layer) {
-    this.update({ layer: l, schoolId: this.authService.getUser()._id }).then(res => {
-      this._layers[l._id] = res;
+    this.update<Layer>({ layer: l, schoolId: this.authService.getUser()._id }).then(res => {
+      this._layers = this._layers.map(r=>{
+        if(res._id === r._id)
+          return res;
+        return r;
+      })
     });
   }
 

@@ -14,7 +14,8 @@ function DB(schoolId) {
 
 
 DB.prototype.save = function (item, tableName) {
-    // console.log(db);
+    console.log("in save")
+    console.log(item);
     return new Promise((res, rej) => {
         db.collection(tableName).findOne({ _id: mongojs.ObjectId(item._id) }, (err, doc) => {
             // console.log(doc);
@@ -26,8 +27,10 @@ DB.prototype.save = function (item, tableName) {
             else {
                 // console.log("in save");
                 // console.log(doc);
+                // console.log(item)
                 db.collection(tableName).update({ _id: mongojs.ObjectId(item._id) }, item, (err, doc) => {
-                    // console.log(item);
+                    console.log("in save 2/n/n/n")
+                    console.log(doc);
                     db.collection(tableName).findOne({ _id: mongojs.ObjectId(item._id) }, (err, doc) => {
                         res(doc);
                     });
@@ -39,12 +42,12 @@ DB.prototype.save = function (item, tableName) {
     });
 }
 
-DB.prototype.find = function (item, tableName, query) {
-    // console.log(db);
-    if (item._id)
-        item._id = mongojs.ObjectId(item._id);
+DB.prototype.find = function (tableName, query, projection) {
+    // console.log(query)
+    // console.log(tableName)
+    
     return new Promise((res, rej) => {
-        db.collection(tableName).find(item, query, (err, doc) => {
+        db.collection(tableName).find( query, projection, (err, doc) => {
             res(doc);
         });
     });

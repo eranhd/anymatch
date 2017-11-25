@@ -7,7 +7,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
     selector: 'dialog-new-layer',
-    templateUrl: 'dialog-new-layer.html',
+    templateUrl: './dialog-new-layer.html',
 })
 export class DialogNewLayer {
 

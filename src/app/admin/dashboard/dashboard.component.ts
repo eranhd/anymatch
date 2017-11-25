@@ -3,7 +3,8 @@ import { SchoolService, AuthService, LayerService, ClassService, UserService } f
 import { School, Class, User, Layer } from "../../models";
 import { FormBuilder, FormGroup, Validators, Validator } from "@angular/forms";
 import { MatPaginator, MatTableDataSource } from '@angular/material';
-import { DialogNewLayer } from "./dialog new layer/dialog-new-layer.conponent"
+import { DialogNewLayer } from "./dialog new layer/dialog-new-layer.conponent";
+import { DialogEditLayer } from "./dialog-edit-layer/dialog-edit-layerconponent";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 
@@ -29,7 +30,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     @Inject(FormBuilder) fb: FormBuilder,
     public layerService: LayerService,
     private classService: ClassService,
-    private userService: UserService,
+    public userService: UserService,
     public dialog: MatDialog) {
 
     this.layerService.layers.subscribe(res => {
@@ -47,7 +48,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
     let dialogRef = this.dialog.open(DialogNewLayer, {
       width: '250px'
-      
+
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -87,6 +88,21 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+  }
+
+  selectRow(layer: Layer) {
+    console.log(layer);
+    let dialogRef = this.dialog.open(DialogEditLayer, {
+      width: '350px',
+      data: layer
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log('The dialog was closed');
+      if (result && result.success)
+        this.layerService.updateLayer(result.layer);
+    });
+
   }
 
 }

@@ -15,16 +15,18 @@ import { RouterModule } from "@angular/router";
 import { routes } from "./app.route";
 import { AuthGuard } from "./guard/auth.guard";
 
-
+import { ComponentsModule } from "./components/compontns.module";
 
 
 /**need to remove */
 import { DashboardComponent } from "./admin/dashboard/dashboard.component";
 
+
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
+    LoginComponent
+
     // DashboardComponent
   ],
   imports: [
@@ -34,7 +36,8 @@ import { DashboardComponent } from "./admin/dashboard/dashboard.component";
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MaterialModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    ComponentsModule
   ],
   providers: [
     HttpService,

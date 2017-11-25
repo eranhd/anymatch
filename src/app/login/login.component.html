@@ -6,25 +6,25 @@
           <div formGroupName="login">
             <h3>{{title}}</h3>
             <mat-form-field>
-              <input matInput type="text" formControlName=username placeholder="User Name">
+              <input matInput type="text" formControlName=username placeholder="שם משתמש">
             </mat-form-field>
             <div formGroupName="pass">
               <mat-form-field>
-                <input matInput type="password" formControlName=password placeholder="Password">
+                <input matInput type="password" formControlName=password placeholder="סיסמה">
               </mat-form-field>
               <mat-form-field *ngIf="createNewSchool">
-                <input matInput type="password" formControlName=verifyPassword placeholder="Verify Password">
+                <input matInput type="password" formControlName=verifyPassword placeholder="אימות סיסמה">
               </mat-form-field>
             </div>
           </div>
   
           <div *ngIf="createNewSchool" formGroupName="newSchool">
-            <h3>Create New School</h3>
+            <h3>יצירת בית ספר</h3>
             <mat-form-field>
-              <input matInput type="text" formControlName=name placeholder="School Name">
+              <input matInput type="text" formControlName=name placeholder="שם בית הספר">
             </mat-form-field>
             <mat-form-field>
-              <input matInput type="text" formControlName=code placeholder="Code">
+              <input matInput type="text" formControlName=code placeholder="קוד בית הספר">
             </mat-form-field>
           </div>
   
@@ -32,10 +32,10 @@
   
       </mat-card-content>
       <mat-card-actions>
-        <button *ngIf="!createNewSchool" mat-button color=primary (click)="changeCreateSchool()">Create school</button>
-        <button *ngIf="!createNewSchool" mat-button color=primary (click)="login()">Login</button>
-        <button *ngIf="createNewSchool" mat-button color=primary (click)="signup()">Sign Up</button>
-        <button mat-button color=secondary (click)="clear()">Clear</button>
+        <button *ngIf="!createNewSchool" mat-button color=primary (click)="changeCreateSchool()">יצירת בית ספר</button>
+        <button *ngIf="!createNewSchool" mat-button color=primary (click)="login()">כניסה</button>
+        <button *ngIf="createNewSchool" mat-button color=primary (click)="signup()">הרשמה</button>
+        <button mat-button color=secondary (click)="clear()">נקה</button>
       </mat-card-actions>
     </mat-card>
   </div>

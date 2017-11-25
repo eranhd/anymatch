@@ -1,0 +1,20 @@
+<mat-card class="card-student">
+  <i class="material-icons">person</i>
+  <div class="data">
+    <div class="title">
+      {{user.fname}} {{user.lname}}, {{user.username}}
+    </div>
+    <div class="prefer">
+      <div class="positive_prefer">
+        <div *ngFor="let p of user.positivePrefer">
+          {{p}}
+        </div>
+      </div>
+      <div class="negative_prefer">
+        <div *ngFor="let p of user.negativePrefer">
+          {{p}}
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-card>

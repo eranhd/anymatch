@@ -7,7 +7,9 @@ import { routes } from "./admin.route";
 import { MaterialModule } from "../material/material.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { LayoutComponent } from './dashboard/layout/layout.component';
-
+import { DialogEditLayer } from "./dashboard/dialog-edit-layer/dialog-edit-layerconponent";
+import { LayerComponent } from './layer/layer.component';
+import { ComponentsModule } from "../components/compontns.module";
 
 @NgModule({
   imports: [
@@ -15,15 +17,19 @@ import { LayoutComponent } from './dashboard/layout/layout.component';
     MaterialModule,
     RouterModule.forChild(routes),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ComponentsModule
   ],
   declarations: [
     DashboardComponent,
     DialogNewLayer,
-    LayoutComponent
+    LayoutComponent,
+    DialogEditLayer,
+    LayerComponent
   ],
   entryComponents: [
-    DialogNewLayer
+    DialogNewLayer,
+    DialogEditLayer
   ]
 })
 export class AdminModule { }

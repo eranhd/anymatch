@@ -2,13 +2,27 @@
 const express = require('express');
 const router = express.Router();
 const user = require("../schema/user.schema");
+const passport = require('passport');
+require('../config/passport')(passport); // pass passport for configuration
+const DB = require("../db/db");
+const mongojs = require('mongojs');
+
+
 
 const collection = "users";
 
 router.post('/all/', (req, res, next) => {
-    let db = new DB(req.body.id);
-    db.getAll(collection).then(doc => {
-        res.send(doc);
+    let db = new DB();
+    console.log({ schoolId: mongojs.ObjectId(req.user.schoolId) })
+    console.log("aa: " + mongojs.ObjectId(req.user[0].schoolId))
+    db.find( collection, { schoolId: req.user[0].schoolId }).then(doc => {
+        if (doc) {
+           
+            res.send(doc);
+        }
+        else
+            res.send("failed");
+
     });
 });
 //POST HTTP method to /bucketlist
@@ -19,7 +33,9 @@ router.post('/', (req, res, next) => {
 });
 
 router.post("/update/", (req, res, next) => {
-    console.log(req.body);
+    // let db = new DB();
+
+    // console.log(req.body);
     user.update(req.body, (err, doc) => {
         if (err)
             res.json({ success: false, message: `Failed to update user. Error: ${err}` });
@@ -29,10 +45,31 @@ router.post("/update/", (req, res, next) => {
     });
 });
 
-//DELETE HTTP method to /bucketlist. Here, we pass in a params which is the object id.
-router.delete('/:id', (req, res, next) => {
-    res.send("DELETE");
+router.post('/create/', (req, res, next) => {
 
+
+    let user = req.body;
+    user.password = user.username;
+    user.permmision = "student";
+    req.body = user;
+    
+    passport.authenticate('local-signup', (err, user, info) => {
+        // console.log(info);
+        if (err) {
+            return next(err); // will generate a 500 error
+        }
+        if (!user) {
+            return res.send({ success: false, message: 'authentication failed' });
+        }
+        req.login(user, loginErr => {
+            if (loginErr) {
+                return next(loginErr);
+            }
+
+            return res.send({ success: true, user: user, message: 'authentication succeeded' });
+        });
+    })(req, res, next);
 });
+
 
 module.exports = router;

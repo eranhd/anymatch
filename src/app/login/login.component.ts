@@ -14,7 +14,7 @@ export class LoginComponent {
 
   public form: FormGroup;
   public list;
-  public title: string = "Login";
+  public title: string = "כניסה";
   private _createNewSchool: boolean = false;
 
   constructor( @Inject(FormBuilder) fb: FormBuilder,

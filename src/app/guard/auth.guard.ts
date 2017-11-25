@@ -20,14 +20,16 @@ export class AuthGuard implements CanActivate {
     if (this.authService.isAuth()) {
       return new Promise(
         (resolve, rej) => {
-          this.schoolService.initSchool(this.authService.getUser().schoolId)
-            .then(res => {
-              this.layerService.getAllLayers(this.authService.getUser().schoolId).then(_ => {
-                this.classService.getAllClass(this.authService.getUser().schoolId).then(_ => {
-                  resolve(true);
+          if (this.authService.getUser().permission != "student") {
+            this.schoolService.initSchool(this.authService.getUser().schoolId)
+              .then(res => {
+                this.layerService.getAllLayers(this.authService.getUser().schoolId).then(_ => {
+                  this.classService.getAllClass(this.authService.getUser().schoolId).then(_ => {
+                    resolve(true);
+                  })
                 })
-              })
-            });
+              });
+          }
         });
     }
     else {
@@ -37,15 +39,17 @@ export class AuthGuard implements CanActivate {
           if (this.authService.isAuth()) {
             return new Promise(
               (resolve, rej) => {
-                this.schoolService.initSchool(this.authService.getUser().schoolId)
-                  .then(res => {
-                    this.layerService.getAllLayers(this.authService.getUser().schoolId).then(_ => {
-                      this.classService.getAllClass(this.authService.getUser().schoolId).then(_ => {
-                        this.router.navigate(["/admin"])
-                        resolve(true);
+                if (this.authService.getUser().permission != "student") {
+                  this.schoolService.initSchool(this.authService.getUser().schoolId)
+                    .then(res => {
+                      this.layerService.getAllLayers(this.authService.getUser().schoolId).then(_ => {
+                        this.classService.getAllClass(this.authService.getUser().schoolId).then(_ => {
+                          this.router.navigate(["/admin"])
+                          resolve(true);
+                        })
                       })
-                    })
-                  });
+                    });
+                }
               });
           }
           else {

@@ -1,0 +1,38 @@
+<div class="layer">
+  <h2>
+    {{layer?.name}}
+  </h2>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>מידע על השכבה</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div>
+        <span class="major">מספר הכיתות</span>
+        <span>{{layer?.classes}}</span>
+      </div>
+      <div>
+        <span class="major">מספר תלמידים</span>
+        <span>{{userService.getUsersByLayer(layer?._id).length}}</span>
+      </div>
+      <div>
+        <span class="major">מספר התאמות</span>
+        <span>0</span>
+      </div>
+    </mat-card-content>
+    <div>
+      <button mat-raised-button color="primary" (click)="changeFlag()">{{addStudentButtonText}}</button>
+      <span *ngIf="addStudentFlag">
+        <mat-form-field>
+          <input matInput text="text" #sname placeholder="Layer Name" />
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="addStudent(sname.value)">הוסף</button>
+      </span>
+    </div>
+  </mat-card>
+  <div class="div_card_student">
+    <div *ngFor="let u of students">
+      <app-card-student [user]=u></app-card-student>
+    </div>
+  </div>
+</div>

@@ -17,6 +17,56 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 })
 export class DashboardComponent {
 
+  constructor(
+    public userService: UserService, private authService: AuthService) {
+    this.userService.users.subscribe(users => {
+      if (users)
+        this._students = users.sort((a, b) => {
+          return a.fname.localeCompare(b.fname)
+        });
+    });
+  }
+  private _students: User[];
+
+
+
+  public get students() {
+    return this._students;
+  }
+
+  public get positive(){
+    return this._students.filter(res=>{
+      return this.authService.getUser().positivePrefer.includes(res._id);
+    })
+  }
+
+  public get negative(){
+    return this._students.filter(res=>{
+      return this.authService.getUser().negativePrefer.includes(res._id);
+    })
+  }
+
+  addToPositive(id: string){
+    this.authService.addPositive(id);
+  }
+
+  addToNegative(id: string){
+    this.authService.addNegative(id);
+    return false;
+  }
+
+  save(){
+    this.authService.update().then(res=>{})
+  }
+
+  clear(){
+    let ans = confirm("האם למחוק את כל העדפות");
+    if(ans){
+      this.authService.getUser().negativePrefer = [];
+      this.authService.getUser().positivePrefer = [];
+      this.save();
+    }
+  }
 
 }
 

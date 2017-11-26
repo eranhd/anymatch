@@ -11,13 +11,13 @@
     </div>
     <div class="prefer">
       <div class="positive_prefer">
-        <div *ngFor="let p of user.positivePrefer">
-          {{p}}
+        <div *ngIf="user.positivePrefer?.length > 0">
+          נבחרו תלמידים רצויים
         </div>
       </div>
       <div class="negative_prefer">
-        <div *ngFor="let p of user.negativePrefer">
-          {{p}}
+        <div *ngIf="user.negativePrefer?.length > 0">
+          נבחרו תלמידים לא רצויים
         </div>
       </div>
     </div>

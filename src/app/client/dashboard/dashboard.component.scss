@@ -1,4 +1,4 @@
-.dashboard{
+.dashboard_div{
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -6,6 +6,7 @@
     height: 100%;
     box-sizing: border-box;
     // align-items: stretch; 
+    padding: 8px;
     .statistic, .line{
         width: 98%;
         height: 20%;
@@ -64,3 +65,17 @@
     overflow: auto;
     max-height: 500px;
   }
+
+  .div_card_student{
+    
+    margin: 8px 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: start;
+    .inner_div{
+        margin: 8px;
+        width: 200px;
+        height: 100px;
+    }
+}

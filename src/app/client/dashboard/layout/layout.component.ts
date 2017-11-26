@@ -29,6 +29,7 @@ export class LayoutComponent implements OnInit {
   }
 
   public svae(pass){
+    console.log(this.authService.getUser())
     this.authService.changePassword(pass ,this.password)
   }
 

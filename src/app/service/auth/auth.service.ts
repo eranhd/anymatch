@@ -65,7 +65,7 @@ export class AuthService {
     return "";
   }
 
-  private update() {
+  public update() {
     return new Promise((res, error) => {
       // console.log("in auth");
       this.http.post(UPDATE, this._user).then(r => {
@@ -83,13 +83,27 @@ export class AuthService {
 
   }
 
-  public changePassword(password, newPassword){
-    this.http.post("user/changePassword", {user: this._user, password : password, newPassword : newPassword}).then(u=>{
-      if(u["success"])
+  public changePassword(password, newPassword) {
+    this.http.post("user/changePassword", { user: this._user, password: password, newPassword: newPassword }).then(u => {
+      if (u["success"])
         this._user = u["user"];
       // console.log(u);
     })
 
+  }
+
+  public addPositive(id) {
+    if (!this._user.positivePrefer)
+      this._user.positivePrefer = [];
+    this._user.positivePrefer.push(id);
+    return true;
+  }
+
+  public addNegative(id) {
+    if (!this._user.negativePrefer)
+      this._user.negativePrefer = [];
+    this._user.negativePrefer.push(id);
+    return true;
   }
 
   public isAuth() {

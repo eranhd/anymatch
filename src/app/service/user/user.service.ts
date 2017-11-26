@@ -61,7 +61,7 @@ export class UserService extends ControlerService {
         res["position"] = index;
         return res;
       });
-    // console.log(this._users);
+    console.log(this._users);
     if (this.ob)
       this.ob.next(this._users)
   }

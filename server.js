@@ -1,4 +1,5 @@
 const express = require("express");
+const fileUpload = require('express-fileupload');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -11,6 +12,7 @@ require('./server/config/passport')(passport); // pass passport for configuratio
 
 const app = express();
 //Middleware for CORS
+app.use(fileUpload());
 
 let useControler = () => {
     const school = require("./server/controller/school.controler");

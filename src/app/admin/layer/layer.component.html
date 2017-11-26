@@ -23,17 +23,21 @@
     <div>
       <button mat-raised-button color="primary" (click)="changeFlag()">{{addStudentButtonText}}</button>
       <span *ngIf="addStudentFlag" [formGroup]="form">
-        <mat-form-field >
+        <mat-form-field>
           <input matInput text="text" formControlName="username" #sname placeholder="ת.ז" />
         </mat-form-field>
         <mat-form-field>
-            <input matInput text="text" formControlName="fname" #fname placeholder="שם פרטי" />
-          </mat-form-field>
-          <mat-form-field>
-              <input matInput text="text" formControlName="lname" #lname placeholder="שם משפחה" />
-            </mat-form-field>
+          <input matInput text="text" formControlName="fname" #fname placeholder="שם פרטי" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput text="text" formControlName="lname" #lname placeholder="שם משפחה" />
+        </mat-form-field>
+
         <button *ngIf="sname.value" mat-raised-button color="primary" (click)="addStudent(sname.value, fname.value, lname.value)">הוסף</button>
+        
       </span>
+      <input type="file" color="primary" (change)="fileChange($event)" placeholder="טען קובץ xlsx" accept=".xlsx">
+      <!-- <button mat-raised-button ></button> -->
     </div>
   </mat-card>
 
@@ -41,7 +45,7 @@
     תלמידים בשכבה
   </h2>
   <div class="div_card_student">
-    <div *ngFor="let u of students">
+    <div class="inner_div" *ngFor="let u of students">
       <app-card-student [user]=u></app-card-student>
     </div>
   </div>

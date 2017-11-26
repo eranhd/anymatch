@@ -3,6 +3,8 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { Layer, User } from "../../models";
 import { SchoolService, AuthService, LayerService, ClassService, UserService } from "../../service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { RequestOptions, Headers, Http } from "@angular/http";
+import { Observable } from "rxjs";
 
 @Component({
   selector: 'app-layer',
@@ -23,14 +25,14 @@ export class LayerComponent implements OnInit {
     private layerService: LayerService,
     public userService: UserService,
     @Inject(FormBuilder) fb: FormBuilder,
-    private authService: AuthService) {
+    private authService: AuthService, private http: Http) {
 
 
-      this.form = fb.group({
-        username: ["", Validators.required],
-        fname: "",
-        lname: ""
-      })
+    this.form = fb.group({
+      username: ["", Validators.required],
+      fname: "",
+      lname: ""
+    })
 
 
     this.activatedRoute.params.subscribe(res => {
@@ -88,11 +90,34 @@ export class LayerComponent implements OnInit {
         u.fname = fname;
         u.lname = lname;
         u.permission = "student";
-        this.userService.updateUser(u).then(ret => { 
+        this.userService.updateUser(u).then(ret => {
           this.form.reset();
         });
       }
     })
+  }
+
+  fileChange(event) {
+    let fileList: FileList = event.target.files;
+    if (fileList.length > 0) {
+      let file: File = fileList[0];
+      let formData: FormData = new FormData();
+      formData.append('uploadFile', file, file.name);
+      let headers = new Headers();
+      /** No need to include Content-Type in Angular 4 */
+      // headers.append('Content-Type', 'multipart/form-data');
+      headers.append('Accept', 'application/json');
+      let options = new RequestOptions({ headers: headers });
+      this.http.post("http://localhost:3000/user/upload", formData, options).subscribe(res=>{
+        console.log(res)
+      })
+        // .map(res => res.json())
+        // .catch(error => Observable.throw(error))
+        // .subscribe(
+        // data => console.log('success'),
+        // error => console.log(error)
+        // )
+    }
   }
 
 }

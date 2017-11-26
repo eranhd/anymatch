@@ -6,10 +6,7 @@
         display: flex;
     }
     
-    h2{
-        background-color: #504c66;
-        color: white;
-    }
+    
 
     .div_card_student{
         
@@ -18,7 +15,8 @@
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: start;
-        div{
+        align-items: stretch;
+        .inner_div{
             margin: 8px;
             width: 17vw;
         }

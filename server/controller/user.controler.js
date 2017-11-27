@@ -7,21 +7,18 @@ require('../config/passport')(passport); // pass passport for configuration
 const DB = require("../db/db");
 const mongojs = require('mongojs');
 const upload = require("../config/upload");
+const convert = require("../services/xlsxToJson.service");
 
 
 const collection = "users";
 
 router.post('/all/', (req, res, next) => {
     let db = new DB();
-    // console.log({ schoolId: mongojs.ObjectId(req.user.schoolId) })
-    // console.log("aa: " + mongojs.ObjectId(req.user[0].schoolId))\\
-    // console.log(req.user[0].permission + "ppppermision\n\n\n\n")
     let projection = {};
     let query = { schoolId: req.user[0].schoolId }
     if (req.user[0].permission === "student") {
         projection = { fname: "fname", lname: "lname" };
         query.layerId = req.user[0].layerId;
-        // console.log(query)
     }
     db.find(collection, query, projection).then(doc => {
         if (doc) {
@@ -33,7 +30,7 @@ router.post('/all/', (req, res, next) => {
 
     });
 });
-//POST HTTP method to /bucketlist
+
 
 router.post('/', (req, res, next) => {
     res.send("POST");
@@ -77,12 +74,22 @@ router.post("/changePassword/", (req, res, next) => {
 });
 
 router.post('/create/', (req, res, next) => {
+    create(req, res, next);
+});
+
+let create = (req, res, next, user) => {
 
 
-    let user = req.body;
-    user.password = user.username;
-    user.permmision = "student";
-    req.body = user;
+    console.log(req.body)
+    if (!user) {
+        let user = req.body;
+        user.password = user.username;
+        user.permmision = "student";
+        req.body = user;
+    }
+    else {
+        req.body = user;
+    }
 
     passport.authenticate('local-signup', (err, user, info) => {
         // console.log(info);
@@ -100,29 +107,31 @@ router.post('/create/', (req, res, next) => {
             return res.send({ success: true, user: user, message: 'authentication succeeded' });
         });
     })(req, res, next);
-});
+}
 
-router.post('/upload/', (req, res) => {
-
-    // res.send('File uploaded!');
+router.post('/upload/', (req, res, next) => {
     if (!req.files)
         return res.status(400).send('No files were uploaded.');
-
     let sampleFile = req.files.uploadFile;
-    let name = req.body.name + ".xlsx";
-
-    if (req.files)
-        console.log(req.files.uploadFile);
-    // Use the mv() method to place the file somewhere on your server
-    sampleFile.mv(upload.xlsx + name, (err) => {
-
-        if (err){
+    
+    let d = new Date();
+    let name = d.getTime() + req.user[0].username;
+    sampleFile.mv(upload.xlsx + name + ".xlsx", (err) => {
+        if (err) {
             console.log(err)
             return res.status(500).send(err);
         }
-        console.log("done");
-        res.send('File uploaded!');
+        convert.convert(upload.xlsx + name + ".xlsx", upload.json + name + ".json").then(json => {
+            let db = new DB(req.user[0].schoolId);
+            db.save({ url: upload.json + name + ".json", des: "user list" }, "files").then(r => {
+                res.send(json);
+            });
+
+        });
+
     });
+
+
 });
 
 

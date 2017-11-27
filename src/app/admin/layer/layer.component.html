@@ -36,8 +36,8 @@
         <button *ngIf="sname.value" mat-raised-button color="primary" (click)="addStudent(sname.value, fname.value, lname.value)">הוסף</button>
         
       </span>
-      <input type="file" color="primary" (change)="fileChange($event)" placeholder="טען קובץ xlsx" accept=".xlsx">
-      <!-- <button mat-raised-button ></button> -->
+      <input type="file" (change)="fileChange($event)" accept=".xlsx">
+      <button #inputFile mat-raised-button color="primary">טען קובץ xlsx</button>
     </div>
   </mat-card>
 

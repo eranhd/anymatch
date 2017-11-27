@@ -74,7 +74,7 @@ export class LayerComponent implements OnInit {
     this._addStudentFlag = !this._addStudentFlag;
   }
 
-  addStudent(name: string, fname: string, lname: string) {
+  public addStudent(name: string, fname: string, lname: string) {
 
     let user = new User();
     user.schoolId = this.authService.getUser().schoolId;
@@ -104,19 +104,31 @@ export class LayerComponent implements OnInit {
       let formData: FormData = new FormData();
       formData.append('uploadFile', file, file.name);
       let headers = new Headers();
-      /** No need to include Content-Type in Angular 4 */
-      // headers.append('Content-Type', 'multipart/form-data');
+
+
       headers.append('Accept', 'application/json');
       let options = new RequestOptions({ headers: headers });
-      this.http.post("http://localhost:3000/user/upload", formData, options).subscribe(res=>{
-        console.log(res)
-      })
-        // .map(res => res.json())
-        // .catch(error => Observable.throw(error))
-        // .subscribe(
-        // data => console.log('success'),
-        // error => console.log(error)
-        // )
+      this.http.post("http://localhost:3000/user/upload", formData, options).subscribe(res => {
+        let users = res.json();
+        if (users) {
+          users.forEach(e => {
+            this.userService.addUser(e, this.authService.schoolId).then(r => {
+              if (r["user"]) {
+                let u = r["user"];
+                u.schoolId = this.authService.schoolId;
+                u.layerId = this._layer._id;
+                u.fname = e.fname;
+                u.lname = e.lname;
+                u.permission = "student";
+                this.userService.updateUser(u).then(ret => {
+                  console.log(ret)
+                });
+              }
+            });
+          });
+          // this.userService.getAllUsers(this.authService.schoolId);
+        }
+      });
     }
   }
 

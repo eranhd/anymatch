@@ -39,7 +39,7 @@ module.exports = function (passport) {
 
             // asynchronous
             // User.findOne wont fire unless data is sent back
-            console.log(username);
+            // console.log(username);
             process.nextTick(function () {
 
                 // find a user whose username is the same as the forms username

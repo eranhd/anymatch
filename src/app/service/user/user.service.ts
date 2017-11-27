@@ -31,8 +31,8 @@ export class UserService extends ControlerService {
           if (u._id != user._id)
             return u
         });
-        console.log(this._users);
-        console.log(updateduser["user"])
+        // console.log(this._users);
+        // console.log(updateduser["user"])
         this._users.push(user);
         this.ob.next(this._users);
         res(updateduser);
@@ -61,7 +61,7 @@ export class UserService extends ControlerService {
         res["position"] = index;
         return res;
       });
-    console.log(this._users);
+    // console.log(this._users);
     if (this.ob)
       this.ob.next(this._users)
   }

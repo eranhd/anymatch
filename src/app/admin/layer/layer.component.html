@@ -38,9 +38,14 @@
       </span>
       <input type="file" (change)="fileChange($event)" accept=".xlsx">
       <button #inputFile mat-raised-button color="primary">טען קובץ xlsx</button>
+      <button mat-raised-button color="primary" (click)="startMatch()" >חלק שכבה לקבוצות</button>
     </div>
   </mat-card>
 
+  <h2 class="title">
+    גרף
+  </h2>
+  <app-graph [graph]=graph></app-graph>
   <h2 class="title">
     תלמידים בשכבה
   </h2>

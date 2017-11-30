@@ -20,10 +20,14 @@ export class DashboardComponent {
   constructor(
     public userService: UserService, private authService: AuthService) {
     this.userService.users.subscribe(users => {
-      if (users)
-        this._students = users.sort((a, b) => {
-          return a.fname.localeCompare(b.fname)
-        });
+      if (users) {
+        if (users[0].fname)
+          this._students = users.sort((a, b) => {
+            return a.fname.localeCompare(b.fname)
+          });
+        else
+          this._students = users
+      }
     });
   }
   private _students: User[];
@@ -31,37 +35,39 @@ export class DashboardComponent {
 
 
   public get students() {
-    return this._students;
+    return this._students.filter(res=>{
+      return !this.authService.getUser().positivePrefer.includes(res._id) && !this.authService.getUser().negativePrefer.includes(res._id);
+    })
   }
 
-  public get positive(){
-    return this._students.filter(res=>{
+  public get positive() {
+    return this._students.filter(res => {
       return this.authService.getUser().positivePrefer.includes(res._id);
     })
   }
 
-  public get negative(){
-    return this._students.filter(res=>{
+  public get negative() {
+    return this._students.filter(res => {
       return this.authService.getUser().negativePrefer.includes(res._id);
     })
   }
 
-  addToPositive(id: string){
+  addToPositive(id: string) {
     this.authService.addPositive(id);
   }
 
-  addToNegative(id: string){
+  addToNegative(id: string) {
     this.authService.addNegative(id);
     return false;
   }
 
-  save(){
-    this.authService.update().then(res=>{})
+  save() {
+    this.authService.update().then(res => { })
   }
 
-  clear(){
+  clear() {
     let ans = confirm("האם למחוק את כל העדפות");
-    if(ans){
+    if (ans) {
       this.authService.getUser().negativePrefer = [];
       this.authService.getUser().positivePrefer = [];
       this.save();

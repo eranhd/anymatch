@@ -21,6 +21,8 @@ export class LayerComponent implements OnInit {
   private _students: User[];
   public form: FormGroup;
 
+
+  public graph;
   constructor(private activatedRoute: ActivatedRoute,
     private layerService: LayerService,
     public userService: UserService,
@@ -126,10 +128,17 @@ export class LayerComponent implements OnInit {
               }
             });
           });
-          // this.userService.getAllUsers(this.authService.schoolId);
         }
       });
     }
+  }
+
+
+  public startMatch(){
+    this.http.post("http://localhost:3000/graph/graph", {layerId : this._layer._id}).subscribe(res=>{
+      // console.log(res.json());
+      this.graph = res.json();
+    }); 
   }
 
 }

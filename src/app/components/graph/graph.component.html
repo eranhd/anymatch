@@ -1,0 +1,10 @@
+<div>
+
+  <canvas #can [width]=width [height]=height id="cancas" 
+    (click)="click($event)" 
+    (mousedown)="selectPosition($event)"
+    (mousemove)="changePosotion($event)"
+    (mouseup)="pointToCahnge = null">
+
+  </canvas>
+</div>

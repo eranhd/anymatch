@@ -40,8 +40,8 @@ module.exports.add = (newUser, callback) => {
 
 module.exports.update = (user, callback) => {
     let u = new User(user);
-    console.log("user:\n\n\n");
-    console.log(u)
+    // console.log("user:\n\n\n");
+    // console.log(u)
     User.findOneAndUpdate({ _id: u._id }, u, { upsert: true }, callback);
 }
 

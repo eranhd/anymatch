@@ -20,12 +20,14 @@ let useControler = () => {
     const student = require("./server/controller/student.controler");
     const user = require("./server/controller/user.controler");
     const clas = require("./server/controller/class.controler");
+    const graph = require("./server/controller/graph.controler");
 
     app.use("/school", school);
     app.use("/layer", layer);
     app.use("/student", student);
     app.use("/user", user);
     app.use("/class", clas);
+    app.use("/graph", graph);
 
 
 };

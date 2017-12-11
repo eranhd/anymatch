@@ -34,24 +34,26 @@
         </mat-form-field>
 
         <button *ngIf="sname.value" mat-raised-button color="primary" (click)="addStudent(sname.value, fname.value, lname.value)">הוסף</button>
-        
+
       </span>
       <input type="file" (change)="fileChange($event)" accept=".xlsx">
       <button #inputFile mat-raised-button color="primary">טען קובץ xlsx</button>
-      <button mat-raised-button color="primary" (click)="startMatch()" >חלק שכבה לקבוצות</button>
+      <button mat-raised-button color="primary" (click)="startMatch()">חלק שכבה לקבוצות</button>
     </div>
   </mat-card>
 
   <h2 class="title">
     גרף
   </h2>
-  <app-graph [graph]=graph></app-graph>
+  <div>
+    <app-graph [graph]=graph></app-graph>
+  </div>
   <h2 class="title">
     תלמידים בשכבה
   </h2>
   <div class="div_card_student">
     <div class="inner_div" *ngFor="let u of students">
-      <app-card-student [user]=u></app-card-student>
+      <app-card-student [user]=u [color]="colors[u.group]"></app-card-student>
     </div>
   </div>
 </div>

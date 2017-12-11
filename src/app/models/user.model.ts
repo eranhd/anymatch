@@ -11,4 +11,5 @@ export class User extends Item {
     isLogin: boolean;
     positivePrefer: string[];
     negativePrefer: string[];
+    group: number;
 }

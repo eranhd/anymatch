@@ -1,13 +1,13 @@
 <div class="dashboard_div">
 
-    <div>
+    <div class="div_action">
         <button mat-raised-button color=primary (click)="save()">שמור</button>
-        <button mat-raised-button color=warn (click)="clear()" >אפס בחירות</button>
+        <button mat-raised-button color=warn (click)="clear()">אפס בחירות</button>
     </div>
 
     <div class="positive_prefer">
         <h2 class="title">
-            העדפות חיוביות
+            תלמידים איתם ארצה להיות
         </h2>
         <div>
             <div class="div_card_student">
@@ -19,7 +19,7 @@
     </div>
     <div class="negative_prefer">
         <h2 class="title">
-            העדפות שליליות
+            תלמידים איתם לא ארצה להיות
         </h2>
         <div>
             <div class="div_card_student">
@@ -33,11 +33,15 @@
     </div>
 
     <h2 class="title">
-        כל התלמידים
+        רשימת כל התלמידים
     </h2>
     <div class="div_card_student">
         <div class="inner_div" *ngFor="let u of students">
             <app-card-student [user]=u (contextmenu)="addToNegative(u._id)" (click)="addToPositive(u._id)"></app-card-student>
         </div>
     </div>
+    <!-- <div class="div_action">
+        <button mat-raised-button color=primary (click)="save()">שמור</button>
+        <button mat-raised-button color=warn (click)="clear()">אפס בחירות</button>
+    </div> -->
 </div>

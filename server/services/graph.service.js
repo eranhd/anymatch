@@ -3,9 +3,11 @@ module.exports.Graph = class Graph {
 
 
     constructor() {
-        this.vertices = [];
-        this.dfsForest = [];
-        this.gmls = [];
+        this.vertices = []
+        this.dfsForest = []
+        this.gmls = []
+        this.groups = []
+        this.groupMap = []
 
     }
 
@@ -20,73 +22,150 @@ module.exports.Graph = class Graph {
         v.addEdge(to, weight);
     }
 
+    getVeretxById(id) { return this.vertices.find(res => res.id == id); }
+
+    calcDegree() {
+        let edges = []
+        this.vertices.forEach(v => {
+            v.edges.forEach(e => {
+                if (!edges[e.to])
+                    edges[e.to] = 0
+                edges[e.to]++
+            })
+        })
+        this.vertices.forEach(v => {
+            v.degree = edges[v.id]
+        })
+    }
+
+    sortByDegree() {
+        this.vertices.sort((a, b) => a.degree < b.degree)
+        console.log(this.vertices)
+    }
 
     dfs() {
         if (!this.vertices)
-            return [];
+            return
+        this.calcDegree()
+        this.sortByDegree()
         this.vertices.forEach(v => {
             if (!v.visit) {
-                v.setGroup(this.dfsForest.length);
-                this.dfsForest.unshift([v]);
-                v.visit = true;
-                this.dfsAlg(v);
+                v.group = this.dfsForest.length;
+                this.dfsFrom(v)
             }
-        });
-
-        this.dfsForest.forEach(res => {
-            this.gmls.push(this.calcGml(res));
-        });
-        // console.log(this.gmls);
-        return this.dfsForest;
+        })
+        // console.log(this.dfsForest)
+        return this.dfsForest
     }
 
-    dfsAlg(v) {
+    dfsFrom(v) {
+        v.visit = true;
+        if (!this.dfsForest[v.group])
+            this.dfsForest[v.group] = []
+        this.dfsForest[v.group].push(v)
         v.edges.forEach(e => {
-            //  console.log(e.weight);
-            if (e.weight > 0) {
-                let ver = this.getVeretxById(e.to);
-                // console.log(ver)
-                if (ver) {
-                    this.dfsForest[0].push(ver);
-                    let ans = ver.visit;
-                    ver.visit = true;
-                    ver.setGroup(v.getGroup());
-                    if(!ans)
-                        this.dfsAlg(ver);
+            let ver = this.getVeretxById(e.to);
+            if (!ver.visit) {
+                ver.group = v.group
+                this.dfsFrom(ver)
+            }
+        })
+    }
+
+    match(numOfGroups) {
+        // this.dfs()
+        if (!this.vertices)
+            return
+
+        let count = 0
+        // this.dfsForest.forEach(df => {
+        this.vertices.forEach(v => {
+            if (!this.groupMap[v.id]) {//if v nit contain to group
+                let flag = false
+                v.edges.forEach(e => {
+                    if (e.weight > 0) {
+                        let ver = this.getVeretxById(e.to)
+                        if (this.groupMap[ver.id] && !flag) {
+                            flag = true
+                            v.group = ver.group
+                            this.groupMap[v.id] = true
+                        }
+                        if (flag && !this.groupMap[ver.id]) {
+                            ver.group = v.group
+                            this.groupMap[ver.id] = true
+                        }
+                    }
+                })
+                if (!flag) {//need to open new group
+                    this.groupMap[v.id] = true
+                    v.group = count
+                    count++
+                    v.edges.forEach(e => {
+                        if (e.weight > 0) {
+                            let ver = this.getVeretxById(e.to)
+
+                            ver.group = v.group
+                            this.groupMap[ver.id] = true
+
+                        }
+                    })
+                }
+
+            }
+        })
+        // })
+
+        this.vertices.forEach(v => {
+            if (!this.groups[v.group])
+                this.groups[v.group] = []
+            this.groups[v.group].push(v)
+        })
+
+        let g = []
+        let numVerInGroup = this.vertices.length / numOfGroups
+        let groupingGroup = []
+        this.groups.forEach(gr => {
+            if (gr.length >= numVerInGroup - numVerInGroup * 0.2 && gr.length <= numVerInGroup + numVerInGroup * 0.2)
+                g.push(gr)
+            else {
+                if (gr.length >= numVerInGroup + numVerInGroup * 0.2) {
+
+                }
+                else {
+                    gr.forEach(v => { groupingGroup.push(v) })
+                    if (groupingGroup.length >= numVerInGroup - numVerInGroup * 0.2 && groupingGroup.length <= numVerInGroup + numVerInGroup * 0.2) {
+                        g.push(groupingGroup)
+                        groupingGroup = []
+                    }
                 }
             }
-            else{
-                return;
-            }
-        });
+        })
+
+        return g
+    }
+
+    mathFrom(v) {
+        this.groupMap
     }
 
     calcGml(group) {
-        let sum = 0;
-        group.forEach(res => {
-            sum += 0.5;
-            if (res.edges) {
-                res.edges.forEach(e => {
-                    let ans = group.find(v => v.id == e.to);
-                    if (ans && ans.edges.length > 0) {
-                        // console.log(e.weight)
-                        // console.log(e.weight / ans.edges.length)
-                        sum += (e.weight / ans.edges.length);
-                    }
 
-                });
-            }
-        });
+        let sum = 0;
+        group.forEach(v => {
+            sum += v.gml;
+        })
         return sum / group.length;
     }
 
-    getVeretxById(id) {
-        // console.log(id);
-        return this.vertices.find(res => {
-            // console.log(res.id + "<->" + id)
-            return res.id == id;
+    calcGmlForVertex(v) {
+        v.edges.forEach(e => {
+            let ver = this.getVeretxById(e.to);
+            if (ver.getGroup() == v.getGroup()) {
+                v.gml += (e.weight / v.edges.filter(res => e.weight > 0 ? res.weight > 0 : res.weight <= 0).length) * 0.5;
+            }
         });
     }
+
 
 }
 
@@ -94,17 +173,19 @@ module.exports.Graph = class Graph {
 class Vertex {
 
     constructor(id, text) {
-        this.edges = [];
-        this.id = id;
-        this.visit = false;
-        this.text = text;
+        this.edges = []
+        this.id = id
+        this.visit = false
+        this.text = text
+        this.gml = 0.5
+        this.degree = 0
     }
 
-    setGroup(g){
+    setGroup(g) {
         this.group = g;
     }
 
-    getGroup(){
+    getGroup() {
         return this.group;
     }
 

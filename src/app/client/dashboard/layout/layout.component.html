@@ -2,58 +2,81 @@
   <mat-toolbar-row class="toolbar">
     <span>Any Match</span>
 
-    <h1>
+    <!-- <h1>
       ברוך הבא {{authService.getUser().fname}} {{authService.getUser().lname}}
-    </h1>
-    <mat-form-field>
+    </h1> -->
+    <!-- <mat-form-field>
       <input matInput placeholder="חפש" type="text">
       <button mat-icon-button>
         <i class="material-icons">search</i>
       </button>
-    </mat-form-field>
+    </mat-form-field> -->
 
 
-    <i class="material-icons">menu</i>
+    
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>dialpad</mat-icon>
+        <span>Redial</span>
+      </button>
+      <button mat-menu-item disabled>
+        <mat-icon>voicemail</mat-icon>
+        <span>Check voicemail</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>notifications_off</mat-icon>
+        <span>Disable alerts</span>
+      </button>
+    </mat-menu>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+
   </mat-toolbar-row>
 </mat-toolbar>
-<router-outlet *ngIf="authService.getUser().isLogin"></router-outlet>
-<div class="first_class" *ngIf="!authService.getUser().isLogin">
-  <mat-card>
-    <h2>הגדרת משתמש
-      <span>{{authService.getUser().username}}</span>
-    </h2>
-    <div>
-      <mat-form-field>
-        <input matInput placeholder="שם פרטי" [(ngModel)]="authService.getUser().fname" />
-      </mat-form-field>
-
-    </div>
-    <div>
-      <mat-form-field>
-        <input matInput placeholder="שם פרטי" [(ngModel)]="authService.getUser().lname" />
-      </mat-form-field>
-    </div>
-    <div>
-      <mat-form-field>
-        <input matInput type=password placeholder="סיסמה" #pass />
-      </mat-form-field>
-    </div>
-    <div>
-      <mat-form-field>
-        <input matInput type=password placeholder="סיסמה חדשה" [(ngModel)]="password" />
-      </mat-form-field>
-    </div>
-    <div>
-      <mat-form-field>
-        <input matInput type=password placeholder="אימות סיסמה" [(ngModel)]="verifyPassword" />
-      </mat-form-field>
-    </div>
-    <div>{{errMessage}}</div>
-    <div>
-      <button mat-raised-button color="primary" (click)="svae(pass.value)">שמור</button>
-      <button mat-raised-button color="warn">נקה טופס</button>
-    </div>
 
 
-  </mat-card>
+<div class="main_client">
+  <router-outlet *ngIf="authService.getUser().isLogin"></router-outlet>
+  <div class="first_class" *ngIf="!authService.getUser().isLogin">
+    <mat-card>
+      <h2>הגדרת משתמש
+        <span>{{authService.getUser().username}}</span>
+      </h2>
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="שם פרטי" [(ngModel)]="authService.getUser().fname" />
+        </mat-form-field>
+
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="שם פרטי" [(ngModel)]="authService.getUser().lname" />
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput type=password placeholder="סיסמה" #pass />
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput type=password placeholder="סיסמה חדשה" [(ngModel)]="password" />
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput type=password placeholder="אימות סיסמה" [(ngModel)]="verifyPassword" />
+        </mat-form-field>
+      </div>
+      <div>{{errMessage}}</div>
+      <div>
+        <button mat-raised-button color="primary" (click)="svae(pass.value)">שמור</button>
+        <button mat-raised-button color="warn">נקה טופס</button>
+      </div>
+
+
+    </mat-card>
+  </div>
 </div>

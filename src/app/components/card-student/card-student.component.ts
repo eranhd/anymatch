@@ -9,6 +9,7 @@ import { User } from "../../models/user.model";
 export class CardStudentComponent implements OnInit {
 
   @Input() user: User;
+  @Input() color: string;
   constructor() { }
 
   ngOnInit() {

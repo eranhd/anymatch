@@ -1,6 +1,11 @@
-div{
+.div_canvas{
     text-align: center;
+    padding: 5px;
     canvas{
         border: 1px solid black;
     }
+}
+
+.div_canvas{
+    width: 100%;
 }

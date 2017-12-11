@@ -9,8 +9,12 @@ import {
   MatPaginatorModule,
   MatDialogModule,
   MatTooltipModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatSidenavModule,
+  MatMenuModule
 } from '@angular/material';
+
+
 
 
 
@@ -25,7 +29,9 @@ import {
     MatPaginatorModule,
     MatDialogModule,
     MatTooltipModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatSidenavModule,
+    MatMenuModule
   ],
   exports: [
     MatButtonModule,
@@ -37,7 +43,9 @@ import {
     MatPaginatorModule,
     MatDialogModule,
     MatTooltipModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatSidenavModule,
+    MatMenuModule
   ],
   declarations: []
 })

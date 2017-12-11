@@ -22,7 +22,8 @@ router.post('/graph/', (req, res, next) => {
                 g.addEdge(e._id, np, -1 * (e.negativePrefer.length - index));
             })
         });
-        res.send(g.dfs());
+
+        res.send(g.match(req.body.groups));
     });
 });
 

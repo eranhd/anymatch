@@ -1,0 +1,22 @@
+<div class="myLayer_div main_div">
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>
+          group
+        </mat-icon>
+        כל התלמידים
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="div_card_student">
+        <div class="inner_div" *ngFor="let u of students">
+          <app-card-student [user]=u></app-card-student>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+
+</div>

@@ -1,97 +1,26 @@
-@media screen and (max-width: 500px){
-    
-    .div_card_student{
-        display: flex;
-        flex-wrap: wrap;
-    }
-    .inner_div{
-        width: 48%;
-        margin: 1%;
-    }
-    .div_action{
-        text-align: center;
-    }
-}
-@media screen and (min-width: 500px){
-    .dashboard_div{
-        display: flex;
-        flex-direction: column;
-        justify-content: start;
-        width: 100%;
-        height: 100%;
-        box-sizing: border-box;
-        // align-items: stretch; 
-        padding: 8px;
-        .statistic, .line{
-            width: 98%;
-            height: 20%;
-            margin: 1%;
-            mat-card{
-                mat-card-content{
-                    display: flex;
-                    justify-content: space-around;
-    
-                }
-                .major{
-                    font-weight: bold;
-                    color: #afafaf;
-                    margin: 0 8px;
-                }
-            }
-        }
-    
-        .lists{
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            height: auto;
-            align-items: stretch;
-            mat-card{
-                height: 100%;  
-                mat-card-content{
-                    display: flex;
-                    flex-direction: column;
-                }
-            }
-        }
-    
-        mat-card{
-            width: 98%;
-            height: 100%;  
-            margin: 0 1%;
-            box-sizing: border-box;
-            mat-card-header mat-card-title{
-                font-weight: bold;
-            }
-        }
-    }
-    
-    
-    
-    
-    .example-container {
-        display: flex;
-        flex-direction: column;
-        width: 96%;
-        margin: 2%;
-      }
-      
-      .mat-table {
-        overflow: auto;
-        max-height: 500px;
-      }
-    
-      .div_card_student{
-        
-        margin: 8px 0;
+.dashboard_client{
+    .two_column{
         display: flex;
         flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: start;
-        .inner_div{
-            margin: 8px;
-            width: 200px;
-            height: 100px;
+        justify-content: space-between;
+        section{
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+            padding: 28px;
+            box-sizing: content-box;
+            mat-card{
+                margin: 14px 0;
+                direction: rtl;
+                .prefers{
+                    display: flex;
+                    flex-wrap: wrap;
+                    .inner_div{
+                        max-width: 100px;
+                        margin: 16px;
+                    }
+                }
+            }
         }
     }
 }

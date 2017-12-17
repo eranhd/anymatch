@@ -131,11 +131,29 @@ export class LayerService extends ControlerService {
   }
 
   public getGraph(id, classes) {
-    
-      return this.http.post("graph/graph", { layerId: id, groups: classes })
-      
-    
-    
+
+    return this.http.post("graph/graph", { layerId: id, groups: classes })
+  }
+
+  public saveMatch(groups, layerId) {
+    let arr = []
+    if (groups) {
+      groups.forEach(a => {
+        let group = []
+        a.forEach(v => {
+          group.push(v.id)
+        })
+        arr.push(group)
+      });
+      let l = this.getLayerById(layerId)
+      l.groups = arr;
+      return new Promise((res, rej) => { 
+        this.updateLayer(l).then(layer=>{
+          res(true)
+        }) 
+      })
+    }
+
 
   }
 

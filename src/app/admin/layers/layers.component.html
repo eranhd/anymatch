@@ -5,16 +5,22 @@
   <div class="layers_card">
     <mat-card class="layer_card" *ngFor="let l of this.layerService.layers | async">
       <mat-card-header>
-        <h1>
-          {{l.name}}
-        </h1>
+        <mat-card-title>
+          <h1>
+            {{l.name}}            
+          </h1>
+
+        </mat-card-title>
+
+
+
       </mat-card-header>
       <mat-card-content>
         <div>
-          מספר כיתות
+          מספר כיתות {{l.classes}}
         </div>
         <div>
-          מספר תלמידים
+          מספר תלמידים {{userService.getUsersByLayer(l._id).length}}
         </div>
       </mat-card-content>
       <mat-card-actions>

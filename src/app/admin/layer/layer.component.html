@@ -21,6 +21,12 @@
         group_work
       </mat-icon>
     </button>
+
+    <button mat-mini-fab matTooltip="שמור שיבוץ זה" *ngIf="hasGraph" (click)="saveMatch()">
+      <mat-icon>
+        save
+      </mat-icon>
+    </button>
   </div>
 
   <mat-card class="layer_data" *ngIf="addStudentFlag">
@@ -44,18 +50,41 @@
     </div>
   </mat-card>
 
-  <h2 class="title">
-    גרף
-  </h2>
-  <div>
-    <app-graph [graph]=graph></app-graph>
-  </div>
-  <h2 class="title">
-    תלמידים בשכבה
-  </h2>
-  <div class="div_card_student">
-    <div class="inner_div" *ngFor="let u of students">
-      <app-card-student [user]=u [color]="colors[u.group]"></app-card-student>
-    </div>
-  </div>
+  <!-- <mat-card *ngIf="hasGraph"> -->
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>
+          show_chart
+        </mat-icon>
+        גרף
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="grapg_div">
+        <app-graph [graph]=graph></app-graph>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>
+          group
+        </mat-icon>
+        כל התלמידים
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="div_card_student">
+        <div class="inner_div" *ngFor="let u of students">
+          <app-card-student [user]=u [color]="colors[u.group]"></app-card-student>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+
+
 </div>

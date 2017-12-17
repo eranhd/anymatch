@@ -1,0 +1,80 @@
+<div class="myLayer_div main_div">
+
+
+
+  <mat-card class="positive_prefer" *ngIf="positive.length > 0">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>
+          thumb_up
+        </mat-icon>
+        תלמידים איתם ארצה להיות
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="div_card_student">
+        <div class="inner_div" *ngFor="let u of positive">
+          <app-card-student [color]="'#54e69d'" [user]=u></app-card-student>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+
+  <mat-card class="negative_prefer" *ngIf="negative.length > 0">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>
+          thumb_down
+        </mat-icon>
+        תלמידים איתם לא ארצה להיות
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="div_card_student">
+        <div class="inner_div" *ngFor="let u of negative">
+          <app-card-student [user]=u [color]="'#ff7676'"></app-card-student>
+        </div>
+      </div>
+    </mat-card-content>
+
+
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>
+          group
+        </mat-icon>
+        רשימת כל התלמידים
+      </mat-card-title>
+      <div class="div_action">
+        <button mat-raised-button color=primary (click)="save()">שמור</button>
+        <button mat-raised-button color=warn (click)="clear()">אפס בחירות</button>
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="div_card_student">
+        <div class="inner_div" *ngFor="let u of students">
+          <app-card-student [user]=u (contextmenu)="addToNegative(u._id)" (click)="addToPositive(u._id)"></app-card-student>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- <h2 class="title">
+    
+        </h2>
+        <div class="div_card_student">
+            <div class="inner_div" *ngFor="let u of students">
+                <app-card-student [user]=u (contextmenu)="addToNegative(u._id)" (click)="addToPositive(u._id)"></app-card-student>
+            </div>
+        </div> -->
+  <!-- <div class="div_action">
+            <button mat-raised-button color=primary (click)="save()">שמור</button>
+            <button mat-raised-button color=warn (click)="clear()">אפס בחירות</button>
+        </div> -->
+</div>

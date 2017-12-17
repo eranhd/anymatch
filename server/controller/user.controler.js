@@ -46,9 +46,14 @@ router.post("/update/", (req, res, next) => {
     user.update(req.body, (err, doc) => {
         if (err)
             res.json({ success: false, message: `Failed to update user. Error: ${err}` });
-        else
-            res.write(JSON.stringify({ success: true, user: doc }, null, 2));
-        res.end();
+        else {
+            user.findById(doc._id, (err, u) => {
+                res.write(JSON.stringify({ success: true, user: u[0] }, null, 2));
+                res.end();
+            })
+
+        }
+
     });
 });
 
@@ -113,7 +118,7 @@ router.post('/upload/', (req, res, next) => {
     if (!req.files)
         return res.status(400).send('No files were uploaded.');
     let sampleFile = req.files.uploadFile;
-    
+
     let d = new Date();
     let name = d.getTime() + req.user[0].username;
     sampleFile.mv(upload.xlsx + name + ".xlsx", (err) => {

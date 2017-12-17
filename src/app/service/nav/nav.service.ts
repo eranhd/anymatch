@@ -23,8 +23,9 @@ export class NavService {
   public navForClient() {
     this._items = [
       new NavItem("ראשי", "client/dashboard", "home", true),
-      new NavItem("השכבה שלי", "", "class", false),
-      new NavItem("הגדרות", "", "settings", false),
+      new NavItem("השכבה שלי", "client/myLayer", "school", false),
+      new NavItem("הכיתה שלי", "client/myClass", "class", false),
+      new NavItem("הגדרות", "client/setting", "settings", false),
       new NavItem("עזרה", "", "help", false),
     ]
     this.select(this._items[0])

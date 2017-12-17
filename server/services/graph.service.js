@@ -182,7 +182,7 @@ module.exports.Graph = class Graph {
 
         let groups = []
         for (let i = 0; i < numOfGroups; i++) {
-            let g = this.knapsack01Dp(length)
+            let g = this.knapsack01Dp((+length.toFixed(0)))
             groups.push(g)
             this.removeChoose(g)
 
@@ -197,6 +197,8 @@ module.exports.Graph = class Graph {
 
     removeChoose(group) {
         let arr = []
+        if (!group)
+            return
         for (let i = 0; i < this.group.length; i++) {
             for (let k in this.group[i].vertices) {
                 if (group.contain(k)) {
@@ -205,9 +207,9 @@ module.exports.Graph = class Graph {
                 }
             }
         }
-        arr.forEach(a => {
-            this.group.splice(a, 1)
-        })
+        for (let i = arr.length - 1; i >= 0; i--)
+            this.group.splice(i, 1)
+
     }
 
 

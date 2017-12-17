@@ -1,47 +1,87 @@
-<div class="dashboard_div">
+<div class="dashboard_client">
+    <app-pages-header [items]=headerCards></app-pages-header>
 
-    <div class="div_action">
-        <button mat-raised-button color=primary (click)="save()">שמור</button>
-        <button mat-raised-button color=warn (click)="clear()">אפס בחירות</button>
+    <div class="two_column">
+        <section>
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>
+                        <mat-icon>
+                            access_time
+                        </mat-icon>
+                        זמן שנותר עד נעילת הבחירות
+                    </mat-card-title>
+                </mat-card-header>
+
+            </mat-card>
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>
+                        <mat-icon>
+                            person
+                        </mat-icon>
+                        הבחירות שלי
+                    </mat-card-title>
+                </mat-card-header>
+
+                <mat-card-content class="prefers">
+                    <div class="inner_div" *ngFor="let u of positive">
+                        <app-card-student [color]="'#54e69d'" [user]=u></app-card-student>
+                    </div>
+                    <div class="inner_div" *ngFor="let u of negative">
+                        <app-card-student [user]=u [color]="'#ff7676'"></app-card-student>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>
+                        <mat-icon>
+                            help
+                        </mat-icon>
+                        עזרה וטיפים
+                    </mat-card-title>
+                </mat-card-header>
+                <ul>
+                    <li>
+                        כדי לבחור תלמידים שברצונך להשתבץ איתם, כנסו לעמוד "השכבה שלי" והתחילו לבחור
+                    </li>
+                    <li>
+                        לאחר שחלוקה לכיתות הסתיימה, תוכלו לראות את הכיתה שלכם בדף "הכיתה שלי"
+                    </li>
+                    <li>
+                        שיבוץ חכם יותר יתבצע אם תמלאו בהגדרות את שדה התחביבים
+                    </li>
+                </ul>
+                <mat-card-content>
+
+                </mat-card-content>
+            </mat-card>
+        </section>
+        <section>
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>
+                        <mat-icon>
+                            info
+                        </mat-icon>
+                        פעולות אחרונות
+                    </mat-card-title>
+                </mat-card-header>
+
+            </mat-card>
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>
+                        <mat-icon>
+                            message
+                        </mat-icon>
+                        הודעות אחרונות
+                    </mat-card-title>
+                </mat-card-header>
+
+            </mat-card>
+        </section>
     </div>
 
-    <div class="positive_prefer">
-        <h2 class="title">
-            תלמידים איתם ארצה להיות
-        </h2>
-        <div>
-            <div class="div_card_student">
-                <div class="inner_div" *ngFor="let u of positive">
-                    <app-card-student [user]=u></app-card-student>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="negative_prefer">
-        <h2 class="title">
-            תלמידים איתם לא ארצה להיות
-        </h2>
-        <div>
-            <div class="div_card_student">
-                <div class="inner_div" *ngFor="let u of negative">
-                    <app-card-student [user]=u (click)="addToPositive(u._id)"></app-card-student>
-                </div>
-            </div>
-        </div>
-
-
-    </div>
-
-    <h2 class="title">
-        רשימת כל התלמידים
-    </h2>
-    <div class="div_card_student">
-        <div class="inner_div" *ngFor="let u of students">
-            <app-card-student [user]=u (contextmenu)="addToNegative(u._id)" (click)="addToPositive(u._id)"></app-card-student>
-        </div>
-    </div>
-    <!-- <div class="div_action">
-        <button mat-raised-button color=primary (click)="save()">שמור</button>
-        <button mat-raised-button color=warn (click)="clear()">אפס בחירות</button>
-    </div> -->
 </div>

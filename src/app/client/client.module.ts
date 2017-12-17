@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { DialogNewLayer } from "./dashboard/dialog new layer/dialog-new-layer.conponent"
 import { RouterModule } from "@angular/router";
 import { routes } from "./client.route";
 import { MaterialModule } from "../material/material.module";
-import { FormsModule, ReactiveFormsModule,  } from "@angular/forms";
-// import { LayoutComponent } from './dashboard/layout/layout.component';
-import { DialogEditLayer } from "./dashboard/dialog-edit-layer/dialog-edit-layerconponent";
+import { FormsModule, ReactiveFormsModule, } from "@angular/forms";
 import { ComponentsModule } from "../components/compontns.module";
+import { SettingsComponent } from "./settings/settings.component";
+import { MyLayerComponent } from './my-layer/my-layer.component';
+import { MyClassComponent } from './my-class/my-class.component';
 
 
 @NgModule({
@@ -22,13 +22,11 @@ import { ComponentsModule } from "../components/compontns.module";
   ],
   declarations: [
     DashboardComponent,
-    DialogNewLayer,
-    // LayoutComponent,
-    DialogEditLayer
+    SettingsComponent,
+    MyLayerComponent,
+    MyClassComponent
   ],
   entryComponents: [
-    DialogNewLayer,
-    DialogEditLayer
   ]
 })
 export class ClientModule { }

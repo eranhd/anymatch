@@ -1,0 +1,13 @@
+.settings{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 500px;
+    .first_class{
+        width: 100%;
+        .mat-form-field{
+            width: 100%;
+            text-align: right;
+        }
+    }
+}

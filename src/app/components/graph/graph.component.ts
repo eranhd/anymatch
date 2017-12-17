@@ -43,14 +43,14 @@ export class GraphComponent implements OnInit, AfterViewInit, OnChanges {
   ngOnInit() {
     // this.width = window.screen.width * 0.8;
     this.width = this.canvas.nativeElement.parentElement.clientWidth - 10
-    console.log(this.canvas.nativeElement.parentElement.clientWidth)
+    // console.log(this.canvas.nativeElement.parentElement.clientWidth)
   }
 
   ngAfterViewInit() {
 
   }
 
-  addVertex(id, text: string, color: string, rangex?: number, rangey?: number) {
+  addVertex(id, text: string, color: string, rangex?: number, offsetx?: number, rangey?: number) {
     let p;
     if (!this.points) {
       this.points = [];
@@ -58,9 +58,10 @@ export class GraphComponent implements OnInit, AfterViewInit, OnChanges {
     let i = Math.random() * (this.height / 10 - 4);
     i = +i.toFixed(0) + 2;
 
-    let j = Math.random() * (this.width / 10 - 4);
-    j = +j.toFixed(0) + 2;
-    this.points.push(new Point(j * 10, i * 10, id, text, color));
+    // let j = Math.random() * (this.width / 10 - 4);
+    let j = Math.random() * (rangex);
+    j = +j.toFixed(0) + offsetx;
+    this.points.push(new Point(j , i * 10, id, text, color));
   }
 
   addLine(from, to, weight) {
@@ -87,18 +88,18 @@ export class GraphComponent implements OnInit, AfterViewInit, OnChanges {
 
   drawEdge() {
     this.context = this.canvas.nativeElement.getContext("2d");
-    // this.context.strokeStyle = "#FF0000";
-
-    // console.log(this.lines)
-    // console.log(this.lines)
     if (!this.lines)
       return;
     this.lines.forEach(l => {
       if (l.w >= 0 && l.b && l.a) {
-        if (l.w > 0)
+        if (l.w > 0){
           this.context.strokeStyle = "blue";
-        else
+          this.context.setLineDash([]);
+        }
+        else{
           this.context.strokeStyle = "green";
+          this.context.setLineDash([5, 15]);
+        }
         this.context.beginPath();
         this.context.moveTo(l.a.x, l.a.y);
         this.context.lineTo(l.b.x, l.b.y);
@@ -106,6 +107,7 @@ export class GraphComponent implements OnInit, AfterViewInit, OnChanges {
       }
       else if (l.b && l.a) {
         this.context.strokeStyle = "red";
+        this.context.setLineDash([2, 15]);
         this.context.beginPath();
 
         // for(let i = 0; i < 20; i++){
@@ -151,10 +153,11 @@ export class GraphComponent implements OnInit, AfterViewInit, OnChanges {
       // console.log("dd");
 
 
+      let rangex = this.width / this.graph.length;
       this.graph.forEach((g, i) => {
         g.forEach(res => {
-          // console.log(res)
-          this.addVertex(res.id, res._text, this.colors[i]);
+
+          this.addVertex(res.id, res._text, this.colors[i], rangex, rangex * i);
         });
       })
 
@@ -164,21 +167,6 @@ export class GraphComponent implements OnInit, AfterViewInit, OnChanges {
         this.addGroup(g);
       })
 
-
-      // console.log(data)
-      // if (this.graph) {
-      //   console.log(this.graph)
-      //   this.graph.vertices.forEach(res => {
-      //     // console.log(res)
-      //     this.addVertex(res.id);
-      //   });
-      //   this.graph.vertices.forEach(res => {
-      //     console.log(res)
-      //     if (res.edges)
-      //       res.edges.forEach(e => {
-      //         this.addLine(res.id, e.to, e.weight);
-      //       });
-      //   });
       this.drawVertex();
       this.drawEdge();
     }

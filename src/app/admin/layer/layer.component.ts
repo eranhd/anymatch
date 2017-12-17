@@ -165,4 +165,12 @@ export class LayerComponent implements OnInit {
     })
   }
 
+  public get hasGraph() {
+    return !!this.graph
+  }
+
+  public async saveMatch() {
+    await this.layerService.saveMatch(this.graph, this._layer._id)
+  }
+
 }

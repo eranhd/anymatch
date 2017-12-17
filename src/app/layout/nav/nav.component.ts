@@ -11,7 +11,11 @@ import { AuthService } from '../../service/index';
 })
 export class NavComponent implements OnInit {
 
+  title: string = ""
   constructor(public navService: NavService, public auth: AuthService) {
+    if(this.auth.permission != ""){
+      this.auth.permission == "student" ? this.title = "תלמיד" : this.title = "אחראי"
+    }
     // console.log(this.navService.items)
   }
 

@@ -11,7 +11,8 @@ import {
   MatTooltipModule,
   MatToolbarModule,
   MatSidenavModule,
-  MatMenuModule
+  MatMenuModule,
+  MatRadioModule
 } from '@angular/material';
 
 
@@ -31,7 +32,8 @@ import {
     MatTooltipModule,
     MatToolbarModule,
     MatSidenavModule,
-    MatMenuModule
+    MatMenuModule,
+    MatRadioModule
   ],
   exports: [
     MatButtonModule,
@@ -45,7 +47,8 @@ import {
     MatTooltipModule,
     MatToolbarModule,
     MatSidenavModule,
-    MatMenuModule
+    MatMenuModule,
+    MatRadioModule
   ],
   declarations: []
 })

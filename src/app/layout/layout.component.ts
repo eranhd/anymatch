@@ -11,7 +11,7 @@ import { NavService } from "../service/nav/nav.service";
 export class LayoutComponent {
     constructor(public authService: AuthService, public navService: NavService) {
         if (this.authService.permission != "") {
-            this.authService.permission != "student" ? this.navService.navForAdmin() : this.navService.navForClient
+            this.authService.permission != "student" ? this.navService.navForAdmin() : this.navService.navForClient()
         }
 
     }

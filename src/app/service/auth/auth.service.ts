@@ -113,6 +113,13 @@ export class AuthService {
     return !!this._user
   }
 
+  public get permission(){
+    return this._user ? this._user.permission : ""
+  }
+
+  public get displayName(){
+    return this._user.fname + " " + this._user.lname;
+  }
 
 
 

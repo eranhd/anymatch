@@ -10,6 +10,7 @@ import { HttpService, SchoolService, AuthService, ClassService, LayerService, Us
 
 import { MaterialModule } from "./material/material.module";
 import { LoginComponent } from './login/login.component';
+import { LayoutComponent } from "./layout/layout.component";
 
 import { RouterModule } from "@angular/router";
 import { routes } from "./app.route";
@@ -17,15 +18,25 @@ import { AuthGuard, AdminGuard } from "./guard/auth.guard";
 
 import { ComponentsModule } from "./components/compontns.module";
 
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 /**need to remove */
 import { DashboardComponent } from "./admin/dashboard/dashboard.component";
+import { HeaderComponent } from './layout/header/header.component';
+import { NavComponent } from './layout/nav/nav.component';
+import { NavService } from "./service/nav/nav.service";
 
+import { DialogNewLayer } from "./admin/dashboard/dialog new layer/dialog-new-layer.conponent"
+import { DialogEditLayer } from "./admin/dashboard/dialog-edit-layer/dialog-edit-layerconponent"
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    LayoutComponent,
+    HeaderComponent,
+    NavComponent,
+    DialogNewLayer,
+    DialogEditLayer
 
     // DashboardComponent
   ],
@@ -37,7 +48,16 @@ import { DashboardComponent } from "./admin/dashboard/dashboard.component";
     BrowserAnimationsModule,
     MaterialModule,
     RouterModule.forRoot(routes),
-    ComponentsModule
+    ComponentsModule,
+    NgbModule.forRoot()
+  ],
+  entryComponents: [
+    LayoutComponent,
+    DialogNewLayer,
+    DialogEditLayer
+  ],
+  exports: [
+    LayoutComponent
   ],
   providers: [
     HttpService,
@@ -47,7 +67,8 @@ import { DashboardComponent } from "./admin/dashboard/dashboard.component";
     LayerService,
     UserService,
     AuthGuard,
-    AdminGuard
+    AdminGuard,
+    NavService
   ],
   bootstrap: [AppComponent]
 })

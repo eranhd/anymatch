@@ -1,0 +1,16 @@
+<mat-card class="page_header">
+  <div *ngFor="let item of items" class="section">
+
+    <div class="circle_icon" [style.background]="item.color">
+      <mat-icon>
+        {{item.icon}}
+      </mat-icon>
+    </div>
+    <div class="title">
+      {{item.title}}
+    </div>
+    <div class="number">
+      {{item.num}}
+    </div>
+  </div>
+</mat-card>

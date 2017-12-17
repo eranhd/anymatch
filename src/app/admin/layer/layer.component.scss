@@ -2,6 +2,24 @@
     padding: 8px;
     display: flex;
     flex-direction: column;
+
+    .div_action{
+        padding: 16px;
+        span{
+            position: relative;
+            overflow: hidden;
+            .btn_upload{
+                visibility: hidden;
+                position: absolute; 
+                overflow: hidden; 
+                width: 0px; 
+                height:0px;
+                border:none;
+                margin:0; 
+                padding:0;
+            }
+        }
+    }
     mat-card-content{
         display: flex;
     }

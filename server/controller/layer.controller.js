@@ -32,10 +32,8 @@ router.post("/create/", (req, res, next) => {
 
 router.post("/update/", (req, res, next) => {
     // console.log(req.body);
-    let db = new DB(req.body.schoolId);
+    let db = new DB(req.user[0].schoolId);
     db.save(req.body.layer, collection).then(resolve => {
-        // console.log("in saveee");
-        // console.log(res olve);
         res.send(resolve);
     });
 

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
-import { Layer, User } from "../../models";
+import { Layer, User, HeaderCard } from "../../models";
 import { SchoolService, AuthService, LayerService, ClassService, UserService } from "../../service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { RequestOptions, Headers, Http } from "@angular/http";
@@ -17,6 +17,7 @@ export class LayerComponent implements OnInit {
   private _layer: Layer;
   private _addStudentFlag: boolean = false;
   public addStudentButtonText = "הוסף תלמיד";
+  public headerCards: HeaderCard[];
 
   private _students: User[];
   public form: FormGroup;
@@ -74,6 +75,12 @@ export class LayerComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.headerCards = [
+      new HeaderCard("class", "מספר כיתות", this.layer.classes, "#796aee"),
+      new HeaderCard("done_all", "תלמדים שמילאו העדפות", this.layerService.num, "#ffc36d"),
+      new HeaderCard("supervisor_account", "מספר תלמידים", this.userService.getUsersByLayer(this.layer._id).length, "#63c3ff"),
+      new HeaderCard("show_chart", "מספר שיבוצים שבוצעו", this.layerService.num, "#63c3ff")
+    ]
 
   }
 
@@ -147,21 +154,15 @@ export class LayerComponent implements OnInit {
   }
 
 
-  public startMatch() {
-    this.http.post("http://localhost:3000/graph/graph", { layerId: this._layer._id, groups : 2 }).subscribe(res => {
-      this.graph = res.json();
-      this._students.forEach(u => {
-        this.graph.forEach((g,i) => { 
-          let group = g.find(v => v.id == u._id); 
-          if(group)
-            // u.group = group.group;
-            u.group = i
-        });
-
-
-        console.log(u.group);
-      })
-    });
+  public async startMatch() {
+    this.graph = await this.layerService.getGraph(this._layer._id, this._layer.classes > 0 ? this._layer.classes : 1)
+    this._students.forEach(u => {
+      this.graph.forEach((g, i) => {
+        let group = g.find(v => v.id == u._id);
+        if (group)
+          u.group = i
+      });
+    })
   }
 
 }

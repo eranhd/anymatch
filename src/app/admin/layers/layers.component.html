@@ -1,0 +1,50 @@
+<div class="layers">
+
+  <app-pages-header [items]=headerCards></app-pages-header>
+
+  <div class="layers_card">
+    <mat-card class="layer_card" *ngFor="let l of this.layerService.layers | async">
+      <mat-card-header>
+        <h1>
+          {{l.name}}
+        </h1>
+      </mat-card-header>
+      <mat-card-content>
+        <div>
+          מספר כיתות
+        </div>
+        <div>
+          מספר תלמידים
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button [routerLink]="['/layout/admin/layer', l._id]">
+          <mat-icon>
+            open_in_new
+          </mat-icon>
+          פתח
+        </button>
+        <button mat-raised-button (click)=editLayer(l)>
+          <mat-icon>
+            mode_edit
+          </mat-icon>
+          ערוך
+        </button>
+        <button mat-raised-button (click)="layerService.remove(l._id)">
+          <mat-icon>
+            delete
+          </mat-icon>
+          מחק
+        </button>
+
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <button (click)="addLayer()" mat-fab matTooltip="הוסף שכבה חדשה">
+    <mat-icon>
+      add
+    </mat-icon>
+  </button>
+
+</div>

@@ -32,7 +32,7 @@ export class AdminGuard implements CanActivate {
           }
           else if (this.authService.getUser().permission === "student") {
             console.log(2);
-            this.router.navigate(["/client"]);
+            this.router.navigate(["/layout/client"]);
           }
         });
     }
@@ -48,7 +48,7 @@ export class AdminGuard implements CanActivate {
                     .then(res => {
                       this.layerService.getAllLayers(this.authService.getUser().schoolId).then(_ => {
                         this.classService.getAllClass(this.authService.getUser().schoolId).then(_ => {
-                          this.router.navigate(["/admin"])
+                          this.router.navigate(["/layout/admin"])
                           resolve(true);
                         })
                       })
@@ -56,7 +56,7 @@ export class AdminGuard implements CanActivate {
                 }
                 else if (this.authService.getUser().permission === "student") {
                   // console.log(1);
-                  this.router.navigate(["/client"]);
+                  this.router.navigate(["/layout/client"]);
                 }
               });
           }
@@ -120,7 +120,7 @@ export class AuthGuard implements CanActivate {
                   .then(res => {
                     this.layerService.getAllLayers(this.authService.getUser().schoolId).then(_ => {
                       this.classService.getAllClass(this.authService.getUser().schoolId).then(_ => {
-                        this.router.navigate(["/client"])
+                        this.router.navigate(["/layout/client"])
                         resolve(true);
                       })
                     })

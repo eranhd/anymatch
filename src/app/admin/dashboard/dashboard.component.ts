@@ -6,7 +6,7 @@ import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { DialogNewLayer } from "./dialog new layer/dialog-new-layer.conponent";
 import { DialogEditLayer } from "./dialog-edit-layer/dialog-edit-layerconponent";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-
+import { HeaderCard } from "../../models";
 
 
 @Component({
@@ -18,7 +18,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 export class DashboardComponent implements OnInit, AfterViewInit {
 
   public form: FormGroup;
-  school;
+  public school;
+  public headerCards: HeaderCard[];
 
   displayedColumns = ['position', 'name', 'class_rooms', 'students'];
   dataSource;
@@ -37,27 +38,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       this.dataSource = new MatTableDataSource<Layer>(res);
     })
 
+
   }
 
   public update() {
     // this.schoolService.update();
   }
 
-  public addLayer() {
-
-
-    let dialogRef = this.dialog.open(DialogNewLayer, {
-      width: '250px'
-
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      if (result && result.success)
-        this.layerService.addLayer(result.layer, this.authService.getUser().schoolId).then(res => {
-        });
-    });
-  }
+  
 
   public addClass() {
     let c = new Class();
@@ -84,6 +72,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit() {
+    this.headerCards = [
+      new HeaderCard("person", "מספר סטודנטים", this.userService.num, "#ff7676"),
+      new HeaderCard("class", "מספר שכבות", this.layerService.num, "#796aee"),
+      new HeaderCard("done", "שיבוצים שבוצעו", this.userService.num, "#ffc36d"),
+      new HeaderCard("sync", "שיבוצים בתהליך", this.userService.num, "#54e69d")
+    ]
   }
 
   ngAfterViewInit() {

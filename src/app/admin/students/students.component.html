@@ -1,0 +1,7 @@
+<div class="students">
+  <div class="div_card_student">
+    <div class="inner_div" *ngFor="let u of userService.users | async">
+      <app-card-student [user]=u></app-card-student>
+    </div>
+  </div>
+</div>

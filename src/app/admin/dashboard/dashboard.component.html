@@ -1,5 +1,9 @@
 <div class="dashboard">
-  <div class="line statistic">
+
+  <app-pages-header [items]=headerCards></app-pages-header>
+
+
+  <!-- <div class="line statistic">
     <mat-card>
       <mat-card-header>
         <mat-card-title>מידע על בית הספר</mat-card-title>
@@ -13,7 +17,7 @@
           <span class="major">קוד מוסד</span>
           <span>{{schoolService.school?.code}}</span>
         </div>
-        <!-- {{schoolService.school | json}} -->
+        
         <div>
           <span class="major">מספר הסטודנטים</span>
           <span>{{userService.num}}</span>
@@ -33,17 +37,17 @@
         </div>
       </mat-card-content>
       <div>
-        
+
         <button mat-raised-button color="primary" matTooltip="הוסף שכבה חדשה" (click)="addLayer()">הוסף שכבה</button>
       </div>
     </mat-card>
-  </div>
+  </div> -->
 
 
 
   <div class="example-container mat-elevation-z8">
 
-    <mat-table #table [dataSource]="dataSource" >
+    <mat-table #table [dataSource]="dataSource">
 
       <!-- Position Column -->
       <ng-container matColumnDef="position">
@@ -72,7 +76,7 @@
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"></mat-row>
     </mat-table>
-    
+
     <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]">
     </mat-paginator>
 

@@ -1,0 +1,89 @@
+<header class="header">
+  <nav class="navbar">
+
+    <div class="container-fluid">
+      <div class="navbar-holder d-flex align-items-center justify-content-between">
+        <!-- Navbar Header-->
+        <div class="navbar-header">
+          <!-- Navbar Brand -->
+          <a href="index.html" class="navbar-brand">
+            <div class="brand-text brand-big">
+              <span>Any Match </span>
+              <strong>Dashboard</strong>
+            </div>
+            <div class="brand-text brand-small">
+              <strong>AM</strong>
+            </div>
+          </a>
+          <!-- Toggle Button-->
+          <a id="toggle-btn" class="menu-btn active">
+            <span></span>
+            <span></span>
+            <span></span>
+          </a>
+        </div>
+        <!-- Navbar Menu -->
+        <div class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+          <!-- Search-->
+
+          <mat-form-field class="search-form-field">
+            <input matInput type="text" placeholder="חיפוש" [(ngModel)]="searchValue" />
+            <button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+              <mat-icon>search</mat-icon>
+            </button>
+          </mat-form-field>
+
+
+
+          <span class="badge bg-orange">10</span>
+          <button mat-icon-button [matMenuTriggerFor]="menuNotification">
+            <mat-icon>notifications_none</mat-icon>
+          </button>
+          <mat-menu #menuNotification="matMenu">
+            <div class="notification">
+              <div>You have 6 new messages</div>
+              <small>4 minutes ago</small>
+            </div>
+            <button mat-menu-item disabled>
+              <mat-icon>voicemail</mat-icon>
+              <span>Check voicemail</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>notifications_off</mat-icon>
+              <strong>view all notifications </strong>
+            </button>
+          </mat-menu>
+
+          <span class="badge bg-orange">2</span>
+          <button mat-icon-button [matMenuTriggerFor]="menuMessage">
+            <mat-icon>message</mat-icon>
+          </button>
+          <mat-menu #menuMessage="matMenu">
+            <div>
+
+              <img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle">
+
+              <div class="msg-body">
+                <h3 class="h5">Jason Doe</h3>
+                <span>Sent You Message</span>
+              </div>
+            </div>
+            <button mat-menu-item>
+              <mat-icon>notifications_off</mat-icon>
+              <strong>view all notifications </strong>
+            </button>
+          </mat-menu>
+
+
+
+          <!-- Logout    -->
+
+          <button mat-icon-button href="login">התנתק
+            <mat-icon>exit_to_app</mat-icon>
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>

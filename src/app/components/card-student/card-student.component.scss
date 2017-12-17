@@ -11,5 +11,21 @@
         flex-direction: column;
         flex-wrap: wrap;
         width: 80%;
+
+        .prefer{
+            .positive_prefer, .negative_prefer{
+                width: 8px;
+                height: 8px;
+                border-radius: 100%;
+                margin: 2px;
+            }
+            .positive_prefer{
+                background-color: green;
+                
+            }
+            .negative_prefer{
+                background-color: red;
+            }
+        }
     }
 }

@@ -1,0 +1,33 @@
+.page_header{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 28px;
+        .section{
+            width: 25%;
+            border-left: 1px solid #eeeeee;
+            border-right: 1px solid #eeeeee;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            .title{
+                
+            }
+            .number{
+                font-weight: bold;
+                font-size: 2em;
+            }
+        }
+        :last-child, :first-child{
+            border: none
+        }
+    
+    .circle_icon{
+        padding: 8px;
+        border-radius: 100%;
+        width: 40px;
+        height: 40px;
+        color: white;
+    }
+}

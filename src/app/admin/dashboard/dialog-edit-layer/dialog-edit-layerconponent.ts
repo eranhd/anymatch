@@ -39,7 +39,7 @@ export class DialogEditLayer {
 
     openLayer(){
 
-        this.router.navigate(["/admin/layout/layer", this.layer._id]);
+        this.router.navigate(["layout/admin/layer", this.layer._id]);
         this.dialogRef.close({ success: false })
     }
 

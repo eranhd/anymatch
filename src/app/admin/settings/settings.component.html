@@ -1,0 +1,42 @@
+<div class="settings">
+  <div class="first_class">
+    <mat-card>
+      <h2>
+        <span>{{authService.getUser().username}}</span>
+      </h2>
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="שם פרטי" [(ngModel)]="authService.getUser().fname" />
+        </mat-form-field>
+
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="שם פרטי" [(ngModel)]="authService.getUser().lname" />
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput type=password placeholder="סיסמה" #pass />
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput type=password placeholder="סיסמה חדשה" [(ngModel)]="password" />
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <input matInput type=password placeholder="אימות סיסמה" [(ngModel)]="verifyPassword" />
+        </mat-form-field>
+      </div>
+      <div>{{errMessage}}</div>
+      <div>
+        <button mat-raised-button (click)="svae(pass.value)">שמור</button>
+        <button mat-raised-button >נקה טופס</button>
+      </div>
+
+
+    </mat-card>
+  </div>
+</div>

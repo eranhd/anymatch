@@ -1,0 +1,13 @@
+.students{
+
+
+    .div_card_student{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        .inner_div{
+            width: 30%;
+            margin: 1.5%;
+        }
+    }
+}

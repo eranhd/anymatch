@@ -1,0 +1,18 @@
+<nav class="side-navbar">
+
+  <div class="sidebar-header d-flex align-items-center">
+    <div class="avatar">
+      <img src="/assets/person.png" class="img-fluid rounded-circle">
+    </div>
+    <div class="title">
+      <h1 class="h4">{{auth.displayName}}</h1>
+      <p>מנהל בית ספר</p>
+    </div>
+  </div>
+
+  <button *ngFor="let item of navService.items" (click)="navService.select(item)" [style.background]="item.isSelect ? '#eef5f9' : 'white'"
+    [routerLink]="item.url" mat-button class="list-unstyled">
+    <mat-icon>{{item.icon}}</mat-icon>
+    {{item.text}}
+  </button>
+</nav>

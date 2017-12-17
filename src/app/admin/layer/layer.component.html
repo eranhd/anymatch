@@ -1,28 +1,33 @@
 <div class="layer">
-  <h2 class="title">
-    {{layer?.name}}
-  </h2>
-  <mat-card class="layer_data">
-    <mat-card-header>
-      <mat-card-title>מידע על השכבה</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <div>
-        <span class="major">מספר הכיתות</span>
-        <span>{{layer?.classes}}</span>
-      </div>
-      <div>
-        <span class="major">מספר תלמידים</span>
-        <span>{{userService.getUsersByLayer(layer?._id).length}}</span>
-      </div>
-      <div>
-        <span class="major">מספר התאמות</span>
-        <span>0</span>
-      </div>
-    </mat-card-content>
+  <app-pages-header [items]=headerCards></app-pages-header>
+  <div class="div_action">
+    <button mat-mini-fab matTooltip="הוסף תלמיד חדש" (click)="changeFlag()">
+      <mat-icon>
+        add
+      </mat-icon>
+    </button>
+
+    <button mat-mini-fab (click)="fileInput.click()" matTooltip="העלה קובץ xls">
+      <mat-icon>
+        file_upload
+      </mat-icon>
+      <span>
+        <input class="btn_upload" type="file" #fileInput (change)="fileChange($event)" accept=".xlsx">
+      </span>
+    </button>
+
+    <button mat-mini-fab matTooltip="חלק קבוצה זו" (click)="startMatch()">
+      <mat-icon>
+        group_work
+      </mat-icon>
+    </button>
+  </div>
+
+  <mat-card class="layer_data" *ngIf="addStudentFlag">
+
     <div>
-      <button mat-raised-button color="primary" (click)="changeFlag()">{{addStudentButtonText}}</button>
-      <span *ngIf="addStudentFlag" [formGroup]="form">
+      <!-- <button mat-raised-button color="primary" (click)="changeFlag()">{{addStudentButtonText}}</button> -->
+      <span [formGroup]="form">
         <mat-form-field>
           <input matInput text="text" formControlName="username" #sname placeholder="ת.ז" />
         </mat-form-field>
@@ -36,9 +41,6 @@
         <button *ngIf="sname.value" mat-raised-button color="primary" (click)="addStudent(sname.value, fname.value, lname.value)">הוסף</button>
 
       </span>
-      <input type="file" (change)="fileChange($event)" accept=".xlsx">
-      <button #inputFile mat-raised-button color="primary">טען קובץ xlsx</button>
-      <button mat-raised-button color="primary" (click)="startMatch()">חלק שכבה לקבוצות</button>
     </div>
   </mat-card>
 

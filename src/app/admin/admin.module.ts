@@ -1,15 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { DialogNewLayer } from "./dashboard/dialog new layer/dialog-new-layer.conponent"
+
 import { RouterModule } from "@angular/router";
 import { routes } from "./admin.route";
 import { MaterialModule } from "../material/material.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { LayoutComponent } from './dashboard/layout/layout.component';
-import { DialogEditLayer } from "./dashboard/dialog-edit-layer/dialog-edit-layerconponent";
+// import { LayoutComponent } from '../layout/layout.component';
+
 import { LayerComponent } from './layer/layer.component';
 import { ComponentsModule } from "../components/compontns.module";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { LayersComponent } from './layers/layers.component';
+import { StudentsComponent } from './students/students.component';
+import { SettingsComponent } from './settings/settings.component';
+import { HelpComponent } from './help/help.component';
 
 @NgModule({
   imports: [
@@ -18,18 +23,19 @@ import { ComponentsModule } from "../components/compontns.module";
     RouterModule.forChild(routes),
     FormsModule,
     ReactiveFormsModule,
-    ComponentsModule
+    ComponentsModule,
+    NgbModule
   ],
   declarations: [
     DashboardComponent,
-    DialogNewLayer,
-    LayoutComponent,
-    DialogEditLayer,
-    LayerComponent
+
+    LayerComponent,
+    LayersComponent,
+    StudentsComponent,
+    SettingsComponent,
+    HelpComponent
   ],
   entryComponents: [
-    DialogNewLayer,
-    DialogEditLayer
   ]
 })
 export class AdminModule { }

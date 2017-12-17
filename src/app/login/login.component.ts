@@ -62,9 +62,9 @@ export class LoginComponent {
     else {
       let permiossion = user["user"].permission;
       if (permiossion === "student")
-        this.router.navigate(["/client"])
+        this.router.navigate(["/layout/client"])
       else
-        this.router.navigate(["/admin"])
+        this.router.navigate(["/layout/admin"])
     }
   }
 

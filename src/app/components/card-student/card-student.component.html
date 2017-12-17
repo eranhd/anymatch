@@ -1,9 +1,9 @@
 <mat-card class="card-student" [style.background-color]="color ? color : 'white'">
   <div class="img">
-      <img width="100%" matTooltip="תמונת התלמיד" src="http://excadetsforum.com/profile_images/no_img.png" />
+    <img width="100%" matTooltip="תמונת התלמיד" src="http://excadetsforum.com/profile_images/no_img.png" />
     <i *ngIf="user?.isLogin" matTooltip="משתמש ביצע כניסה ראשונית" class="material-icons">verified_user</i>
   </div>
-  
+
   <div class="data">
     <div class="title">
       <div>{{user.fname}} {{user.lname}}</div>
@@ -13,15 +13,13 @@
       </div>
     </div>
     <div class="prefer">
-      <div class="positive_prefer">
-        <div *ngIf="user.positivePrefer?.length > 0">
-          נבחרו תלמידים רצויים
-        </div>
+      <div class="positive_prefer" matTooltip="התלמיד בחר העדפות חיוביות" *ngIf="user.positivePrefer?.length > 0">
+
       </div>
-      <div class="negative_prefer">
-        <div *ngIf="user.negativePrefer?.length > 0">
-          נבחרו תלמידים לא רצויים
-        </div>
+
+      <div class="negative_prefer" matTooltip="התלמיד בחר העדפות שליליות" *ngIf="user.negativePrefer?.length > 0">
+
+
       </div>
     </div>
   </div>

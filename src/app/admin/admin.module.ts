@@ -15,6 +15,7 @@ import { LayersComponent } from './layers/layers.component';
 import { StudentsComponent } from './students/students.component';
 import { SettingsComponent } from './settings/settings.component';
 import { HelpComponent } from './help/help.component';
+import { OpenStudentDialogComponent } from './layer/open-student-dialog/open-student-dialog.component';
 
 @NgModule({
   imports: [
@@ -33,9 +34,11 @@ import { HelpComponent } from './help/help.component';
     LayersComponent,
     StudentsComponent,
     SettingsComponent,
-    HelpComponent
+    HelpComponent,
+    OpenStudentDialogComponent
   ],
   entryComponents: [
+    OpenStudentDialogComponent
   ]
 })
 export class AdminModule { }

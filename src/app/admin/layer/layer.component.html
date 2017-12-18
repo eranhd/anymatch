@@ -51,21 +51,7 @@
   </mat-card>
 
   <!-- <mat-card *ngIf="hasGraph"> -->
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>
-        <mat-icon>
-          show_chart
-        </mat-icon>
-        גרף
-      </mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <div class="grapg_div">
-        <app-graph [graph]=graph></app-graph>
-      </div>
-    </mat-card-content>
-  </mat-card>
+
 
   <mat-card>
     <mat-card-header>
@@ -79,8 +65,24 @@
     <mat-card-content>
       <div class="div_card_student">
         <div class="inner_div" *ngFor="let u of students">
-          <app-card-student [user]=u [color]="colors[u.group]"></app-card-student>
+          <app-card-student [showActions]=true [user]=u [color]="colors[u.group]" (open)="openStudent($event)"></app-card-student>
         </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>
+          show_chart
+        </mat-icon>
+        גרף
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="grapg_div">
+        <app-graph [graph]=graph></app-graph>
       </div>
     </mat-card-content>
   </mat-card>

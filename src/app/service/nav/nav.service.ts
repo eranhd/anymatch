@@ -1,11 +1,20 @@
 import { Injectable } from '@angular/core';
+import { Observable } from "rxjs";
+
 
 @Injectable()
 export class NavService {
 
   private _pageName = "";
   private _items: NavItem[] = [];
+  private searchObservable: Observable<string>;
+  private searchObsrver;
+
+
   constructor() {
+    this.searchObservable = new Observable(o => {
+      this.searchObsrver = o;
+    })
 
   }
 
@@ -44,6 +53,16 @@ export class NavService {
   public get items() {
     return this._items ? this._items : [];
   }
+
+
+  public search(term: string){
+    this.searchObsrver.next(term);
+  }
+
+  public get searchObser(){
+    return this.searchObservable;
+  }
+
 
 }
 

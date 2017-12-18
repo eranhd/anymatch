@@ -5,6 +5,10 @@ import { SchoolService, AuthService, LayerService, ClassService, UserService } f
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { RequestOptions, Headers, Http } from "@angular/http";
 import { Observable } from "rxjs";
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { OpenStudentDialogComponent } from './open-student-dialog/open-student-dialog.component';
+import { NavService } from '../../service/nav/nav.service';
+import { ComponentBase } from "../../componentBase.model";
 
 @Component({
   selector: 'app-layer',
@@ -12,12 +16,13 @@ import { Observable } from "rxjs";
   styleUrls: ['./layer.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class LayerComponent implements OnInit {
+export class LayerComponent extends ComponentBase implements OnInit {
 
   private _layer: Layer;
   private _addStudentFlag: boolean = false;
   public addStudentButtonText = "הוסף תלמיד";
   public headerCards: HeaderCard[];
+
 
   private _students: User[];
   public form: FormGroup;
@@ -41,9 +46,11 @@ export class LayerComponent implements OnInit {
     private layerService: LayerService,
     public userService: UserService,
     @Inject(FormBuilder) fb: FormBuilder,
-    private authService: AuthService, private http: Http) {
+    private authService: AuthService, private http: Http,
+    public dialog: MatDialog,
+    navService: NavService) {
 
-
+    super(navService)
     this.form = fb.group({
       username: ["", Validators.required],
       fname: "",
@@ -89,7 +96,9 @@ export class LayerComponent implements OnInit {
   }
 
   public get students() {
-    return this._students;
+    return this.searchTerm != "" ? this._students.filter(s =>
+      s.fname.includes(this.searchTerm) || s.lname.includes(this.searchTerm) || s.username.includes(this.searchTerm)
+    ) : this._students
   }
 
   public changeFlag() {
@@ -172,5 +181,30 @@ export class LayerComponent implements OnInit {
   public async saveMatch() {
     await this.layerService.saveMatch(this.graph, this._layer._id)
   }
+
+  public openStudent(s: User) {
+    // console.log(s);
+    let dialogRef = this.dialog.open(OpenStudentDialogComponent, {
+      width: '600px',
+      data: {
+        user: s,
+        positive: this.userService.getUsersByLayer(this._layer._id).filter(u => s.positivePrefer.includes(u._id)),
+        negative: this.userService.getUsersByLayer(this._layer._id).filter(u => s.negativePrefer.includes(u._id))
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      if (result && result.success)
+        this.userService.updateUser(result.user).then(u => { })
+    });
+
+  }
+
+  // public search(str) {
+  //   this._students = this._students.filter(s =>
+  //     s.fname.includes(str) || s.lname.includes(str) || s.username.includes(str)
+  //   )
+  // }
 
 }

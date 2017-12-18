@@ -1,0 +1,36 @@
+<mat-card class="show-student-card">
+  <mat-card-header>
+    <mat-card-title>
+      {{data?.user?.fname}} {{data?.user?.lname}}
+    </mat-card-title>
+    <mat-card-subtitle>
+      בלחיצה על אחד הכרטיסיות יוסר התלמיד מהרשימה
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <h2>
+      תלמידים שנבחרו
+    </h2>
+    <div class="div_card_student">
+      <div class="inner_div" *ngFor="let u of data?.positive">
+        <app-card-student (click)="removeStudent(u._id, true)" [user]=u [color]="'#54e69d'"></app-card-student>
+      </div>
+      <div class="inner_div" *ngFor="let u of data?.negative">
+        <app-card-student (click)="removeStudent(u._id, false)" [user]=u [color]="'#ff7676'"></app-card-student>
+      </div>
+      <div *ngIf="data?.positive?.length == 0 && data?.negative?.length == 0 ">
+        לא נבחרו תלמידים
+      </div>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-raised-button (click)="save()">
+      שמור
+    </button>
+    <button mat-raised-button (click)="onNoClick()">
+      בטל
+    </button>
+  </mat-card-actions>
+</mat-card>

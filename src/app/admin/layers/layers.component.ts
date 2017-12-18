@@ -4,6 +4,8 @@ import { HeaderCard, Layer } from '../../models';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DialogNewLayer } from '../dashboard/dialog new layer/dialog-new-layer.conponent';
 import { DialogEditLayer } from '../dashboard/dialog-edit-layer/dialog-edit-layerconponent';
+import { ComponentBase } from "../../componentBase.model";
+import { NavService } from '../../service/nav/nav.service';
 
 @Component({
   selector: 'app-layers',
@@ -11,14 +13,17 @@ import { DialogEditLayer } from '../dashboard/dialog-edit-layer/dialog-edit-laye
   styleUrls: ['./layers.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class LayersComponent implements OnInit {
+export class LayersComponent extends ComponentBase implements OnInit {
 
   public headerCards: HeaderCard[];
   constructor(public layerService: LayerService,
     public dialog: MatDialog,
     private authService: AuthService,
-    public userService: UserService
-  ) { }
+    public userService: UserService,
+    navService: NavService
+  ) {
+    super(navService)
+  }
 
   public addLayer() {
 
@@ -52,7 +57,7 @@ export class LayersComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result && result.success){
+      if (result && result.success) {
         layer.classes = result.layer.classes
         layer.name = result.layer.name
         this.layerService.updateLayer(layer);
@@ -61,6 +66,10 @@ export class LayersComponent implements OnInit {
 
   }
 
-  
+  public search(str){
+    
+  }
+
+
 
 }

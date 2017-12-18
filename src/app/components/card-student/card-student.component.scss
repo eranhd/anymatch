@@ -1,18 +1,23 @@
 .card-student{
     box-sizing: border-box;
     width: 100%;
-    display: flex;
-    flex-direction: row;
-    .img{
-        width: 20%;
-    }
-    .data{
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-        width: 80%;
+    // display: flex;
+    // flex-direction: row;
+    // .img{
+    //     width: 20%;
+    // }
+    // .data{
+    //     display: flex;
+    //     flex-direction: column;
+    //     flex-wrap: wrap;
+    //     width: 80%;
 
+    mat-card-title{
+
+    }
         .prefer{
+            display: flex;
+            justify-content: flex-start;
             .positive_prefer, .negative_prefer{
                 width: 8px;
                 height: 8px;
@@ -27,5 +32,5 @@
                 background-color: red;
             }
         }
-    }
+    // }
 }

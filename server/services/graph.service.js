@@ -1,3 +1,5 @@
+const jsgraphs = require('js-graph-algorithms');
+
 module.exports.Graph = class Graph {
 
 
@@ -23,7 +25,9 @@ module.exports.Graph = class Graph {
         v.addEdge(to, weight);
     }
 
-    getVeretxById(id) { return this.vertices.find(res => res.id == id); }
+    getVeretxById(id) {
+        return this.vertices.find(res => res.id == id);
+    }
 
     calcDegree() {
         let edges = []
@@ -83,32 +87,35 @@ module.exports.Graph = class Graph {
         this.vertices.forEach(v => {
             if (!this.groupMap[v.id]) {//if v not contain to group
                 let flag = false
-                v.edges.forEach(e => { // for each edge in v, if e has group and positive, add v to e group
-                    if (e.weight > 0) {
-                        let ver = this.getVeretxById(e.to)
-                        if (this.groupMap[ver.id] && !flag) {
-                            flag = true
-                            v.group = ver.group
+                for (let i = 0; i < v.edges.length; i++) { // for each edge in v, if e has group and positive, add v to e group
+                    // if (e.weight > 0) {
+                    let e = v.edges[i]
+                    let ver = this.getVeretxById(e.to)
+                    if (this.groupMap[ver.id] && !flag) {
+                        flag = true
+                        let g = ver.group
+                        v.group = g
+                        for (i = 0; i < v.edges.length; i++) {
+                            e = v.edges[i]
+                            ver = this.getVeretxById(e.to)
+                            ver.group = g
                             this.groupMap[v.id] = true
                         }
-                        if (flag && !this.groupMap[ver.id]) {
-                            ver.group = v.group
-                            this.groupMap[ver.id] = true
-                        }
                     }
-                })
+                    // }
+                }
                 if (!flag) {//need to open new group
                     this.groupMap[v.id] = true
                     v.group = count
                     count++
                     v.edges.forEach(e => {
-                        if (e.weight > 0) {
-                            let ver = this.getVeretxById(e.to)
+                        // if (e.weight > 0) {
+                        let ver = this.getVeretxById(e.to)
 
-                            ver.group = v.group
-                            this.groupMap[ver.id] = true
+                        ver.group = v.group
+                        this.groupMap[ver.id] = true
 
-                        }
+                        // }
                     })
                 }
 
@@ -116,6 +123,7 @@ module.exports.Graph = class Graph {
         })
 
 
+        //build groups 
         this.vertices.forEach(v => {
             if (!this.group[v.group])
                 this.group[v.group] = new Group(v.group)
@@ -126,12 +134,110 @@ module.exports.Graph = class Graph {
         /**
          * grouping group 
          */
-        let g = []
 
 
+
+        let hasMore = false
+        for (let i = this.group.length - 1; i >= 0; i--) {
+            if (!this.group[i])
+                this.group.splice(i, 1);
+        }
         let numVerInGroup = this.vertices.length / numOfGroups
+        this.group.forEach(g => {
+            if (g.length > numVerInGroup)
+                hasMore = true
+        })
+        hasMore ? this.buildDirectGraphWithWeight(numVerInGroup) : this.buildDirectGraphWithWeight()
+        for (let i = this.group.length - 1; i >= 0; i--) {
+            if (!this.group[i] || this.group[i].length == 0)
+                this.group.splice(i, 1);
+        }
         return this.grouping(numVerInGroup, numOfGroups)
 
+    }
+
+
+    buildDirectGraphWithWeight(cut) {
+        let gs = []
+        this.group.forEach(graph => {
+            let arr = graph.toArray();
+            let arrMap = []
+            let toMap = []
+            arr.forEach((v, i) => {
+                arrMap[v.id] = i + 2;
+            })
+            let g = new jsgraphs.FlowNetwork(arr.length + 2);
+            arr.forEach((v, i) => {
+                let sum = 0
+                v.edges.forEach(e => {
+                    g.node(i).label = v._text
+                    if (arrMap[e.to]) {
+                        if (e.weight > 0) {
+                            sum += e.weight
+                            toMap[e.to] ? toMap[e.to] += e.weight : toMap[e.to] = e.weight
+                        }
+                        g.addEdge(new jsgraphs.FlowEdge(arrMap[v.id], arrMap[e.to], e.weight));
+                    }
+                })
+                g.addEdge(new jsgraphs.FlowEdge(0, arrMap[v.id], sum));
+
+
+
+            })
+            arr.forEach(v => {
+                let id = v.id.toString()
+                // let w = cut && toMap.length < cut ? toMap[id] : toMap[id] / 2
+                let w = toMap[id]
+                g.addEdge(new jsgraphs.FlowEdge(arrMap[v.id], 1, w ? w : -1));
+            })
+
+            let source = 0;
+            let target = 1
+            let ff = new jsgraphs.FordFulkerson(g, source, target);;
+            // console.log('max-flow: ' + ff.value);
+            var minCut = ff.minCut(g);
+            let count = gs.length
+            let arrChoose = []
+            gs.push(new Group(count))
+            gs.push(new Group(count + 1))
+            for (var i = minCut.length - 1; i >= 0; i--) {
+                var e = minCut[i];
+
+                if (e.from() != 0) {
+                    if (arrChoose.find(a => a == e.from()))
+                        continue;
+                    let f = e.from()
+                    arrChoose.push(f)
+                    let id = ""
+                    for (let key in arrMap)
+                        if (arrMap[key] == f) {
+                            id = key
+                            break;
+                        }
+                    let v2 = this.getVeretxById(id)
+                    v2.group = count
+                    gs[count].addVertex(v2)
+                }
+                else if (!arrChoose.find(a => a == e.to())) {
+                    if (arrChoose.find(a => a == e.to()))
+                        continue;
+                    let f = e.to()
+                    arrChoose.push(f)
+                    let id = ""
+                    for (let key in arrMap)
+                        if (arrMap[key] == f) {
+                            id = key
+                            break;
+                        }
+                    let v2 = this.getVeretxById(id)
+                    v2.group = count + 1
+                    gs[count + 1].addVertex(v2)
+                }
+            }
+
+        })
+
+        this.group = gs
     }
 
     /**
@@ -182,7 +288,8 @@ module.exports.Graph = class Graph {
 
         let groups = []
         for (let i = 0; i < numOfGroups; i++) {
-            let g = this.knapsack01Dp((+length.toFixed(0)))
+            let l = length % 1 == 0? length : (+length.toFixed(0) + 1) 
+            let g = this.knapsack01Dp(l)
             groups.push(g)
             this.removeChoose(g)
 
@@ -208,7 +315,7 @@ module.exports.Graph = class Graph {
             }
         }
         for (let i = arr.length - 1; i >= 0; i--)
-            this.group.splice(i, 1)
+            this.group.splice(arr[i], 1)
 
     }
 
@@ -457,4 +564,3 @@ class Edge {
         this.weight = weight;
     }
 }
-

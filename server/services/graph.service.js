@@ -48,6 +48,9 @@ module.exports.Graph = class Graph {
         console.log(this.vertices)
     }
 
+    /**
+     * create dfs forest for the group
+     */
     dfs() {
         if (!this.vertices)
             return
@@ -59,7 +62,6 @@ module.exports.Graph = class Graph {
                 this.dfsFrom(v)
             }
         })
-        // console.log(this.dfsForest)
         return this.dfsForest
     }
 
@@ -77,13 +79,15 @@ module.exports.Graph = class Graph {
         })
     }
 
-    match(numOfGroups) {
 
+    /**
+     * 
+     * @param {number} numOfGroups : the number of group you want to divide
+     */
+    match(numOfGroups) {
         if (!this.vertices)
             return []
-
         let count = 0
-
         this.vertices.forEach(v => {
             if (!this.groupMap[v.id]) {//if v not contain to group
                 let flag = false
@@ -109,131 +113,173 @@ module.exports.Graph = class Graph {
                     v.group = count
                     count++
                     v.edges.forEach(e => {
-                        // if (e.weight > 0) {
                         let ver = this.getVeretxById(e.to)
 
                         ver.group = v.group
                         this.groupMap[ver.id] = true
-
-                        // }
                     })
                 }
 
             }
         })
-
-
         //build groups 
         this.vertices.forEach(v => {
             if (!this.group[v.group])
                 this.group[v.group] = new Group(v.group)
             this.group[v.group].addVertex(v)
         })
-
-
         /**
          * grouping group 
          */
-
-
-
         let hasMore = false
-        for (let i = this.group.length - 1; i >= 0; i--) {
-            if (!this.group[i])
-                this.group.splice(i, 1);
-        }
+        this.reduceGroup()
         let numVerInGroup = this.vertices.length / numOfGroups
-        this.group.forEach(g => {
-            if (g.length > numVerInGroup)
-                hasMore = true
+        // this.group.forEach(g => {
+        //     if (g.length > numVerInGroup)//need to divide the group
+        //         hasMore = true
+        // })
+        // hasMore ? this.buildDirectGraphWithWeight(numVerInGroup) : this.buildDirectGraphWithWeight()
+        this.buildDirectGraphWithWeight()
+
+        let dGroups = []
+        this.group.forEach((graph, i) => {
+            if (graph.length > numVerInGroup) {//need to divide the group
+
+                let graphAndMap = this.buildDirectGraphWithWeightForFF(graph, numVerInGroup / graph.length)
+                let g = graphAndMap.g
+                let arrMap = graphAndMap.arrMap
+                let count = this.group.length
+                let dividedGraph = this.divideGroup(arrMap, count, g)
+                this.group[i] = dividedGraph.g1
+                dGroups.push(dividedGraph.g2)
+            }
         })
-        hasMore ? this.buildDirectGraphWithWeight(numVerInGroup) : this.buildDirectGraphWithWeight()
+        if (dGroups.length > 0) {
+            dGroups.forEach(g => { this.group.push(g) })
+        }
+
+        this.reduceGroup()
+        return this.grouping(numVerInGroup, numOfGroups)
+    }
+
+    /**
+     * delete all empty group from group
+     */
+    reduceGroup() {
         for (let i = this.group.length - 1; i >= 0; i--) {
             if (!this.group[i] || this.group[i].length == 0)
                 this.group.splice(i, 1);
         }
-        return this.grouping(numVerInGroup, numOfGroups)
-
     }
 
+    buildDirectGraphWithWeightForFF(graph, reduce) {
+        let arr = graph.toArray();
+        let arrMap = []
+        let toMap = []
+        arr.forEach((v, i) => {
+            arrMap[v.id] = i + 2;
+        })
+        let g = new jsgraphs.FlowNetwork(arr.length + 2);
+        arr.forEach((v, i) => {
+            let sum = 0
+            v.edges.forEach(e => {
+                g.node(i).label = v._text
+                if (arrMap[e.to]) {
+                    if (e.weight > 0) {
+                        sum += e.weight
+                        toMap[e.to] ? toMap[e.to] += e.weight : toMap[e.to] = e.weight
+                    }
+                    g.addEdge(new jsgraphs.FlowEdge(arrMap[v.id], arrMap[e.to], e.weight));
+                }
+            })
+            //add edge from start to v
+            g.addEdge(new jsgraphs.FlowEdge(0, arrMap[v.id], sum));
 
-    buildDirectGraphWithWeight(cut) {
+
+
+        })
+        arr.forEach(v => {//add edge from v to last 
+            let id = v.id.toString()
+            let w = toMap[id]
+            if (w && reduce)
+                w = (w * reduce).toFixed(2)
+            g.addEdge(new jsgraphs.FlowEdge(arrMap[v.id], 1, w ? w : -1));
+        })
+        return { g: g, arrMap: arrMap }
+    }
+
+    getIdFromArrMap(arrMap, f) {
+        let id = ""
+        for (let key in arrMap)
+            if (arrMap[key] == f) {
+                id = key
+                break;
+            }
+        return id
+    }
+
+    divideGroup(arrMap, count, g) {
+        let source = 0;
+        let target = 1
+        let ff = new jsgraphs.FordFulkerson(g, source, target);
+        let minCut = ff.minCut(g);
+        let arrChoose = []
+        let g1 = new Group(count)
+        let g2 = new Group(count + 1)
+
+        for (let i = minCut.length - 1; i >= 0; i--) {
+            let e = minCut[i];
+
+            if (e.from() != 0) {
+                if (arrChoose.find(a => a == e.from()))
+                    continue;
+                let f = e.from()
+                arrChoose.push(f)
+                let id = this.getIdFromArrMap(arrMap, f)
+                let v2 = this.getVeretxById(id)
+                v2.group = count
+                g1.addVertex(v2)
+            }
+            else if (!arrChoose.find(a => a == e.to())) {
+                // if (arrChoose.find(a => a == e.to()))
+                //     continue;
+                let f = e.to()
+                arrChoose.push(f)
+                let id = this.getIdFromArrMap(arrMap, f)
+
+                let v2 = this.getVeretxById(id)
+                v2.group = count + 1
+                g2.addVertex(v2)
+            }
+        }
+
+        for (let key in arrMap) {
+            if (!arrChoose.find(a => arrMap[key] == a)) {
+                arrChoose.push(arrMap[key])
+                let v2 = this.getVeretxById(key)
+                v2.group = count + 1
+                g2.addVertex(v2)
+            }
+        }
+
+        return { g1: g1, g2: g2 }
+    }
+
+    buildDirectGraphWithWeight(reduce) {
         let gs = []
         this.group.forEach(graph => {
-            let arr = graph.toArray();
-            let arrMap = []
-            let toMap = []
-            arr.forEach((v, i) => {
-                arrMap[v.id] = i + 2;
-            })
-            let g = new jsgraphs.FlowNetwork(arr.length + 2);
-            arr.forEach((v, i) => {
-                let sum = 0
-                v.edges.forEach(e => {
-                    g.node(i).label = v._text
-                    if (arrMap[e.to]) {
-                        if (e.weight > 0) {
-                            sum += e.weight
-                            toMap[e.to] ? toMap[e.to] += e.weight : toMap[e.to] = e.weight
-                        }
-                        g.addEdge(new jsgraphs.FlowEdge(arrMap[v.id], arrMap[e.to], e.weight));
-                    }
-                })
-                g.addEdge(new jsgraphs.FlowEdge(0, arrMap[v.id], sum));
 
-
-
-            })
-            arr.forEach(v => {
-                let id = v.id.toString()
-                // let w = cut && toMap.length < cut ? toMap[id] : toMap[id] / 2
-                let w = toMap[id]
-                g.addEdge(new jsgraphs.FlowEdge(arrMap[v.id], 1, w ? w : -1));
-            })
-
-            let source = 0;
-            let target = 1
-            let ff = new jsgraphs.FordFulkerson(g, source, target);;
-            // console.log('max-flow: ' + ff.value);
-            var minCut = ff.minCut(g);
-            let count = gs.length
-            let arrChoose = []
-            gs.push(new Group(count))
-            gs.push(new Group(count + 1))
-            for (var i = minCut.length - 1; i >= 0; i--) {
-                var e = minCut[i];
-
-                if (e.from() != 0) {
-                    if (arrChoose.find(a => a == e.from()))
-                        continue;
-                    let f = e.from()
-                    arrChoose.push(f)
-                    let id = ""
-                    for (let key in arrMap)
-                        if (arrMap[key] == f) {
-                            id = key
-                            break;
-                        }
-                    let v2 = this.getVeretxById(id)
-                    v2.group = count
-                    gs[count].addVertex(v2)
-                }
-                else if (!arrChoose.find(a => a == e.to())) {
-                    if (arrChoose.find(a => a == e.to()))
-                        continue;
-                    let f = e.to()
-                    arrChoose.push(f)
-                    let id = ""
-                    for (let key in arrMap)
-                        if (arrMap[key] == f) {
-                            id = key
-                            break;
-                        }
-                    let v2 = this.getVeretxById(id)
-                    v2.group = count + 1
-                    gs[count + 1].addVertex(v2)
-                }
+            if (graph.length > 1) {
+                let graphAndMap = this.buildDirectGraphWithWeightForFF(graph)
+                let g = graphAndMap.g
+                let arrMap = graphAndMap.arrMap
+                let count = gs.length
+                let dividedGraph = this.divideGroup(arrMap, count, g)
+                gs.push(dividedGraph.g1)
+                gs.push(dividedGraph.g2)
             }
+            else
+                gs.push(graph)
 
         })
 
@@ -288,8 +334,12 @@ module.exports.Graph = class Graph {
 
         let groups = []
         for (let i = 0; i < numOfGroups; i++) {
-            let l = length % 1 == 0? length : (+length.toFixed(0) + 1) 
+            let l = length % 1 == 0 ? length : (+length.toFixed(0))
+            let flag = false
+            Math.abs(l - length) < 0.5 && Math.abs(l - length) != 0 ? flag = true : l = l
             let g = this.knapsack01Dp(l)
+            if (g.length == 0 && flag)
+                g = this.knapsack01Dp(l + 1)
             groups.push(g)
             this.removeChoose(g)
 

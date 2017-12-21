@@ -1,0 +1,40 @@
+.message_div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 45px;
+    margin: 6px 0;
+    cursor: pointer;
+    transform: background-color 0.5s;
+    &:hover{
+        
+    }
+    img{
+        width: 44px;
+        height: 44px;
+    }
+    .data{
+        border-bottom: 1px solid #cacaca8f;
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .title{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            .time{
+                color: #cacaca;
+                font-size: 70%;
+            }
+            .name{
+                font-weight: bold;
+            }
+        }
+        .last_message{
+            text-align: right;
+            font-size: 80%;
+            color: #787878;
+        }
+    }
+}

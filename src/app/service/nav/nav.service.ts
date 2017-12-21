@@ -24,6 +24,7 @@ export class NavService {
       new NavItem("שכבות", "admin/layers", "class", false),
       new NavItem("תלמידים", "admin/students", "group", false),
       new NavItem("הגדרות", "admin/setting", "settings", false),
+      new NavItem("דואר", "admin/messages", "message", false),
       new NavItem("עזרה", "admin/help", "help", false),
     ]
     this.select(this._items[0])
@@ -35,6 +36,7 @@ export class NavService {
       new NavItem("השכבה שלי", "client/myLayer", "school", false),
       new NavItem("הכיתה שלי", "client/myClass", "class", false),
       new NavItem("הגדרות", "client/setting", "settings", false),
+      new NavItem("דואר", "client/messages", "message", false),
       new NavItem("עזרה", "", "help", false),
     ]
     this.select(this._items[0])

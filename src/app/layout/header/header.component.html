@@ -28,7 +28,7 @@
 
           <mat-form-field class="search-form-field">
             <input matInput type="text" placeholder="חיפוש" [(ngModel)]="searchValue" (change)="search.emit(searchValue)" />
-            <button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear" (click)="search.emit(searchValue)" >
+            <button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear" (click)="search.emit(searchValue)">
               <mat-icon>search</mat-icon>
             </button>
           </mat-form-field>
@@ -54,23 +54,23 @@
             </button>
           </mat-menu>
 
-          <!-- <span class="badge bg-orange">2</span> -->
-          <button mat-icon-button [matMenuTriggerFor]="menuMessage">
-            <mat-icon>message</mat-icon>
-          </button>
+          <div>
+            <span class="badge bg-orange" *ngIf="newMessage != 0">{{newMessage}}</span>
+            <button mat-icon-button [matMenuTriggerFor]="menuMessage">
+              <mat-icon>message</mat-icon>
+            </button>
+          </div>
           <mat-menu #menuMessage="matMenu">
-            <div>
-
-              <img src="img/avatar-1.jpg" alt="..." class="img-fluid rounded-circle">
-
-              <div class="msg-body">
-                <h3 class="h5">Jason Doe</h3>
-                <span>Sent You Message</span>
-              </div>
-            </div>
-            <button mat-menu-item>
+            <app-contact *ngFor="let c of msgService.recent | async" 
+              [name]="getName(c)" 
+              [time]="c.messages[0]?.date" 
+              [lastMessage]="c.messages[0]?.text" 
+              (open)="open(c)"
+              [routerLink]="authService.permission != 'student' ? 'admin/messages' : 'client/messages'">
+            </app-contact>
+            <button mat-menu-item [routerLink]="authService.permission != 'student' ? 'admin/messages' : 'client/messages'">
               <mat-icon>notifications_off</mat-icon>
-              <strong>view all notifications </strong>
+              <strong>כל ההודעות</strong>
             </button>
           </mat-menu>
 

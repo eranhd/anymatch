@@ -16,6 +16,10 @@
         color: white;
     }
     
+    .badge{
+        position: absolute;
+        z-index: 9;
+    }
     
     @media screen and (max-width: 500px){
         .search-form-field{

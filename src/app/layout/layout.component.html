@@ -1,5 +1,7 @@
 <div class="div_layout">
-    <app-header (search)="navService.search($event)"></app-header>
+    <app-header 
+        (search)="navService.search($event)"
+        [newMessage]="msgService.numOfNewMessage | async"></app-header>
     <div class="main_layout">
         <app-nav class="app-nav"></app-nav>
         <div class="content">

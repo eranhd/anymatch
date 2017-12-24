@@ -44,7 +44,7 @@ export class LayersComponent extends ComponentBase implements OnInit {
   ngOnInit() {
     this.headerCards = [
       new HeaderCard("class", "מספר שכבות", this.layerService.num, "#796aee"),
-      new HeaderCard("sort", "ממוצע תלמידים לשכבה", this.userService.num / this.layerService.num, "#ffc36d"),
+      new HeaderCard("sort", "ממוצע תלמידים לשכבה", +(this.userService.num / this.layerService.num).toFixed(0), "#ffc36d"),
       new HeaderCard("show_chart", "ממוצע כיתות לשכבה", this.layerService.num, "#63c3ff")
     ]
   }

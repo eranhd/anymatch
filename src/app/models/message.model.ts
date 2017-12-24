@@ -4,7 +4,7 @@ export class Message {
     public from: string = "";
     public text: string = "";
     public date: Date = new Date();
-    public isRead: boolean = false;
+    public isRead: any = {};
 }
 
 export class MessageView extends Message {

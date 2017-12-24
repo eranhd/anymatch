@@ -19,9 +19,10 @@
                 justify-content: flex-start;
                 display: flex;
                 .buble{
+                    box-shadow: 1px 1px 1px;
                     border: 1px solid #cacaca;
-                    background: #cacaca;
-                    width: 60%;
+                    background: #94c7e8;
+                    max-width: 60%;
                     justify-content: space-between;
                     border-radius: 10px;
                     margin: 12px;
@@ -29,6 +30,7 @@
                     box-sizing: border-box;
                     min-width: 30%;
                     text-align: right;
+                    border-top-right-radius: 0;
                     :last-child{
                         font-size: 60%;
                     }
@@ -36,7 +38,10 @@
                 
             }
             .right{
-
+                :first-child{
+                    border-radius: 10px;
+                    border-top-left-radius: 0;
+                }
                 justify-content: flex-end;
             }
         }

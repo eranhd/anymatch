@@ -35,6 +35,8 @@
             text-align: right;
             font-size: 80%;
             color: #787878;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
     }
 }

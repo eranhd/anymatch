@@ -13,10 +13,12 @@ export class MessageService extends ControlerService {
   public conversations: Conversation[] = [];
   public currentConversation: Conversation;
   public _currentConversation: ReplaySubject<Conversation> = new ReplaySubject();
+  public numOfNewMessage: ReplaySubject<number> = new ReplaySubject();
+  public recent: ReplaySubject<Conversation[]> = new ReplaySubject();
+
   constructor(http: HttpService,
     private authService: AuthService,
     private userService: UserService,
-    // private socket: Socket
   ) {
 
 
@@ -24,11 +26,15 @@ export class MessageService extends ControlerService {
 
     this.getAllMessages().then(c => {
       this.conversations = c;
+      this.numOfNewMessage.next(this.notReadCount());
     });
     this.connectToSocket("massage/" + this.authService.id, "newMessage");
 
     this.socketReplay.subscribe(res => {
       if (res["event"] == "newMessage") {
+        let c = this.getConversationById(res["data"].conversation._id);
+        if (!c)
+          this.conversations.push(res["data"].conversation);
         this.conversations = this.conversations.map((c, i) => {
           if (!c._id)
             return res["data"].conversation;
@@ -38,19 +44,47 @@ export class MessageService extends ControlerService {
 
           return c;
         });
-        if (this.currentConversation._id == res["data"].conversation._id){
-          this.currentConversation = res["data"].conversation;
-          this._currentConversation.next(this.currentConversation);
-        }
+        console.log(this.conversations)
+        if (this.currentConversation)
+          if (this.currentConversation._id == res["data"].conversation._id) {
+            this.currentConversation = res["data"].conversation;
+            this._currentConversation.next(this.currentConversation);
+          }
       }
+      this.numOfNewMessage.next(this.notReadCount());
     });
+  }
 
+  private notReadCount() {
+    let count = 0;
+    this.conversations.forEach(c => {
+      if (c)
+        count += this.notCountMessages(c._id);
+    });
+    // console.log(count)
+    this.recent.next(this.conversations.slice(0, this.conversations.length > 6 ? 6 : this.conversations.length))
+    return count;
+  }
+  public notCountMessages(id: string) {
+    let c = this.getConversationById(id);
+    let count = 0;
+    if (c)
+      if (!c.messages[0].isRead[this.authService.id])
+        return 1;
 
-
+    return 0;
   }
 
   public getConversationById(id: string) {
     return this.conversations.find(res => res._id === id)
+  }
+
+  public async conversationOpen(id: string) {
+    let c = this.getConversationById(id);
+    c.messages[0].isRead[this.authService.id] = true;
+    await this.create({ conversation: c });
+    this.numOfNewMessage.next(this.notReadCount());
+    return true;
   }
 
   public async sendMessage(conversation: Conversation, message: string) {
@@ -58,7 +92,9 @@ export class MessageService extends ControlerService {
     m.date = new Date();
     m.from = this.authService.id;
     m.text = message;
+    m.isRead[this.authService.id] = true;
     conversation.messages.unshift(m);
+
     // this.socket.emit("message", conversation);
     conversation = <Conversation>await this.create({ conversation: conversation });
     await this.getAllMessages();
@@ -83,7 +119,8 @@ export class MessageService extends ControlerService {
   public async getAllMessages() {
     this.conversations = await this.getAll(this.authService.id);
     this.currentConversation = this.conversations[0] ? this.conversations[0] : null;
-    if (this.conversations)
+    if (this.conversations) {
+      this.numOfNewMessage.next(this.notReadCount());
       return this.conversations
         .sort((a, b) => {
           if (b.messages.length == 0)
@@ -93,14 +130,10 @@ export class MessageService extends ControlerService {
           else {
             let dateA = a.messages[0].date;
             let dateB = b.messages[0].date;
-            // console.log(dateA)
-            // if (dateA.toLocaleDateString() != dateB.toLocaleDateString())
-            //   return dateA.toLocaleDateString().localeCompare(dateB.toLocaleDateString());
-            // else
-              // dateA.toLocaleTimeString().localeCompare(dateB.toLocaleTimeString());
-              return (dateB+"").localeCompare(dateA + "");
+            return (dateB + "").localeCompare(dateA + "");
           }
         })
+    }
     return [];
   }
 

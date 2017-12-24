@@ -6,7 +6,8 @@
     justify-content: flex-start;
 }
 .main_layout{
-    background-color: #eef5f9; 
+    // background-color: #eef5f9; 
+    background-image: url("http://sewuka.co/wp-content/uploads/2017/08/23310840-light-gray-rough-concrete-wall-seamless-background-a-texturedecorative-tiles--textured-paint-991x660.jpg");
     display: flex;
     height: 90%;
     .app-nav{
@@ -30,6 +31,8 @@
         padding: 28px; 
         width: 100%;
         height: 100%; 
+        // eef1ffa6
+        background-color: rgba(200, 194, 250, 0.3);
         // display: flex;
         // overflow: scroll;  
        

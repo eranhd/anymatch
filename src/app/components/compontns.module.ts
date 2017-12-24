@@ -20,7 +20,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     exports: [
         CardStudentComponent,
         GraphComponent,
-        PagesHeaderComponent
+        PagesHeaderComponent,
+        ContactComponent
     ],
     imports: [
         CommonModule,

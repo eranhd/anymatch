@@ -29,6 +29,8 @@ export class MessageComponent implements OnInit, OnChanges {
 
 
   public async send() {
+    if (this.conversation._id)
+      this.messageService.conversationOpen(this.conversation._id)
     if (this.msg != "") {
       this.conversation = await this.messageService.sendMessage(this.conversation, this.msg);
       this.msg = "";
@@ -38,8 +40,11 @@ export class MessageComponent implements OnInit, OnChanges {
   ngOnInit() {
   }
 
-  ngOnChanges(data){
-    console.log(data)
+  ngOnChanges(data) {
+    if (data.conversation) {
+      if (this.conversation._id)
+        this.messageService.conversationOpen(this.conversation._id)
+    }
   }
 
 

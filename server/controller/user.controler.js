@@ -18,12 +18,24 @@ router.post('/all/', (req, res, next) => {
     let query = { schoolId: req.user[0].schoolId }
     if (req.user[0].permission === "student") {
         projection = { fname: "fname", lname: "lname" };
-        query.layerId = req.user[0].layerId;
+        query.layerId = req.user[0].layerId
+
     }
     db.find(collection, query, projection).then(doc => {
         if (doc) {
-
-            res.send(doc);
+            if (req.user[0].permission === "student") {
+                query.layerId = { $exists: false };
+                db.find(collection, query, projection).then(d => {
+                    if (!d)
+                        d = []
+                    doc.forEach(u => {
+                        d.push(u)
+                    })
+                    res.send(d);
+                })
+            }
+            else
+                res.send(doc);
         }
         else
             res.send("failed");

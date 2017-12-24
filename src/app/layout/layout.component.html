@@ -1,13 +1,15 @@
-<app-header (search)="navService.search($event)"></app-header>
-<div class="main_layout">
-    <app-nav class="app-nav"></app-nav>
-    <div class="content">
-        <mat-card class="page_title">
-            {{navService.pageName}}
-        </mat-card>
-        <div class="content-inner">
-            <router-outlet></router-outlet>
-        </div>
+<div class="div_layout">
+    <app-header (search)="navService.search($event)"></app-header>
+    <div class="main_layout">
+        <app-nav class="app-nav"></app-nav>
+        <div class="content">
+            <mat-card class="page_title">
+                {{navService.pageName}}
+            </mat-card>
+            <div class="content-inner">
+                <router-outlet></router-outlet>
+            </div>
 
+        </div>
     </div>
 </div>

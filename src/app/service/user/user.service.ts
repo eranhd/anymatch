@@ -31,8 +31,6 @@ export class UserService extends ControlerService {
           if (u._id != user._id)
             return u
         });
-        // console.log(this._users);
-        // console.log(updateduser["user"])
         this._users.push(user);
         this.ob.next(this._users);
         res(updateduser);
@@ -80,6 +78,10 @@ export class UserService extends ControlerService {
     return this._users.filter(res => {
       return res.layerId === id;
     })
+  }
+
+  public getUserById(id: string){
+    return this._users.find(u=> u._id == id)
   }
 
   

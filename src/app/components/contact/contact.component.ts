@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, Output, EventEmitter, Input } from '@angular/core';
 import { Conversation } from '../../models/index';
+import { UserService } from '../../service/index';
 
 @Component({
   selector: 'app-contact',
@@ -13,9 +14,14 @@ export class ContactComponent implements OnInit {
   @Input() time: string;
   @Input() lastMessage: string;
   @Output() open: EventEmitter<any> = new EventEmitter<any>();
-  constructor() { }
+  constructor(private userService: UserService) {
+  }
 
   ngOnInit() {
+    let n = this.userService.getUserById(this.name);
+    // console.log(n)
+    if (n)
+      this.name = n.fname + " " + n.lname;
   }
 
 }

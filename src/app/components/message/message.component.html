@@ -1,119 +1,28 @@
 <div class="conversation_div">
 
   <div class="messages">
-    <div class="message">
-      <div>
-        זאת הודעת דוגמה
-      </div>
-      <div>
-        18:22
+    <div class="message"  *ngFor="let m of conversation.messages">
+      <div class="inner_message" [class.right]="m.from == authService.id">
+        <div class="buble">
+          <div>
+            {{m?.text}}
+          </div>
+          <div>
+            {{m?.date | date:"dd.MM.yy HH:mm"}}
+          </div>
+        </div>
       </div>
     </div>
-
-    <div class="message">
-      <div>
-        זאת הודעת דוגמה
-      </div>
-      <div>
-        18:22
-      </div>
-    </div>
-
-    <div class="message">
-      <div>
-        זאת הודעת דוגמה
-      </div>
-      <div>
-        18:22
-      </div>
-    </div>
-
-    <div class="message">
-      <div>
-        זאת הודעת דוגמה
-      </div>
-      <div>
-        18:22
-      </div>
-    </div>
-
-    <div class="message">
-      <div>
-        זאת הודעת דוגמה
-      </div>
-      <div>
-        18:22
-      </div>
-    </div>
-
-    <div class="message">
-      <div>
-        זאת הודעת דוגמה זאת הודעת דוגמה זאת הודעת דוגמה זאת הודעת דוגמה
-      </div>
-      <div>
-        18:22
-      </div>
-    </div>
-
-    <div class="message">
-        <div>
-          זאת הודעת דוגמה
-        </div>
-        <div>
-          18:22
-        </div>
-      </div>
-  
-      <div class="message">
-        <div>
-          זאת הודעת דוגמה
-        </div>
-        <div>
-          18:22
-        </div>
-      </div>
-  
-      <div class="message">
-        <div>
-          זאת הודעת דוגמה
-        </div>
-        <div>
-          18:22
-        </div>
-      </div>
-  
-      <div class="message">
-        <div>
-          זאת הודעת דוגמה
-        </div>
-        <div>
-          18:22
-        </div>
-      </div>
-  
-      <div class="message">
-        <div>
-          זאת הודעת דוגמה
-        </div>
-        <div>
-          18:22
-        </div>
-      </div>
-  
-      <div class="message">
-        <div>
-          זאת הודעת דוגמה זאת הודעת דוגמה זאת הודעת דוגמה זאת הודעת דוגמה
-        </div>
-        <div>
-          18:22
-        </div>
-      </div>
   </div>
 
   <div class="send_div">
-    <input placeholder="message">
-    <button mat-raised-button color="primary">
-      שלח
+    <mat-form-field>
+      <input [(ngModel)]="msg" matInput placeholder="כתוב הודעה">
+    </mat-form-field>
+    <button mat-raised-button #sendButton (click)="send()" color="primary">
+      <mat-icon>
+        send
+      </mat-icon>
     </button>
   </div>
 </div>

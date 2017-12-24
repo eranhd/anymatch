@@ -1,18 +1,15 @@
 <div class="messages_div">
   <div class="members">
-    <app-contact [name]="'יעל'" [time]="'12.12.27'" [lastMessage]="'מה אומרת?'">
-    </app-contact>
-    <app-contact [name]="'ערן'" [time]="'12.12.27'" [lastMessage]="'מה אומרת?'">
-    </app-contact>
-    <app-contact [name]="'עודד'" [time]="'12.12.27'" [lastMessage]="'מה אומרת?'">
-    </app-contact>
+    <app-contact *ngFor="let c of con" [name]="getName(c)" [time]="c.messages[0]?.date" [lastMessage]="c.messages[0]?.text"
+      (open)="conversation = c"></app-contact>
+
 
 
 
   </div>
   <div class="messages">
-    <app-message>
-      
+    <app-message *ngIf="conversation" [conversation]=conversation>
+      <!-- pass conversation -->
     </app-message>
   </div>
 </div>

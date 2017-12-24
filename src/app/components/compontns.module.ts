@@ -7,6 +7,7 @@ import { PagesHeaderComponent } from './pages-header/pages-header.component';
 import { MessagesComponent } from './messages/messages.component';
 import { MessageComponent } from './message/message.component';
 import { ContactComponent } from './contact/contact.component';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 @NgModule({
     declarations: [
         CardStudentComponent,
@@ -23,7 +24,9 @@ import { ContactComponent } from './contact/contact.component';
     ],
     imports: [
         CommonModule,
-        MaterialModule
+        MaterialModule,
+        FormsModule, 
+        ReactiveFormsModule
     ]
 })
 export class ComponentsModule { }

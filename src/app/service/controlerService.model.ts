@@ -1,6 +1,6 @@
 import { HttpService } from "./http/http.service";
-
-
+import * as io from 'socket.io-client';
+import { ReplaySubject } from "rxjs";
 
 export class ControlerService {
     protected path: string;
@@ -8,9 +8,33 @@ export class ControlerService {
     protected ALL: string = "all";
     protected UPDATE: string = "update";
     protected GETBYID: string = "getById";
+    protected socket;
+    protected socketReplay: ReplaySubject<any>;
+    protected observer: any;
 
     constructor(path, protected http: HttpService) {
         this.path = path + "/";
+
+        this.socketReplay = new ReplaySubject<any>();
+    }
+
+    public connectToSocket(socket, event) {
+        let s = io.connect(this.http.path + socket);
+        console.log(s)
+        s
+            .on("connect", () => {
+                console.log("connect to " + socket);
+            });
+        s
+            .on((event), data => {
+                console.log("new message")
+                this.socketReplay.next({ data: data, event: event });
+            });
+        s
+            .on("disconnect", ()=>{
+                console.log("disconnect");
+            })
+
     }
 
     public getAll<T>(id?: string): Promise<any> {
@@ -30,6 +54,8 @@ export class ControlerService {
         let temp = { _id: id };
         return this.http.post(this.path + this.GETBYID, temp);
     }
+
+
 
 
 }

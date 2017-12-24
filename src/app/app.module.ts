@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
-import { HttpService, SchoolService, AuthService, ClassService, LayerService, UserService } from "./service";
+import { HttpService, SchoolService, AuthService, ClassService, LayerService, UserService, MessageService } from "./service";
 
 import { MaterialModule } from "./material/material.module";
 import { LoginComponent } from './login/login.component';
@@ -26,7 +26,11 @@ import { NavComponent } from './layout/nav/nav.component';
 import { NavService } from "./service/nav/nav.service";
 
 import { DialogNewLayer } from "./admin/dashboard/dialog new layer/dialog-new-layer.conponent"
-import { DialogEditLayer } from "./admin/dashboard/dialog-edit-layer/dialog-edit-layerconponent"
+import { DialogEditLayer } from "./admin/dashboard/dialog-edit-layer/dialog-edit-layerconponent";
+import { SizeDirective } from './directives/size.directive';
+import { SocketIoModule, SocketIoConfig } from 'ng2-socket-io';
+
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
 @NgModule({
   declarations: [
@@ -36,7 +40,8 @@ import { DialogEditLayer } from "./admin/dashboard/dialog-edit-layer/dialog-edit
     HeaderComponent,
     NavComponent,
     DialogNewLayer,
-    DialogEditLayer
+    DialogEditLayer,
+    SizeDirective
 
     // DashboardComponent
   ],
@@ -49,7 +54,8 @@ import { DialogEditLayer } from "./admin/dashboard/dialog-edit-layer/dialog-edit
     MaterialModule,
     RouterModule.forRoot(routes),
     ComponentsModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    // SocketIoModule.forRoot(config)
   ],
   entryComponents: [
     LayoutComponent,
@@ -68,7 +74,9 @@ import { DialogEditLayer } from "./admin/dashboard/dialog-edit-layer/dialog-edit
     UserService,
     AuthGuard,
     AdminGuard,
-    NavService
+    NavService,
+    MessageService,
+    SizeDirective
   ],
   bootstrap: [AppComponent]
 })

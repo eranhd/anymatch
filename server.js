@@ -8,11 +8,17 @@ const passport = require('passport');
 const flash = require('connect-flash');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const DB = require("./server/db/db");
+const socket = require("./server/socket/messgae.socket");
 require('./server/config/passport')(passport); // pass passport for configuration
 
+let message = require("./server/controller/message.controler");
+
 const app = express();
+// let server = require('http').Server(app);
 //Middleware for CORS
 app.use(fileUpload());
+let s;
 
 let useControler = () => {
     const school = require("./server/controller/school.controler");
@@ -21,6 +27,7 @@ let useControler = () => {
     const user = require("./server/controller/user.controler");
     const clas = require("./server/controller/class.controler");
     const graph = require("./server/controller/graph.controler");
+    message = require("./server/controller/message.controler");
 
     app.use("/school", school);
     app.use("/layer", layer);
@@ -28,6 +35,9 @@ let useControler = () => {
     app.use("/user", user);
     app.use("/class", clas);
     app.use("/graph", graph);
+    app.use("/message", message);
+
+
 
 
 };
@@ -85,6 +95,7 @@ app.post('/login', (req, res, next) => {
             if (err) {
                 return res.send({ success: false, code: 2, message: 'authentication failed' });
             }
+            s.addSocket(user._id.toString());
             return res.send({ success: true, message: 'authentication succeeded', user: user });
         });
     })(req, res, next);
@@ -97,24 +108,19 @@ app.get('/logout', (req, res) => {
     return res.send("logout")
 });
 
-/*express.static is a built in middleware function to serve static files.
- We are telling express server public folder is the place to look for the static files
-*/
+
+
+
 app.use(express.static(path.join(__dirname, 'dist')));
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
-// const DIST_FOLDER = path.join(process.cwd(), 'dist');
-// console.log(DIST_FOLDER)
+let server = app.listen(3000, () => { console.log("listen to 3000") });
 
-// app.get('*', (req, res) => {
-//     res.render(join(DIST_FOLDER, 'browser', 'index.html'), { req });
-// });
-
-
-app.listen(3000, () => { console.log("listen to 3000") });
-
+//init socket for any user
+s = socket.init(server);
+message.setSocket(s);
 
 

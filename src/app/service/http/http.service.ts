@@ -6,7 +6,7 @@ import { Http, Headers, RequestOptions } from "@angular/http";
 export class HttpService {
 
 
-  private path: string = "http://localhost:3000/";
+  public path: string = "http://localhost:3000/";
   private header: Headers;
   private options;
   constructor(private http: Http) {

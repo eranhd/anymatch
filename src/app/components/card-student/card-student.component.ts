@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
 import { User } from "../../models/user.model";
+import { MessageService } from '../../service/index';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-card-student',
   templateUrl: './card-student.component.html',
@@ -12,9 +14,15 @@ export class CardStudentComponent implements OnInit {
   @Input() color: string;
   @Input() showActions: boolean = false;
   @Output() open: EventEmitter<User> = new EventEmitter<User>()
-  constructor() { }
+  @Output() message: EventEmitter<User> = new EventEmitter<User>()
+  constructor(private msgService: MessageService, private router: Router ) { }
 
   ngOnInit() {
+  }
+
+  msgClick(){
+    this.msgService.startConversationWith(this.user._id);
+    this.router.navigate(["/layout/admin/messages"]);
   }
 
 }

@@ -538,7 +538,7 @@ var LayerComponent = (function (_super) {
             var headers = new __WEBPACK_IMPORTED_MODULE_5__angular_http__["a" /* Headers */]();
             headers.append('Accept', 'application/json');
             var options = new __WEBPACK_IMPORTED_MODULE_5__angular_http__["d" /* RequestOptions */]({ headers: headers });
-            this.http.post("http://localhost:3000/user/upload", formData, options).subscribe(function (res) {
+            this.http.post(window.location.host + "/user/upload", formData, options).subscribe(function (res) {
                 var users = res.json();
                 if (users) {
                     users.forEach(function (e) {
@@ -1049,7 +1049,7 @@ var SettingsComponent = (function () {
 /***/ "../../../../../src/app/admin/students/students.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"students\">\n  <mat-spinner [diameter]=100 *ngIf=\"!students\" [strokeWidth]=\"5\"></mat-spinner>\n  <div class=\"div_card_student\">\n    <div class=\"inner_div\" *ngFor=\"let u of students\">\n      <app-card-student [user]=u></app-card-student>\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"students\">\r\n  <mat-spinner class=\"spinner\" [diameter]=100 *ngIf=\"!students\" [strokeWidth]=\"5\"></mat-spinner>\r\n  <div class=\"div_card_student\">\r\n    <div class=\"inner_div\" *ngFor=\"let u of students\">\r\n      <app-card-student [user]=u></app-card-student>\r\n    </div>\r\n  </div>\r\n</div>"
 
 /***/ }),
 
@@ -1061,7 +1061,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".students .div_card_student {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap; }\n  .students .div_card_student .inner_div {\n    width: 30%;\n    margin: 1.5%; }\n", ""]);
+exports.push([module.i, ".students .div_card_student {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap; }\n  .students .div_card_student .inner_div {\n    width: 30%;\n    margin: 1.5%; }\n\n.spinner {\n  position: absolute !important;\n  top: 50%;\n  left: 50%; }\n", ""]);
 
 // exports
 

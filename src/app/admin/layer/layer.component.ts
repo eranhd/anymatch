@@ -130,7 +130,7 @@ export class LayerComponent extends ComponentBase implements OnInit {
 
       headers.append('Accept', 'application/json');
       let options = new RequestOptions({ headers: headers });
-      this.http.post("http://localhost:3000/user/upload", formData, options).subscribe(res => {
+      this.http.post(window.location.host + "/user/upload", formData, options).subscribe(res => {
         let users = res.json();
         if (users) {
           users.forEach(e => {

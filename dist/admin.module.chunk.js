@@ -1049,7 +1049,7 @@ var SettingsComponent = (function () {
 /***/ "../../../../../src/app/admin/students/students.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"students\">\n  <div class=\"div_card_student\">\n    <div class=\"inner_div\" *ngFor=\"let u of students\">\n      <app-card-student [user]=u></app-card-student>\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"students\">\r\n  <div class=\"div_card_student\">\r\n    <div class=\"inner_div\" *ngFor=\"let u of students\">\r\n      <app-card-student [user]=u></app-card-student>\r\n    </div>\r\n  </div>\r\n</div>"
 
 /***/ }),
 

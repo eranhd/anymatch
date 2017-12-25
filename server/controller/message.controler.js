@@ -7,7 +7,7 @@ const collection = "conversations";
 
 router.post('/all/', (req, res, next) => {
     let db = new DB();
-    db.find(collection, { participants: req.body.id }).then(doc => {
+    db.find(collection, "",{ participants: req.body.id }).then(doc => {
         res.send(doc);
     });
 });

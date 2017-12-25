@@ -19,8 +19,8 @@ router.post('/create/', (req, res, next) => {
 
     anyDb.save(req.body, "schools").then(school => {
         // console.log(school);
-        let db = new DB(school._id);
-        db.save(school, "data").then(s => {
+        let db = new DB();
+        db.save(school, "data", school._id).then(s => {
             res.send(school);
         })
 
@@ -29,9 +29,9 @@ router.post('/create/', (req, res, next) => {
 
 router.post("/getById/", (req, res, next) => {
 
-    let db = new DB(req.body._id);
+    let db = new DB();
     // console.log(req.body._id);
-    db.findOne(req.body, "data").then(resolve => {
+    db.findOne(req.body, "data", req.body._id).then(resolve => {
         console.log(resolve);
         res.send(resolve);
     });
@@ -39,8 +39,8 @@ router.post("/getById/", (req, res, next) => {
 
 router.post("/update/", (req, res, next) => {
     // console.log(req.body);
-    let db = new DB(req.body._id);
-    db.save(req.body, "data").then(resolve => {
+    let db = new DB();
+    db.save(req.body, "data", req.body._id).then(resolve => {
         // console.log("in saveee");
         // console.log(res olve);
         res.send(resolve);

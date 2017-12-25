@@ -6,8 +6,8 @@ const DB = require("../db/db");
 const collection = "classes";
 
 router.post('/all/', (req, res, next) => {
-    let db = new DB(req.body.id);
-    db.getAll(collection).then(doc => {
+    let db = new DB();
+    db.getAll(collection, req.body.id).then(doc => {
         res.send(doc);
     });
 });
@@ -21,8 +21,8 @@ router.post('/', (req, res, next) => {
 
 router.post("/create/", (req, res, next) => {
     // console.log(req.body.schoolId +", "+ collection);
-    let db = new DB(req.body.schoolId);
-    db.save(req.body.layer, collection).then(resolve => {
+    let db = new DB();
+    db.save(req.body.layer, collection, req.body.schoolId).then(resolve => {
         res.send(resolve);
     });
 

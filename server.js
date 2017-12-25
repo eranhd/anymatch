@@ -57,7 +57,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 const config = require("./server/config/database");
-// mongoose.connect(config.database + "anymatch" + config.option)
+mongoose.connect(config.database + "anymatch");
 
 useControler();
 
@@ -117,7 +117,7 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
-let server = app.listen(8080, () => { console.log("listen to 8080") });
+let server = app.listen(3000, () => { console.log("listen to 3000") });
 
 //init socket for any user
 s = socket.init(server);

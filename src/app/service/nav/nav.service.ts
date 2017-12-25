@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
+import { ItemWithIcon } from '../../models/ItemWithIcon.model';
 
 
 @Injectable()
 export class NavService {
 
-  private _pageName = "";
+  private _pageName: string = "";
   private _items: NavItem[] = [];
   private searchObservable: Observable<string>;
   private searchObsrver;
@@ -57,17 +58,19 @@ export class NavService {
   }
 
 
-  public search(term: string){
+  public search(term: string) {
     this.searchObsrver.next(term);
   }
 
-  public get searchObser(){
+  public get searchObser() {
     return this.searchObservable;
   }
 
 
 }
 
-export class NavItem {
-  constructor(public text: string, public url: string, public icon: string, public isSelect) { }
+export class NavItem extends ItemWithIcon {
+  constructor(public text: string, public url: string, icon: string, public isSelect) {
+    super(icon);
+  }
 }

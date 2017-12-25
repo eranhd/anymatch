@@ -18,7 +18,7 @@ export class MessageService extends ControlerService {
 
   constructor(http: HttpService,
     private authService: AuthService,
-    private userService: UserService,
+    private userService: UserService
   ) {
 
 
@@ -44,10 +44,11 @@ export class MessageService extends ControlerService {
 
           return c;
         });
-        console.log(this.conversations)
+        // console.log(this.conversations)
         if (this.currentConversation)
           if (this.currentConversation._id == res["data"].conversation._id) {
             this.currentConversation = res["data"].conversation;
+            console.log(this.currentConversation)
             this._currentConversation.next(this.currentConversation);
           }
       }
@@ -82,7 +83,7 @@ export class MessageService extends ControlerService {
   public async conversationOpen(id: string) {
     let c = this.getConversationById(id);
     c.messages[0].isRead[this.authService.id] = true;
-    await this.create({ conversation: c });
+    // await this.create({ conversation: c });
     this.numOfNewMessage.next(this.notReadCount());
     return true;
   }

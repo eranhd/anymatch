@@ -1,14 +1,14 @@
 <div class="messages_div">
   <div class="members">
     <app-contact *ngFor="let c of con" [name]="getName(c)" [time]="c.messages[0]?.date" [lastMessage]="c.messages[0]?.text"
-      (open)="conversation = c"></app-contact>
+      (open)="messageService.currentConversation = c"></app-contact>
 
 
 
 
   </div>
   <div class="messages">
-    <app-message *ngIf="conversation" [conversation]=conversation>
+    <app-message *ngIf="messageService.currentConversation" [conversation]=messageService.currentConversation>
       <!-- pass conversation -->
     </app-message>
   </div>

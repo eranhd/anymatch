@@ -20,17 +20,17 @@
   </mat-card-content>
 
   <mat-card-actions *ngIf="showActions">
-    <button mat-raised-button (click)="open.emit(user)">
+    <button mat-icon-button (click)="open.emit(user)">
       <mat-icon>
         open_in_new
       </mat-icon>
-      פתח
+      <!-- פתח -->
     </button>
-    <button mat-raised-button (click)="msgClick()">
+    <button mat-icon-button (click)="msgClick()">
       <mat-icon>
         message
       </mat-icon>
-      שלח הודעה
+      <!-- שלח הודעה -->
     </button>
   </mat-card-actions>
 </mat-card>

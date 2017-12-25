@@ -12,8 +12,12 @@ import {
   MatToolbarModule,
   MatSidenavModule,
   MatMenuModule,
-  MatRadioModule
+  MatRadioModule,
+  MatDatepickerModule,
+  MatNativeDateModule
+
 } from '@angular/material';
+// import { MatMomentDateModule } from "@angular/material-moment-adapter";
 
 
 
@@ -33,7 +37,9 @@ import {
     MatToolbarModule,
     MatSidenavModule,
     MatMenuModule,
-    MatRadioModule
+    MatRadioModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   exports: [
     MatButtonModule,
@@ -48,7 +54,9 @@ import {
     MatToolbarModule,
     MatSidenavModule,
     MatMenuModule,
-    MatRadioModule
+    MatRadioModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   declarations: []
 })

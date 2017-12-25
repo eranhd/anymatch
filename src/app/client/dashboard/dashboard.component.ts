@@ -18,6 +18,7 @@ export class DashboardComponent {
 
   public headerCards: HeaderCard[];
   private _students: User[];
+  private _layer: Layer;
 
   constructor(public schoolService: SchoolService,
     private authService: AuthService,
@@ -29,6 +30,8 @@ export class DashboardComponent {
       new HeaderCard("done_all", "מספר התלמידים שבחרו", this.layerService.num, "#796aee"),
       new HeaderCard("sync", "בחירה פתוחה", null, "#54e69d")
     ]
+
+    this._layer = this.layerService.getLayerById(this.authService.getUser().layerId);
 
     this.userService.users.subscribe(users => {
       if (users) {
@@ -53,6 +56,21 @@ export class DashboardComponent {
       return this.authService.getUser().negativePrefer.includes(res._id);
     })
   }
+
+  public get timer() {
+    let d = new Date();
+
+    // console.log(d.toLocaleDateString())
+    if (this._layer)
+      if (this._layer.lockTime) {
+        let d2 = new Date(this._layer.lockTime);
+        console.log(d2.toLocaleDateString())
+        return d2.getFullYear() <= d.getFullYear() && d2.getMonth() <= d.getMonth() && d2.getDate() <= d.getDate() ? null : d2;
+      }
+    return null
+  }
+
+  
 
 }
 

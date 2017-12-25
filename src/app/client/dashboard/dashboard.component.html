@@ -9,10 +9,12 @@
                         <mat-icon>
                             access_time
                         </mat-icon>
-                        זמן שנותר עד נעילת הבחירות
+                        תאריך אחרון לבחירת העדפות
                     </mat-card-title>
                 </mat-card-header>
-
+                <mat-card-content>
+                    {{timer ?( timer | date:"dd.MM.yyy") : "שיבוץ נעול"}}
+                </mat-card-content>
             </mat-card>
             <mat-card>
                 <mat-card-header>

@@ -57,7 +57,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 const config = require("./server/config/database");
-mongoose.connect(config.database + "anymatch");
+// mongoose.connect(config.database + "anymatch" + config.option)
 
 useControler();
 

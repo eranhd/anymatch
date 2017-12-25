@@ -88,6 +88,8 @@ export class LayerService extends ControlerService {
     })
   }
 
+  
+
 
   public addClass(id: string, layerId: string) {
     let l = this.getLayerById(layerId);
@@ -97,7 +99,7 @@ export class LayerService extends ControlerService {
     this.updateLayer(l);
   }
 
-  public updateLayer(l: Layer) {
+  public updateLayer(l: Layer): Promise<boolean> {
     return new Promise((res, rej) => {
       this.update<Layer>({ layer: l }).then(layer => {
         this._layers = this._layers.map(r => {
@@ -147,10 +149,10 @@ export class LayerService extends ControlerService {
       });
       let l = this.getLayerById(layerId)
       l.groups = arr;
-      return new Promise((res, rej) => { 
-        this.updateLayer(l).then(layer=>{
+      return new Promise((res, rej) => {
+        this.updateLayer(l).then(layer => {
           res(true)
-        }) 
+        })
       })
     }
 

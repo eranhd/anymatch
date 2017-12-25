@@ -89,6 +89,13 @@ export class LayerComponent extends ComponentBase implements OnInit {
     this._addStudentFlag = !this._addStudentFlag;
   }
 
+  public set lockTime(e) {
+    // console.log(e)
+    this._layer.lockTime = e;
+    console.log(this._layer);
+    this.layerService.updateLayer(this._layer).then(res => { })
+  }
+
   public addStudent(name: string, fname: string, lname: string) {
 
     let user = new User();

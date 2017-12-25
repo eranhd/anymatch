@@ -33,6 +33,17 @@
         save
       </mat-icon>
     </button>
+
+
+    <mat-form-field [hidden]="true">
+      <input matInput [matDatepicker]="picker" [(ngModel)]="lockTime" placeholder="Choose a date">
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <button mat-mini-fab matTooltip="פתח זמן לשיבוץ"(click)="picker.open()">
+      <mat-icon>
+        timer
+      </mat-icon>
+    </button>
   </div>
 
   <mat-card class="layer_data" *ngIf="addStudentFlag">

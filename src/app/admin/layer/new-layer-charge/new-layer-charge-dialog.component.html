@@ -1,0 +1,16 @@
+<mat-form-field>
+  <input matInput placeholder="ת.ז" [(ngModel)]="data.user.username">
+</mat-form-field>
+<mat-form-field>
+  <input matInput placeholder="שם פרטי" [(ngModel)]="data.user.fname">
+</mat-form-field>
+<mat-form-field>
+  <input matInput placeholder="שם פרטי" [(ngModel)]="data.user.lname">
+</mat-form-field>
+
+<button mat-raised-button (click)="save()">
+  שמור
+</button>
+<button mat-raised-button (click)="onNoClick()">
+  בטל
+</button>

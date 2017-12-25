@@ -7,6 +7,7 @@ import { RequestOptions, Headers, Http } from "@angular/http";
 import { Observable } from "rxjs";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { OpenStudentDialogComponent } from './open-student-dialog/open-student-dialog.component';
+import { NewLayerChargeDialogComponent } from "./new-layer-charge/new-layer-charge-dialog.component";
 import { NavService } from '../../service/nav/nav.service';
 import { ComponentBase } from "../../componentBase.model";
 
@@ -21,7 +22,7 @@ export class LayerComponent extends ComponentBase implements OnInit {
   private _layer: Layer;
   private _addStudentFlag: boolean = false;
   public addStudentButtonText = "הוסף תלמיד";
-  
+
   private _students: User[];
   public form: FormGroup;
 
@@ -180,6 +181,37 @@ export class LayerComponent extends ComponentBase implements OnInit {
 
       if (result && result.success)
         this.userService.updateUser(result.user).then(u => { })
+    });
+
+  }
+
+
+  public addNewCharge() {
+    // console.log(s);
+    let s: User = new User()
+    let dialogRef = this.dialog.open(NewLayerChargeDialogComponent, {
+      width: '600px',
+      data: {
+        user: s
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      // console.log(result.user)
+      if (result && result.success)
+        this.userService.addUser(result.user, this.authService.schoolId).then(u => {
+          if (u["user"]) {
+            s = u["user"];
+            s.permission = "charge";
+            s.layerId = this._layer._id;
+            s.schoolId = this.authService.schoolId;
+
+            this.userService.updateUser(s).then(ret => {
+              console.log(ret)
+            });
+          }
+        })
     });
 
   }

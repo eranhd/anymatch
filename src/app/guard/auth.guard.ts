@@ -21,16 +21,16 @@ export class AdminGuard implements CanActivate {
       return new Promise(
         (resolve, rej) => {
           if (this.authService.getUser().permission != "student") {
-            this.schoolService.initSchool(this.authService.getUser().schoolId)
+            this.schoolService.initSchool(this.authService.schoolId)
               .then(res => {
-                this.layerService.getAllLayers(this.authService.getUser().schoolId).then(_ => {
-                  this.classService.getAllClass(this.authService.getUser().schoolId).then(_ => {
+                this.layerService.getAllLayers(this.authService.schoolId).then(_ => {
+                  this.classService.getAllClass(this.authService.schoolId).then(_ => {
                     resolve(true);
                   })
                 })
               });
           }
-          else if (this.authService.getUser().permission === "student") {
+          else if (this.authService.permission === "student") {
             console.log(2);
             this.router.navigate(["/layout/client"]);
           }

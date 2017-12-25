@@ -9,9 +9,17 @@ const collection = "layers";
 
 router.post('/all/', (req, res, next) => {
     let db = new DB(req.body.id);
-    db.getAll(collection).then(doc => {
-        res.send(doc);
-    });
+    let query = {};
+    if (req.user[0].permission === "charge") {
+        query._id = req.user[0].layerId;
+        db.findOne(query, collection).then(doc => {
+            res.send([doc]);
+        });
+    }
+    else
+        db.find(collection).then(doc => {
+            res.send(doc);
+        });
 });
 
 //POST HTTP method to /bucketlist

@@ -18,8 +18,11 @@ router.post('/all/', (req, res, next) => {
     let query = { schoolId: req.user[0].schoolId }
     if (req.user[0].permission === "student") {
         projection = { fname: "fname", lname: "lname" };
-        query.layerId = req.user[0].layerId
+        query.layerId = req.user[0].layerId;
 
+    }
+    else if (req.user[0].permission === "charge") {
+        query.layerId = req.user[0].layerId;
     }
     db.find(collection, query, projection).then(doc => {
         if (doc) {
@@ -34,6 +37,18 @@ router.post('/all/', (req, res, next) => {
                     res.send(d);
                 })
             }
+            else if (req.user[0].permission === "charge") {
+                query.layerId = { $exists: false };
+                db.find(collection, query, projection).then(d => {
+                    if (!d)
+                        d = []
+                    doc.forEach(u => {
+                        d.push(u)
+                    })
+                    res.send(d);
+                })
+            }
+
             else
                 res.send(doc);
         }

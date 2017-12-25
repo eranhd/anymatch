@@ -182,7 +182,7 @@ var DashboardComponent = (function () {
         this.dialog = dialog;
         this.displayedColumns = ['position', 'name', 'class_rooms', 'students'];
         this.layerService.layers.subscribe(function (res) {
-            _this.dataSource = new __WEBPACK_IMPORTED_MODULE_4__angular_material__["q" /* MatTableDataSource */](res);
+            _this.dataSource = new __WEBPACK_IMPORTED_MODULE_4__angular_material__["r" /* MatTableDataSource */](res);
         });
     }
     DashboardComponent.prototype.update = function () {
@@ -1049,7 +1049,7 @@ var SettingsComponent = (function () {
 /***/ "../../../../../src/app/admin/students/students.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"students\">\n  <div class=\"div_card_student\">\n    <div class=\"inner_div\" *ngFor=\"let u of students\">\n      <app-card-student [user]=u></app-card-student>\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"students\">\n  <mat-spinner [diameter]=100 *ngIf=\"!students\" [strokeWidth]=\"5\"></mat-spinner>\n  <div class=\"div_card_student\">\n    <div class=\"inner_div\" *ngFor=\"let u of students\">\n      <app-card-student [user]=u></app-card-student>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 

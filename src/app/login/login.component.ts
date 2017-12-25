@@ -16,6 +16,7 @@ export class LoginComponent {
   public list;
   public title: string = "כניסה";
   private _createNewSchool: boolean = false;
+  public _showProgress: boolean = false
 
   constructor( @Inject(FormBuilder) fb: FormBuilder,
     private schoolService: SchoolService,
@@ -46,11 +47,13 @@ export class LoginComponent {
 
   public async login() {
 
+    this._showProgress = true;
     let u = {};
     u["username"] = this.form.controls.login["controls"].username.value;
     u["password"] = this.form.controls.login["controls"].pass.value.password;
     let user = await this.authService.login(u);
     // console.log(user);
+    this._showProgress = false;
     if (!user["success"]) {
       if (user["code"] == 1) {
         console.log("not found");
@@ -92,6 +95,8 @@ export class LoginComponent {
     // console.log(group.controls["password"].value === group.controls["verifyPassword"].value);
     return group.controls["password"].value === group.controls["verifyPassword"].value;
   }
+
+  public get showProgress() { return this._showProgress; }
 
 
 }

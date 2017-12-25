@@ -1,4 +1,5 @@
 <div class="students">
+  <mat-spinner [diameter]=100 *ngIf="!students" [strokeWidth]="5"></mat-spinner>
   <div class="div_card_student">
     <div class="inner_div" *ngFor="let u of students">
       <app-card-student [user]=u></app-card-student>

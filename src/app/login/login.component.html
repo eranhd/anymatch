@@ -1,46 +1,3 @@
-<!-- <div class="app_main">
-  <mat-card>
-    <mat-card-content>
-      <form [formGroup]="form">
-
-        <div formGroupName="login">
-          <h3>{{title}}</h3>
-          <mat-form-field>
-            <input matInput type="text" formControlName=username placeholder="שם משתמש">
-          </mat-form-field>
-          <div formGroupName="pass">
-            <mat-form-field>
-              <input matInput type="password" formControlName=password placeholder="סיסמה">
-            </mat-form-field>
-            <mat-form-field *ngIf="createNewSchool">
-              <input matInput type="password" formControlName=verifyPassword placeholder="אימות סיסמה">
-            </mat-form-field>
-          </div>
-        </div>
-
-        <div *ngIf="createNewSchool" formGroupName="newSchool">
-          <h3>יצירת בית ספר</h3>
-          <mat-form-field>
-            <input matInput type="text" formControlName=name placeholder="שם בית הספר">
-          </mat-form-field>
-          <mat-form-field>
-            <input matInput type="text" formControlName=code placeholder="קוד בית הספר">
-          </mat-form-field>
-        </div>
-
-      </form>
-
-    </mat-card-content>
-    <mat-card-actions>
-      <button *ngIf="!createNewSchool" mat-raised-button color=primary (click)="login()">כניסה</button>
-      <button *ngIf="!createNewSchool" mat-raised-button color=accent (click)="changeCreateSchool()">יצירת בית ספר</button>
-      <button *ngIf="createNewSchool" mat-raised-button color=primary (click)="signup()">הרשמה</button>
-      <button mat-raised-button color="warn" (click)="clear()">נקה</button>
-    </mat-card-actions>
-  </mat-card>
-</div> -->
-
-
 <div class="page login-page">
   <div class="container d-flex align-items-center">
     <div class="form-holder has-shadow">
@@ -62,16 +19,6 @@
             <div class="content">
 
 
-
-              <!-- <form id="login-form" method="post"> -->
-              <!-- <div class="form-group">
-                  <input id="login-username" type="text" name="loginUsername" required="" class="input-material">
-                  <label for="login-username" class="label-material">User Name</label>
-                </div>
-                <div class="form-group">
-                  <input id="login-password" type="password" name="loginPassword" required="" class="input-material">
-                  <label for="login-password" class="label-material">Password</label>
-                </div> -->
 
               <form id="login-form" [formGroup]="form">
 
@@ -98,9 +45,10 @@
                   </mat-form-field>
                 </div>
 
+                <mat-spinner [diameter]=24 *ngIf="showProgress" [strokeWidth]="5"></mat-spinner>
+                <button *ngIf="!createNewSchool && !showProgress" id="login" class="btn btn-primary" (click)="login()">Login</button>
+                <button *ngIf="createNewSchool && !showProgress" mat-raised-button color=primary (click)="signup()">Sign Up</button>
 
-                <button *ngIf="!createNewSchool" id="login" class="btn btn-primary" (click)="login()">Login</button>
-                <button *ngIf="createNewSchool" mat-raised-button color=primary (click)="signup()">Sign Up</button>
 
               </form>
 

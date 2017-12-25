@@ -1573,7 +1573,7 @@ var NavComponent = (function () {
 /***/ "../../../../../src/app/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!-- <div class=\"app_main\">\n  <mat-card>\n    <mat-card-content>\n      <form [formGroup]=\"form\">\n\n        <div formGroupName=\"login\">\n          <h3>{{title}}</h3>\n          <mat-form-field>\n            <input matInput type=\"text\" formControlName=username placeholder=\"שם משתמש\">\n          </mat-form-field>\n          <div formGroupName=\"pass\">\n            <mat-form-field>\n              <input matInput type=\"password\" formControlName=password placeholder=\"סיסמה\">\n            </mat-form-field>\n            <mat-form-field *ngIf=\"createNewSchool\">\n              <input matInput type=\"password\" formControlName=verifyPassword placeholder=\"אימות סיסמה\">\n            </mat-form-field>\n          </div>\n        </div>\n\n        <div *ngIf=\"createNewSchool\" formGroupName=\"newSchool\">\n          <h3>יצירת בית ספר</h3>\n          <mat-form-field>\n            <input matInput type=\"text\" formControlName=name placeholder=\"שם בית הספר\">\n          </mat-form-field>\n          <mat-form-field>\n            <input matInput type=\"text\" formControlName=code placeholder=\"קוד בית הספר\">\n          </mat-form-field>\n        </div>\n\n      </form>\n\n    </mat-card-content>\n    <mat-card-actions>\n      <button *ngIf=\"!createNewSchool\" mat-raised-button color=primary (click)=\"login()\">כניסה</button>\n      <button *ngIf=\"!createNewSchool\" mat-raised-button color=accent (click)=\"changeCreateSchool()\">יצירת בית ספר</button>\n      <button *ngIf=\"createNewSchool\" mat-raised-button color=primary (click)=\"signup()\">הרשמה</button>\n      <button mat-raised-button color=\"warn\" (click)=\"clear()\">נקה</button>\n    </mat-card-actions>\n  </mat-card>\n</div> -->\n\n\n<div class=\"page login-page\">\n  <div class=\"container d-flex align-items-center\">\n    <div class=\"form-holder has-shadow\">\n      <div class=\"row\">\n\n        <div class=\"col-lg-6\">\n          <div class=\"info d-flex align-items-center\">\n            <div class=\"content\">\n              <div class=\"logo\">\n                <h1>Any Match</h1>\n              </div>\n              <p>Connecting Pepole To Optimal Group</p>\n            </div>\n          </div>\n        </div>\n\n        <div class=\"col-lg-6 bg-white\">\n          <div class=\"form d-flex align-items-center\">\n            <div class=\"content\">\n\n\n\n              <!-- <form id=\"login-form\" method=\"post\"> -->\n              <!-- <div class=\"form-group\">\n                  <input id=\"login-username\" type=\"text\" name=\"loginUsername\" required=\"\" class=\"input-material\">\n                  <label for=\"login-username\" class=\"label-material\">User Name</label>\n                </div>\n                <div class=\"form-group\">\n                  <input id=\"login-password\" type=\"password\" name=\"loginPassword\" required=\"\" class=\"input-material\">\n                  <label for=\"login-password\" class=\"label-material\">Password</label>\n                </div> -->\n\n              <form id=\"login-form\" [formGroup]=\"form\">\n\n                <div formGroupName=\"login\">\n                  <mat-form-field>\n                    <input matInput type=\"text\" formControlName=username placeholder=\"שם משתמש\">\n                  </mat-form-field>\n                  <div formGroupName=\"pass\">\n                    <mat-form-field>\n                      <input matInput type=\"password\" formControlName=password placeholder=\"סיסמה\">\n                    </mat-form-field>\n                    <mat-form-field *ngIf=\"createNewSchool\">\n                      <input matInput type=\"password\" formControlName=verifyPassword placeholder=\"אימות סיסמה\">\n                    </mat-form-field>\n                  </div>\n                </div>\n\n                <div *ngIf=\"createNewSchool\" formGroupName=\"newSchool\">\n                  <mat-form-field>\n                    <input matInput type=\"text\" formControlName=name placeholder=\"שם בית הספר\">\n                  </mat-form-field>\n                  <mat-form-field>\n                    <input matInput type=\"text\" formControlName=code placeholder=\"קוד בית הספר\">\n                  </mat-form-field>\n                </div>\n\n\n                <button *ngIf=\"!createNewSchool\" id=\"login\" class=\"btn btn-primary\" (click)=\"login()\">Login</button>\n                <button *ngIf=\"createNewSchool\" mat-raised-button color=primary (click)=\"signup()\">Sign Up</button>\n\n              </form>\n\n\n\n              <a href=\"#\" class=\"forgot-pass\">Forgot Password?</a>\n              <br>\n              <small *ngIf=\"!createNewSchool\">Do not have an account? </small>\n              <button *ngIf=\"!createNewSchool\" class=\"signup\" class=\"btn btn-primary\" (click)=\"changeCreateSchool()\">Create new school</button>\n\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n\n</div>"
+module.exports = "<div class=\"page login-page\">\n  <div class=\"container d-flex align-items-center\">\n    <div class=\"form-holder has-shadow\">\n      <div class=\"row\">\n\n        <div class=\"col-lg-6\">\n          <div class=\"info d-flex align-items-center\">\n            <div class=\"content\">\n              <div class=\"logo\">\n                <h1>Any Match</h1>\n              </div>\n              <p>Connecting Pepole To Optimal Group</p>\n            </div>\n          </div>\n        </div>\n\n        <div class=\"col-lg-6 bg-white\">\n          <div class=\"form d-flex align-items-center\">\n            <div class=\"content\">\n\n\n\n              <form id=\"login-form\" [formGroup]=\"form\">\n\n                <div formGroupName=\"login\">\n                  <mat-form-field>\n                    <input matInput type=\"text\" formControlName=username placeholder=\"שם משתמש\">\n                  </mat-form-field>\n                  <div formGroupName=\"pass\">\n                    <mat-form-field>\n                      <input matInput type=\"password\" formControlName=password placeholder=\"סיסמה\">\n                    </mat-form-field>\n                    <mat-form-field *ngIf=\"createNewSchool\">\n                      <input matInput type=\"password\" formControlName=verifyPassword placeholder=\"אימות סיסמה\">\n                    </mat-form-field>\n                  </div>\n                </div>\n\n                <div *ngIf=\"createNewSchool\" formGroupName=\"newSchool\">\n                  <mat-form-field>\n                    <input matInput type=\"text\" formControlName=name placeholder=\"שם בית הספר\">\n                  </mat-form-field>\n                  <mat-form-field>\n                    <input matInput type=\"text\" formControlName=code placeholder=\"קוד בית הספר\">\n                  </mat-form-field>\n                </div>\n\n                <mat-spinner [diameter]=24 *ngIf=\"showProgress\" [strokeWidth]=\"5\"></mat-spinner>\n                <button *ngIf=\"!createNewSchool && !showProgress\" id=\"login\" class=\"btn btn-primary\" (click)=\"login()\">Login</button>\n                <button *ngIf=\"createNewSchool && !showProgress\" mat-raised-button color=primary (click)=\"signup()\">Sign Up</button>\n\n\n              </form>\n\n\n\n              <a href=\"#\" class=\"forgot-pass\">Forgot Password?</a>\n              <br>\n              <small *ngIf=\"!createNewSchool\">Do not have an account? </small>\n              <button *ngIf=\"!createNewSchool\" class=\"signup\" class=\"btn btn-primary\" (click)=\"changeCreateSchool()\">Create new school</button>\n\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n\n</div>"
 
 /***/ }),
 
@@ -1662,6 +1662,7 @@ var LoginComponent = (function () {
         this.router = router;
         this.title = "כניסה";
         this._createNewSchool = false;
+        this._showProgress = false;
         this.form = fb.group({
             login: fb.group({
                 username: ["", __WEBPACK_IMPORTED_MODULE_1__angular_forms__["j" /* Validators */].required],
@@ -1686,6 +1687,7 @@ var LoginComponent = (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        this._showProgress = true;
                         u = {};
                         u["username"] = this.form.controls.login["controls"].username.value;
                         u["password"] = this.form.controls.login["controls"].pass.value.password;
@@ -1693,6 +1695,7 @@ var LoginComponent = (function () {
                     case 1:
                         user = _a.sent();
                         // console.log(user);
+                        this._showProgress = false;
                         if (!user["success"]) {
                             if (user["code"] == 1) {
                                 console.log("not found");
@@ -1751,6 +1754,11 @@ var LoginComponent = (function () {
         // console.log(group.controls["password"].value === group.controls["verifyPassword"].value);
         return group.controls["password"].value === group.controls["verifyPassword"].value;
     };
+    Object.defineProperty(LoginComponent.prototype, "showProgress", {
+        get: function () { return this._showProgress; },
+        enumerable: true,
+        configurable: true
+    });
     LoginComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'app-login',
@@ -1797,16 +1805,17 @@ var MaterialModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatInputModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["c" /* MatCardModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["i" /* MatIconModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["r" /* MatTableModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["s" /* MatTableModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["n" /* MatPaginatorModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["g" /* MatDialogModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["t" /* MatTooltipModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["s" /* MatToolbarModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["p" /* MatSidenavModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["u" /* MatTooltipModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["t" /* MatToolbarModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["q" /* MatSidenavModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["k" /* MatMenuModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["o" /* MatRadioModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["p" /* MatRadioModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["e" /* MatDatepickerModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["l" /* MatNativeDateModule */]
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["l" /* MatNativeDateModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["o" /* MatProgressSpinnerModule */]
             ],
             exports: [
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MatButtonModule */],
@@ -1814,16 +1823,17 @@ var MaterialModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatInputModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["c" /* MatCardModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["i" /* MatIconModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["r" /* MatTableModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["s" /* MatTableModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["n" /* MatPaginatorModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["g" /* MatDialogModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["t" /* MatTooltipModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["s" /* MatToolbarModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["p" /* MatSidenavModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["u" /* MatTooltipModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["t" /* MatToolbarModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["q" /* MatSidenavModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["k" /* MatMenuModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["o" /* MatRadioModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["p" /* MatRadioModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["e" /* MatDatepickerModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["l" /* MatNativeDateModule */]
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["l" /* MatNativeDateModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["o" /* MatProgressSpinnerModule */]
             ],
             declarations: []
         })

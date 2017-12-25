@@ -12,4 +12,5 @@ export class User extends Item {
     positivePrefer: string[];
     negativePrefer: string[];
     group: number;
+    gender: string;
 }

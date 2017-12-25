@@ -1,67 +1,80 @@
 <div class="settings">
   <div class="first_class">
-    <!-- <mat-card>
-      <h2>
-        <span>{{authService.getUser().username}}</span>
-      </h2> -->
     <mat-card>
-      <div>
-        <mat-form-field>
-          <input matInput placeholder="שם פרטי" [(ngModel)]="authService.getUser().fname" />
-        </mat-form-field>
+      <mat-card-header>
+        <mat-card-title>
+          פרטים אישיים
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div>
+          <mat-form-field>
+            <input matInput placeholder="שם פרטי" [(ngModel)]="user.fname" />
+          </mat-form-field>
 
-      </div>
-      <div>
-        <mat-form-field>
-          <input matInput placeholder="שם פרטי" [(ngModel)]="authService.getUser().lname" />
-        </mat-form-field>
-      </div>
-
-
-      <div>
-        <h3>
-          מין
-        </h3>
-        <mat-radio-group>
-          <mat-radio-button value="male">זכר</mat-radio-button>
-          <mat-radio-button value="female">נקבה</mat-radio-button>
-        </mat-radio-group>
-      </div>
+        </div>
+        <div>
+          <mat-form-field>
+            <input matInput placeholder="שם פרטי" [(ngModel)]="user.lname" />
+          </mat-form-field>
+        </div>
+        <div>
+          <h3>
+            מין
+          </h3>
+          <mat-radio-group>
+            <mat-radio-button [checked]="user.gender == 'male'" (change)="user.gender = 'male'" value="male">זכר</mat-radio-button>
+            <mat-radio-button [checked]="user.gender == 'female'" (change)="user.gender = 'female'" value="female">נקבה</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </mat-card-content>
     </mat-card>
-    <mat-card>
 
 
-      <section class="example-section">
-        <h2>
+
+
+    <mat-card class="example-section">
+      <mat-card-header>
+        <mat-card-title>
           תחביבים
-        </h2>
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
         <mat-checkbox *ngFor="let h of hobbies" class="example-margin">{{h}}</mat-checkbox>
         <mat-checkbox class="example-margin">ספורט</mat-checkbox>
-      </section>
+      </mat-card-content>
     </mat-card>
 
 
+
     <mat-card>
-      <div>
-        <mat-form-field>
-          <input matInput type=password placeholder="סיסמה" #pass />
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field>
-          <input matInput type=password placeholder="סיסמה חדשה" [(ngModel)]="password" />
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field>
-          <input matInput type=password placeholder="אימות סיסמה" [(ngModel)]="verifyPassword" />
-        </mat-form-field>
-      </div>
-      <div>{{errMessage}}</div>
-      <div>
+      <mat-card-header>
+        <mat-card-title>
+          אימות סיסמה
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div>
+          <mat-form-field>
+            <input matInput type=password placeholder="סיסמה" #pass />
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <input matInput type=password placeholder="סיסמה חדשה" [(ngModel)]="password" />
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <input matInput type=password placeholder="אימות סיסמה" [(ngModel)]="verifyPassword" />
+          </mat-form-field>
+        </div>
+        <div>{{errMessage}}</div>
+      </mat-card-content>
+      <mat-card-actions>
         <button mat-raised-button (click)="svae(pass.value)">שמור</button>
         <button mat-raised-button>נקה טופס</button>
-      </div>
+      </mat-card-actions>
     </mat-card>
 
 

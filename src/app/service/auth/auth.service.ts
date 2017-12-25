@@ -11,7 +11,7 @@ const UPDATE: string = "user/update"
 @Injectable()
 export class AuthService {
 
-  private _user: User;
+  public _user: User;
 
   constructor(private http: HttpService) {
 
@@ -83,14 +83,14 @@ export class AuthService {
 
   }
 
+
+
   public changePassword(password, newPassword) {
     this.http.post("user/changePassword", { user: this._user, password: password, newPassword: newPassword }).then(u => {
       if (u["success"]){
         this._user = u["user"];
         this._user.isLogin = true;
       }
-      
-      // console.log(u);
     });
 
   }

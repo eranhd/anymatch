@@ -203,12 +203,14 @@ export class LayerComponent extends ComponentBase implements OnInit {
         this.userService.addUser(result.user, this.authService.schoolId).then(u => {
           if (u["user"]) {
             s = u["user"];
+            s.fname = result.user.fname;
+            s.lname = result.user.lname;
             s.permission = "charge";
             s.layerId = this._layer._id;
             s.schoolId = this.authService.schoolId;
 
             this.userService.updateUser(s).then(ret => {
-              console.log(ret)
+              // console.log(ret)
             });
           }
         })

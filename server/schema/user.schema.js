@@ -14,7 +14,9 @@ const UserSchema = mongoose.Schema({
     permission: String,
     isLogin: Boolean,
     positivePrefer: Array,
-    negativePrefer: Array
+    negativePrefer: Array,
+    group: Number,
+    gender: String
 });
 
 

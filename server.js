@@ -117,7 +117,7 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
-let server = app.listen(3000, () => { console.log("listen to 3000") });
+let server = app.listen(8080, () => { console.log("listen to 8080") });
 
 //init socket for any user
 s = socket.init(server);

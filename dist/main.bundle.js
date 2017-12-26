@@ -2553,7 +2553,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var HttpService = (function () {
     function HttpService(http) {
         this.http = http;
-        this.path = "http://" + window.location.host + "/"; //"http://localhost:3000/";
+        this.path = (window.location.host == "localhost:3000" ? "http://" : "https://") + window.location.host + "/";
         this.header = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'Content-Type': 'application/json' });
         this.options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: this.header });
     }

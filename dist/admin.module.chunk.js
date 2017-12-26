@@ -122,7 +122,7 @@ var routes = [
 /***/ "../../../../../src/app/admin/dashboard/dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"dashboard\">\n\n  <app-pages-header [items]=headerCards></app-pages-header>\n\n  <div class=\"two_column\">\n    <section>\n      <mat-card>\n        <mat-card-header>\n\n          <mat-card-title>\n            <mat-icon>\n              timer\n            </mat-icon>\n            זמן שנותר עד נעילת השיבוץ הקרוב\n          </mat-card-title>\n        </mat-card-header>\n\n      </mat-card>\n\n      <mat-card>\n        <mat-card-header>\n\n          <mat-card-title>\n            <mat-icon>\n              charts\n            </mat-icon>\n            פידבק מתלמידים שעברו שיבוץ\n          </mat-card-title>\n        </mat-card-header>\n        <mat-card-content>\n          <canvas baseChart \n          [data]=\"authService.feedback ? authService.feedback : [] \" \n          [labels]=\"[0, 1,2,3,4]\" \n          [options]=\"{ responsive: true }\" \n          [chartType]=\"'bar'\" \n          [colors]=\"[{\n            backgroundColor:'#9b9ba5'\n          }]\"\n          [labels]=\"['']\"\n          ></canvas>\n        </mat-card-content>\n      </mat-card>\n\n      <!-- \n            \n       -->\n      <mat-card>\n        <mat-card-header>\n\n          <mat-card-title>\n            <mat-icon>\n              notifications\n            </mat-icon>\n            התראות\n          </mat-card-title>\n        </mat-card-header>\n        <mat-card-content>\n          בפיתוח\n        </mat-card-content>\n      </mat-card>\n      <mat-card>\n        <mat-card-header>\n          <mat-card-title>\n            <mat-icon>\n              help\n            </mat-icon>\n            עזרה וטיפים\n          </mat-card-title>\n        </mat-card-header>\n        <mat-card-content>\n          בפיתוח\n        </mat-card-content>\n      </mat-card>\n    </section>\n    <section>\n      <mat-card>\n        <mat-card-header>\n          <mat-card-title>\n            <mat-icon>\n              info\n            </mat-icon>\n            פעולות אחרונות\n          </mat-card-title>\n        </mat-card-header>\n        <mat-card-content class=\"last_operation_content\">\n          <div class=\"operation\" [class.odd]=\"i%2 != 0\" *ngFor=\"let o of authService.lastOperation; let i = index\">\n            <mat-icon>\n              {{o.icon}}\n            </mat-icon>\n            <span>\n              {{o.text}}\n            </span>\n          </div>\n        </mat-card-content>\n\n      </mat-card>\n      <mat-card>\n        <mat-card-header>\n          <mat-card-title>\n            <mat-icon>\n              message\n            </mat-icon>\n            הודעות אחרונות\n          </mat-card-title>\n        </mat-card-header>\n        <mat-card-content>\n          בפיתוח\n        </mat-card-content>\n      </mat-card>\n    </section>\n  </div>\n\n</div>"
+module.exports = "<div class=\"dashboard\">\n\n  <app-pages-header [items]=headerCards></app-pages-header>\n\n  <div class=\"two_column\">\n    <section>\n      <mat-card>\n        <mat-card-header>\n\n          <mat-card-title>\n            <mat-icon>\n              timer\n            </mat-icon>\n            זמן שנותר עד נעילת השיבוץ הקרוב\n          </mat-card-title>\n        </mat-card-header>\n\n      </mat-card>\n\n      <mat-card>\n        <mat-card-header>\n\n          <mat-card-title>\n            <mat-icon>\n              show_chart\n            </mat-icon>\n            פידבק מתלמידים שעברו שיבוץ\n          </mat-card-title>\n        </mat-card-header>\n        <mat-card-content>\n          <canvas baseChart \n          [data]=\"authService.feedback ? authService.feedback : [] \" \n          [labels]=\"[0, 1,2,3,4]\" \n          [options]=\"{ responsive: true }\" \n          [chartType]=\"'bar'\" \n          [colors]=\"[{\n            backgroundColor:'#9b9ba5'\n          }]\"\n          [labels]=\"['']\"\n          ></canvas>\n        </mat-card-content>\n      </mat-card>\n\n      <!-- \n            \n       -->\n      <mat-card>\n        <mat-card-header>\n\n          <mat-card-title>\n            <mat-icon>\n              notifications\n            </mat-icon>\n            התראות\n          </mat-card-title>\n        </mat-card-header>\n        <mat-card-content>\n          בפיתוח\n        </mat-card-content>\n      </mat-card>\n      <mat-card>\n        <mat-card-header>\n          <mat-card-title>\n            <mat-icon>\n              help\n            </mat-icon>\n            עזרה וטיפים\n          </mat-card-title>\n        </mat-card-header>\n        <mat-card-content>\n          בפיתוח\n        </mat-card-content>\n      </mat-card>\n    </section>\n    <section>\n      <mat-card>\n        <mat-card-header>\n          <mat-card-title>\n            <mat-icon>\n              info\n            </mat-icon>\n            פעולות אחרונות\n          </mat-card-title>\n        </mat-card-header>\n        <mat-card-content class=\"last_operation_content\">\n          <div class=\"operation\" [class.odd]=\"i%2 != 0\" *ngFor=\"let o of authService.lastOperation; let i = index\">\n            <mat-icon>\n              {{o.icon}}\n            </mat-icon>\n            <span>\n              {{o.text}}\n            </span>\n          </div>\n        </mat-card-content>\n\n      </mat-card>\n      <mat-card>\n        <mat-card-header>\n          <mat-card-title>\n            <mat-icon>\n              message\n            </mat-icon>\n            הודעות אחרונות\n          </mat-card-title>\n        </mat-card-header>\n        <mat-card-content>\n          בפיתוח\n        </mat-card-content>\n      </mat-card>\n    </section>\n  </div>\n\n</div>"
 
 /***/ }),
 
@@ -186,7 +186,7 @@ var DashboardComponent = (function () {
         this.dialog = dialog;
         this.displayedColumns = ['position', 'name', 'class_rooms', 'students'];
         this.layerService.layers.subscribe(function (res) {
-            _this.dataSource = new __WEBPACK_IMPORTED_MODULE_4__angular_material__["r" /* MatTableDataSource */](res);
+            _this.dataSource = new __WEBPACK_IMPORTED_MODULE_4__angular_material__["s" /* MatTableDataSource */](res);
         });
     }
     DashboardComponent.prototype.update = function () {
@@ -217,7 +217,7 @@ var DashboardComponent = (function () {
         this.headerCards = [
             new __WEBPACK_IMPORTED_MODULE_2__models__["c" /* HeaderCard */]("person", "מספר סטודנטים", this.userService.num, "#ff7676"),
             new __WEBPACK_IMPORTED_MODULE_2__models__["c" /* HeaderCard */]("school", "מספר שכבות", this.layerService.num, "#796aee"),
-            new __WEBPACK_IMPORTED_MODULE_2__models__["c" /* HeaderCard */]("done", "שיבוצים שבוצעו", this.userService.num, "#ffc36d"),
+            new __WEBPACK_IMPORTED_MODULE_2__models__["c" /* HeaderCard */]("done", "שיבוצים שבוצעו", this.schoolService.numOfMatch, "#ffc36d"),
             new __WEBPACK_IMPORTED_MODULE_2__models__["c" /* HeaderCard */]("sync", "שיבוצים בתהליך", this.userService.num, "#54e69d")
         ];
     };
@@ -238,8 +238,8 @@ var DashboardComponent = (function () {
         });
     };
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__WEBPACK_IMPORTED_MODULE_4__angular_material__["m" /* MatPaginator */]),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_4__angular_material__["m" /* MatPaginator */])
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__WEBPACK_IMPORTED_MODULE_4__angular_material__["n" /* MatPaginator */]),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_4__angular_material__["n" /* MatPaginator */])
     ], DashboardComponent.prototype, "paginator", void 0);
     DashboardComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
@@ -255,7 +255,7 @@ var DashboardComponent = (function () {
             __WEBPACK_IMPORTED_MODULE_1__service__["d" /* LayerService */],
             __WEBPACK_IMPORTED_MODULE_1__service__["b" /* ClassService */],
             __WEBPACK_IMPORTED_MODULE_1__service__["g" /* UserService */],
-            __WEBPACK_IMPORTED_MODULE_4__angular_material__["f" /* MatDialog */]])
+            __WEBPACK_IMPORTED_MODULE_4__angular_material__["g" /* MatDialog */]])
     ], DashboardComponent);
     return DashboardComponent;
 }());
@@ -437,13 +437,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 
 var LayerComponent = (function (_super) {
     __extends(LayerComponent, _super);
-    function LayerComponent(activatedRoute, layerService, userService, fb, authService, http, dialog, navService) {
+    function LayerComponent(activatedRoute, layerService, userService, fb, authService, http, schoolService, dialog, navService) {
         var _this = _super.call(this, navService) || this;
         _this.activatedRoute = activatedRoute;
         _this.layerService = layerService;
         _this.userService = userService;
         _this.authService = authService;
         _this.http = http;
+        _this.schoolService = schoolService;
         _this.dialog = dialog;
         _this._addStudentFlag = false;
         _this.addStudentButtonText = "הוסף תלמיד";
@@ -504,9 +505,7 @@ var LayerComponent = (function (_super) {
     };
     Object.defineProperty(LayerComponent.prototype, "lockTime", {
         set: function (e) {
-            // console.log(e)
             this._layer.lockTime = e;
-            // console.log(this._layer);
             this.layerService.updateLayer(this._layer).then(function (res) { });
         },
         enumerable: true,
@@ -602,6 +601,7 @@ var LayerComponent = (function (_super) {
                     case 0: return [4 /*yield*/, this.layerService.saveMatch(this.graph, this._layer._id)];
                     case 1:
                         _a.sent();
+                        this.schoolService.addMatch();
                         return [2 /*return*/];
                 }
             });
@@ -615,7 +615,8 @@ var LayerComponent = (function (_super) {
             data: {
                 user: s,
                 positive: this.userService.getUsersByLayer(this._layer._id).filter(function (u) { return s.positivePrefer.includes(u._id); }),
-                negative: this.userService.getUsersByLayer(this._layer._id).filter(function (u) { return s.negativePrefer.includes(u._id); })
+                negative: this.userService.getUsersByLayer(this._layer._id).filter(function (u) { return s.negativePrefer.includes(u._id); }),
+                students: this._students
             }
         });
         dialogRef.afterClosed().subscribe(function (result) {
@@ -664,7 +665,8 @@ var LayerComponent = (function (_super) {
             __WEBPACK_IMPORTED_MODULE_3__service__["g" /* UserService */],
             __WEBPACK_IMPORTED_MODULE_4__angular_forms__["b" /* FormBuilder */],
             __WEBPACK_IMPORTED_MODULE_3__service__["a" /* AuthService */], __WEBPACK_IMPORTED_MODULE_5__angular_http__["b" /* Http */],
-            __WEBPACK_IMPORTED_MODULE_6__angular_material__["f" /* MatDialog */],
+            __WEBPACK_IMPORTED_MODULE_3__service__["f" /* SchoolService */],
+            __WEBPACK_IMPORTED_MODULE_6__angular_material__["g" /* MatDialog */],
             __WEBPACK_IMPORTED_MODULE_9__service_nav_nav_service__["a" /* NavService */]])
     ], LayerComponent);
     return LayerComponent;
@@ -741,7 +743,7 @@ var NewLayerChargeDialogComponent = (function () {
             encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewEncapsulation"].None
         }),
         __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Optional"])()), __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_1__angular_material__["a" /* MAT_DIALOG_DATA */])),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_material__["h" /* MatDialogRef */], Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_material__["i" /* MatDialogRef */], Object])
     ], NewLayerChargeDialogComponent);
     return NewLayerChargeDialogComponent;
 }());
@@ -753,7 +755,7 @@ var NewLayerChargeDialogComponent = (function () {
 /***/ "../../../../../src/app/admin/layer/open-student-dialog/open-student-dialog.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<mat-card class=\"show-student-card\">\n  <mat-card-header>\n    <mat-card-title>\n      {{data?.user?.fname}} {{data?.user?.lname}}\n    </mat-card-title>\n    <mat-card-subtitle>\n      בלחיצה על אחד הכרטיסיות יוסר התלמיד מהרשימה\n    </mat-card-subtitle>\n  </mat-card-header>\n\n  <mat-card-content>\n    <h2>\n      תלמידים שנבחרו\n    </h2>\n    <div class=\"div_card_student\">\n      <div class=\"inner_div\" *ngFor=\"let u of data?.positive\">\n        <app-card-student (click)=\"removeStudent(u._id, true)\" [user]=u [color]=\"'#54e69d'\"></app-card-student>\n      </div>\n      <div class=\"inner_div\" *ngFor=\"let u of data?.negative\">\n        <app-card-student (click)=\"removeStudent(u._id, false)\" [user]=u [color]=\"'#ff7676'\"></app-card-student>\n      </div>\n      <div *ngIf=\"data?.positive?.length == 0 && data?.negative?.length == 0 \">\n        לא נבחרו תלמידים\n      </div>\n    </div>\n  </mat-card-content>\n\n  <mat-card-actions>\n    <button mat-raised-button (click)=\"save()\">\n      שמור\n    </button>\n    <button mat-raised-button (click)=\"onNoClick()\">\n      בטל\n    </button>\n  </mat-card-actions>\n</mat-card>"
+module.exports = "<mat-card class=\"show-student-card\">\n  <mat-card-header>\n    <mat-card-title>\n      {{data?.user?.fname}} {{data?.user?.lname}}\n    </mat-card-title>\n    <mat-card-subtitle>\n      בלחיצה על אחד הכרטיסיות יוסר התלמיד מהרשימה\n    </mat-card-subtitle>\n  </mat-card-header>\n\n  <mat-card-content>\n    <h3>\n      <form class=\"example-form\">\n        <mat-form-field class=\"example-full-width\">\n          <input type=\"text\" placeholder=\"הוסף לרשימה\" matInput name=\"addUserInput\" [(ngModel)]=addUser [matAutocomplete]=\"auto\">\n          <mat-autocomplete #auto=\"matAutocomplete\">\n            <mat-option *ngFor=\"let u of students\" [value]=\"u.username \">\n              {{u.fname + ' ' + u.lname }}\n            </mat-option>\n          </mat-autocomplete>\n        </mat-form-field>\n        <button mat-icon-button matTooltip=\"הוסף לרשימת העדפות חיוביות\" (click)=addtoPositive()>\n          <mat-icon>\n            arrow_drop_up\n          </mat-icon>\n        </button>\n        <button mat-icon-button matTooltip=\"הוסף לרשימת העדפות שליליות\" (click)=addToNegative()>\n          <mat-icon>\n            arrow_drop_down\n          </mat-icon>\n        </button>\n        <button mat-icon-button matTooltip=\"מנע משני הסטודנטים להשתבץ יחד\">\n          <mat-icon>\n            block\n          </mat-icon>\n        </button>\n      </form>\n    </h3>\n    <h3>\n      תלמידים שנבחרו\n    </h3>\n    <div class=\"div_card_student\">\n      <div class=\"inner_div\" *ngFor=\"let u of pos\">\n        <app-card-student (click)=\"removeStudent(u._id, true)\" [user]=u [color]=\"'#54e69d'\"></app-card-student>\n      </div>\n      <div class=\"inner_div\" *ngFor=\"let u of neg\">\n        <app-card-student (click)=\"removeStudent(u._id, false)\" [user]=u [color]=\"'#ff7676'\"></app-card-student>\n      </div>\n      <div *ngIf=\"data?.positive?.length == 0 && data?.negative?.length == 0 \">\n        לא נבחרו תלמידים\n      </div>\n    </div>\n  </mat-card-content>\n\n  <mat-card-actions>\n    <button mat-raised-button (click)=\"save()\">\n      שמור\n    </button>\n    <button mat-raised-button (click)=\"onNoClick()\">\n      בטל\n    </button>\n  </mat-card-actions>\n</mat-card>"
 
 /***/ }),
 
@@ -819,6 +821,55 @@ var OpenStudentDialogComponent = (function () {
     OpenStudentDialogComponent.prototype.save = function () {
         this.dialogRef.close({ success: true, user: this.data.user });
     };
+    Object.defineProperty(OpenStudentDialogComponent.prototype, "students", {
+        get: function () {
+            return this.data.students;
+            // return this.data.students.map(u =>  u.fname + " " + u.lname );
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(OpenStudentDialogComponent.prototype, "addUser", {
+        get: function () {
+            return this._addUser;
+        },
+        set: function (u) {
+            console.log(u);
+            this._addUser = u;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    OpenStudentDialogComponent.prototype.addtoPositive = function () {
+        var _this = this;
+        var u = this.students.find(function (u) { return u.username == _this._addUser; });
+        // console.log(u)
+        this.data.user.positivePrefer.push(u._id);
+        this.data.positivePrefer ? this.data.positivePrefer.push(u) : this.data.positivePrefer = [u];
+        console.log(this.data.user);
+        this._addUser = "";
+    };
+    OpenStudentDialogComponent.prototype.addToNegative = function () {
+        var _this = this;
+        var u = this.students.find(function (u) { return u.username = _this._addUser; });
+        this.data.user.negativePrefer.push(u._id);
+        this.data.negativePrefer ? this.data.negativePrefer.push(u) : this.data.negativePrefer = [u];
+        this._addUser = "";
+    };
+    Object.defineProperty(OpenStudentDialogComponent.prototype, "pos", {
+        get: function () {
+            return this.data.positivePrefer ? this.data.positivePrefer : [];
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(OpenStudentDialogComponent.prototype, "neg", {
+        get: function () {
+            return this.data.negativePrefer ? this.data.negativePrefer : [];
+        },
+        enumerable: true,
+        configurable: true
+    });
     OpenStudentDialogComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-open-student-dialog',
@@ -827,7 +878,7 @@ var OpenStudentDialogComponent = (function () {
             encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewEncapsulation"].None
         }),
         __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Optional"])()), __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_1__angular_material__["a" /* MAT_DIALOG_DATA */])),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_material__["h" /* MatDialogRef */], Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_material__["i" /* MatDialogRef */], Object])
     ], OpenStudentDialogComponent);
     return OpenStudentDialogComponent;
 }());
@@ -957,7 +1008,7 @@ var LayersComponent = (function (_super) {
             encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewEncapsulation"].None
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__service_index__["d" /* LayerService */],
-            __WEBPACK_IMPORTED_MODULE_3__angular_material__["f" /* MatDialog */],
+            __WEBPACK_IMPORTED_MODULE_3__angular_material__["g" /* MatDialog */],
             __WEBPACK_IMPORTED_MODULE_1__service_index__["a" /* AuthService */],
             __WEBPACK_IMPORTED_MODULE_1__service_index__["g" /* UserService */],
             __WEBPACK_IMPORTED_MODULE_7__service_nav_nav_service__["a" /* NavService */]])

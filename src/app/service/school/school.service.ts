@@ -23,7 +23,7 @@ export class SchoolService extends ControlerService {
 
   public async initSchool(id: string) {
     // console.log(id)
-    this.userService.getAllUsers(id).then(res=>{});
+    this.userService.getAllUsers(id).then(res => { });
     const s = await this.getById(id);
     this._school = s;
     return this._school;
@@ -68,6 +68,15 @@ export class SchoolService extends ControlerService {
 
   public addClass() {
 
+  }
+
+  public addMatch() {
+    this._school.numOfMatch++;
+    this.updateSchool();
+  }
+
+  public get numOfMatch(){
+    return this._school.numOfMatch ? this._school.numOfMatch : 0;
   }
 
 

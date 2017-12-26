@@ -73,7 +73,7 @@ var DialogNewLayer = (function () {
             template: __webpack_require__("../../../../../src/app/admin/dashboard/dialog new layer/dialog-new-layer.html"),
         }),
         __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_2__angular_material__["a" /* MAT_DIALOG_DATA */])), __param(2, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_1__angular_forms__["b" /* FormBuilder */])),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_material__["h" /* MatDialogRef */], Object, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["b" /* FormBuilder */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_material__["i" /* MatDialogRef */], Object, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["b" /* FormBuilder */]])
     ], DialogNewLayer);
     return DialogNewLayer;
 }());
@@ -149,7 +149,7 @@ var DialogEditLayer = (function () {
         }),
         __param(2, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_2__angular_material__["a" /* MAT_DIALOG_DATA */])),
         __param(3, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_1__angular_forms__["b" /* FormBuilder */])),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_material__["h" /* MatDialogRef */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_material__["i" /* MatDialogRef */],
             __WEBPACK_IMPORTED_MODULE_3__angular_router__["b" /* Router */], Object, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["b" /* FormBuilder */]])
     ], DialogEditLayer);
     return DialogEditLayer;
@@ -1808,40 +1808,42 @@ var MaterialModule = (function () {
     MaterialModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MatButtonModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["d" /* MatCheckboxModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatInputModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["c" /* MatCardModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["i" /* MatIconModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["s" /* MatTableModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["n" /* MatPaginatorModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["g" /* MatDialogModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["u" /* MatTooltipModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["t" /* MatToolbarModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["q" /* MatSidenavModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["k" /* MatMenuModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["p" /* MatRadioModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["e" /* MatDatepickerModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["l" /* MatNativeDateModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["o" /* MatProgressSpinnerModule */]
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["c" /* MatButtonModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["e" /* MatCheckboxModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["k" /* MatInputModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["d" /* MatCardModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatIconModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["t" /* MatTableModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["o" /* MatPaginatorModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["h" /* MatDialogModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["v" /* MatTooltipModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["u" /* MatToolbarModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["r" /* MatSidenavModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["l" /* MatMenuModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["q" /* MatRadioModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["f" /* MatDatepickerModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["m" /* MatNativeDateModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["p" /* MatProgressSpinnerModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MatAutocompleteModule */]
             ],
             exports: [
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MatButtonModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["d" /* MatCheckboxModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatInputModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["c" /* MatCardModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["i" /* MatIconModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["s" /* MatTableModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["n" /* MatPaginatorModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["g" /* MatDialogModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["u" /* MatTooltipModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["t" /* MatToolbarModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["q" /* MatSidenavModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["k" /* MatMenuModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["p" /* MatRadioModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["e" /* MatDatepickerModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["l" /* MatNativeDateModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["o" /* MatProgressSpinnerModule */]
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["c" /* MatButtonModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["e" /* MatCheckboxModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["k" /* MatInputModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["d" /* MatCardModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatIconModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["t" /* MatTableModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["o" /* MatPaginatorModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["h" /* MatDialogModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["v" /* MatTooltipModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["u" /* MatToolbarModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["r" /* MatSidenavModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["l" /* MatMenuModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["q" /* MatRadioModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["f" /* MatDatepickerModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["m" /* MatNativeDateModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["p" /* MatProgressSpinnerModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MatAutocompleteModule */]
             ],
             declarations: []
         })
@@ -2501,7 +2503,6 @@ var ClassService = (function (_super) {
                         return [4 /*yield*/, this.getAll(schoolId)];
                     case 1:
                         _a._class = _b.sent();
-                        console.log(this._class);
                         return [2 /*return*/];
                 }
             });
@@ -3453,6 +3454,17 @@ var SchoolService = (function (_super) {
     };
     SchoolService.prototype.addClass = function () {
     };
+    SchoolService.prototype.addMatch = function () {
+        this._school.numOfMatch++;
+        this.updateSchool();
+    };
+    Object.defineProperty(SchoolService.prototype, "numOfMatch", {
+        get: function () {
+            return this._school.numOfMatch ? this._school.numOfMatch : 0;
+        },
+        enumerable: true,
+        configurable: true
+    });
     SchoolService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__http_http_service__["a" /* HttpService */],
@@ -3549,11 +3561,12 @@ var UserService = (function (_super) {
         var _this = this;
         return new Promise(function (res, rej) {
             _this.update(user).then(function (updateduser) {
-                _this._users.map(function (u) {
+                _this._users = _this._users.map(function (u) {
                     if (u._id != user._id)
                         return u;
+                    return user;
                 });
-                _this._users.push(user);
+                // this._users.push(user);
                 _this.ob.next(_this._users);
                 res(updateduser);
             });

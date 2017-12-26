@@ -32,6 +32,7 @@ export class LayerComponent extends ComponentBase implements OnInit {
     public userService: UserService,
     @Inject(FormBuilder) fb: FormBuilder,
     private authService: AuthService, private http: Http,
+    private schoolService: SchoolService,
     public dialog: MatDialog,
     navService: NavService) {
 
@@ -90,9 +91,7 @@ export class LayerComponent extends ComponentBase implements OnInit {
   }
 
   public set lockTime(e) {
-    // console.log(e)
     this._layer.lockTime = e;
-    // console.log(this._layer);
     this.layerService.updateLayer(this._layer).then(res => { })
   }
 
@@ -171,7 +170,8 @@ export class LayerComponent extends ComponentBase implements OnInit {
   }
 
   public async saveMatch() {
-    await this.layerService.saveMatch(this.graph, this._layer._id)
+    await this.layerService.saveMatch(this.graph, this._layer._id);
+    this.schoolService.addMatch();
   }
 
   public openStudent(s: User) {
@@ -181,7 +181,8 @@ export class LayerComponent extends ComponentBase implements OnInit {
       data: {
         user: s,
         positive: this.userService.getUsersByLayer(this._layer._id).filter(u => s.positivePrefer.includes(u._id)),
-        negative: this.userService.getUsersByLayer(this._layer._id).filter(u => s.negativePrefer.includes(u._id))
+        negative: this.userService.getUsersByLayer(this._layer._id).filter(u => s.negativePrefer.includes(u._id)),
+        students: this._students  
       }
     });
 
@@ -225,11 +226,5 @@ export class LayerComponent extends ComponentBase implements OnInit {
     });
 
   }
-
-  // public search(str) {
-  //   this._students = this._students.filter(s =>
-  //     s.fname.includes(str) || s.lname.includes(str) || s.username.includes(str)
-  //   )
-  // }
 
 }

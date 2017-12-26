@@ -4,6 +4,7 @@ export class School extends Item {
     code: string;
     layersId: string[];
     usersId: string[];
+    numOfMatch: 0;
 }
 
 export class SchoolViewModel extends School {

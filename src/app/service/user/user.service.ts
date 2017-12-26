@@ -27,11 +27,12 @@ export class UserService extends ControlerService {
   public updateUser(user) {
     return new Promise((res, rej) => {
       this.update<User>(user).then(updateduser => {
-        this._users.map(u => {
+        this._users = this._users.map(u => {
           if (u._id != user._id)
             return u
+          return user
         });
-        this._users.push(user);
+        // this._users.push(user);
         this.ob.next(this._users);
         res(updateduser);
       });

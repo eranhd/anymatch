@@ -9,14 +9,41 @@
   </mat-card-header>
 
   <mat-card-content>
-    <h2>
+    <h3>
+      <form class="example-form">
+        <mat-form-field class="example-full-width">
+          <input type="text" placeholder="הוסף לרשימה" matInput name="addUserInput" [(ngModel)]=addUser [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let u of students" [value]="u.username ">
+              {{u.fname + ' ' + u.lname }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <button mat-icon-button matTooltip="הוסף לרשימת העדפות חיוביות" (click)=addtoPositive()>
+          <mat-icon>
+            arrow_drop_up
+          </mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="הוסף לרשימת העדפות שליליות" (click)=addToNegative()>
+          <mat-icon>
+            arrow_drop_down
+          </mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="מנע משני הסטודנטים להשתבץ יחד">
+          <mat-icon>
+            block
+          </mat-icon>
+        </button>
+      </form>
+    </h3>
+    <h3>
       תלמידים שנבחרו
-    </h2>
+    </h3>
     <div class="div_card_student">
-      <div class="inner_div" *ngFor="let u of data?.positive">
+      <div class="inner_div" *ngFor="let u of pos">
         <app-card-student (click)="removeStudent(u._id, true)" [user]=u [color]="'#54e69d'"></app-card-student>
       </div>
-      <div class="inner_div" *ngFor="let u of data?.negative">
+      <div class="inner_div" *ngFor="let u of neg">
         <app-card-student (click)="removeStudent(u._id, false)" [user]=u [color]="'#ff7676'"></app-card-student>
       </div>
       <div *ngIf="data?.positive?.length == 0 && data?.negative?.length == 0 ">

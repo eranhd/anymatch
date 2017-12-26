@@ -18,7 +18,7 @@ export class ClassService extends ControlerService {
 
   public async getAllClass(schoolId: string) {
     this._class = await this.getAll<Class[]>(schoolId);
-    console.log(this._class);
+    // console.log(this._class);
   }
 
   public addClass(clas, schoolId): Promise<Class> {

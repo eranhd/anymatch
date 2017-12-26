@@ -15,7 +15,8 @@ import {
   MatRadioModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatAutocompleteModule
 
 } from '@angular/material';
 // import { MatMomentDateModule } from "@angular/material-moment-adapter";
@@ -41,7 +42,8 @@ import {
     MatRadioModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatAutocompleteModule
   ],
   exports: [
     MatButtonModule,
@@ -59,7 +61,8 @@ import {
     MatRadioModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatAutocompleteModule
   ],
   declarations: []
 })

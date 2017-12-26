@@ -3,16 +3,7 @@ const config = require("../config/database");
 
 
 let db;
-// let sId = "";
-// function DB(schoolId) {
 function DB() {
-    // console.log(schoolId)
-    // if (schoolId)
-    //     sId = schoolId;
-    // else
-    //     db = "";
-    // db = mongojs(config.database + mongojs.ObjectId(schoolId));
-    // else
     db = mongojs(config.database + "anymatch");
 
 }

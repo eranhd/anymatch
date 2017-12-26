@@ -38,7 +38,7 @@ var ClientModule = (function () {
     function ClientModule() {
     }
     ClientModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["K" /* NgModule */])({
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
             imports: [
                 __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
                 __WEBPACK_IMPORTED_MODULE_5__material_material_module__["a" /* MaterialModule */],
@@ -93,7 +93,7 @@ var routes = [
 /***/ "../../../../../src/app/client/dashboard/dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"dashboard_client\">\r\n    <app-pages-header [items]=headerCards></app-pages-header>\r\n\r\n    <div class=\"two_column\">\r\n        <section>\r\n            <mat-card>\r\n                <mat-card-header>\r\n                    <mat-card-title>\r\n                        <mat-icon>\r\n                            access_time\r\n                        </mat-icon>\r\n                        תאריך אחרון לבחירת העדפות\r\n                    </mat-card-title>\r\n                </mat-card-header>\r\n                <mat-card-content>\r\n                    {{timer ?( timer | date:\"dd.MM.yyy\") : \"שיבוץ נעול\"}}\r\n                </mat-card-content>\r\n            </mat-card>\r\n            <mat-card>\r\n                <mat-card-header>\r\n                    <mat-card-title>\r\n                        <mat-icon>\r\n                            person\r\n                        </mat-icon>\r\n                        הבחירות שלי\r\n                    </mat-card-title>\r\n                </mat-card-header>\r\n\r\n                <mat-card-content class=\"prefers\">\r\n                    <div class=\"inner_div\" *ngFor=\"let u of positive\">\r\n                        <app-card-student [color]=\"'#54e69d'\" [user]=u></app-card-student>\r\n                    </div>\r\n                    <div class=\"inner_div\" *ngFor=\"let u of negative\">\r\n                        <app-card-student [user]=u [color]=\"'#ff7676'\"></app-card-student>\r\n                    </div>\r\n                </mat-card-content>\r\n            </mat-card>\r\n            <mat-card>\r\n                <mat-card-header>\r\n                    <mat-card-title>\r\n                        <mat-icon>\r\n                            help\r\n                        </mat-icon>\r\n                        עזרה וטיפים\r\n                    </mat-card-title>\r\n                </mat-card-header>\r\n                <ul>\r\n                    <li>\r\n                        כדי לבחור תלמידים שברצונך להשתבץ איתם, כנסו לעמוד \"השכבה שלי\" והתחילו לבחור\r\n                    </li>\r\n                    <li>\r\n                        לאחר שחלוקה לכיתות הסתיימה, תוכלו לראות את הכיתה שלכם בדף \"הכיתה שלי\"\r\n                    </li>\r\n                    <li>\r\n                        שיבוץ חכם יותר יתבצע אם תמלאו בהגדרות את שדה התחביבים\r\n                    </li>\r\n                </ul>\r\n                <mat-card-content>\r\n\r\n                </mat-card-content>\r\n            </mat-card>\r\n        </section>\r\n        <section>\r\n            <mat-card>\r\n                <mat-card-header>\r\n                    <mat-card-title>\r\n                        <mat-icon>\r\n                            feedback\r\n                        </mat-icon>\r\n                        משוב על שיבוץ\r\n                    </mat-card-title>\r\n                </mat-card-header>\r\n                <mat-card-content class=\"last_feedback_content\">\r\n\r\n                    <div class=\"feedback\" [class.odd]=\"i%2 != 0\" *ngFor=\"let f of feedback; let i = index\">\r\n                        <strong>\r\n                            {{f}}\r\n                        </strong>\r\n                        <mat-radio-group [(ngModel)]=\"result[i]\">\r\n                            <mat-radio-button *ngFor=\"let j of grade\" [value]=\"j\">\r\n                                {{j}}\r\n                            </mat-radio-button>\r\n                        </mat-radio-group>\r\n                    </div>\r\n                </mat-card-content>\r\n                <mat-card-actions>\r\n                    <button mat-raised-button>\r\n                            שלח\r\n                        <mat-icon class=\"send_icon\">\r\n                            send\r\n                        </mat-icon>\r\n                        \r\n                    </button>\r\n                </mat-card-actions>\r\n            </mat-card>\r\n            <mat-card>\r\n                <mat-card-header>\r\n                    <mat-card-title>\r\n                        <mat-icon>\r\n                            info\r\n                        </mat-icon>\r\n                        פעולות אחרונות\r\n                    </mat-card-title>\r\n                </mat-card-header>\r\n                <mat-card-content>\r\n                    בפיתוח\r\n                </mat-card-content>\r\n            </mat-card>\r\n            <mat-card>\r\n                <mat-card-header>\r\n                    <mat-card-title>\r\n                        <mat-icon>\r\n                            message\r\n                        </mat-icon>\r\n                        הודעות אחרונות\r\n                    </mat-card-title>\r\n                </mat-card-header>\r\n                <mat-card-content>\r\n                    בפיתוח\r\n                </mat-card-content>\r\n            </mat-card>\r\n        </section>\r\n    </div>\r\n\r\n</div>"
+module.exports = "<div class=\"dashboard_client\">\r\n    <app-pages-header [items]=headerCards></app-pages-header>\r\n\r\n    <div class=\"two_column\">\r\n        <section>\r\n            <mat-card>\r\n                <mat-card-header>\r\n                    <mat-card-title>\r\n                        <mat-icon>\r\n                            access_time\r\n                        </mat-icon>\r\n                        תאריך אחרון לבחירת העדפות\r\n                    </mat-card-title>\r\n                </mat-card-header>\r\n                <mat-card-content>\r\n                    {{timer ?( timer | date:\"dd.MM.yyy\") : \"שיבוץ נעול\"}}\r\n                </mat-card-content>\r\n            </mat-card>\r\n            <mat-card>\r\n                <mat-card-header>\r\n                    <mat-card-title>\r\n                        <mat-icon>\r\n                            person\r\n                        </mat-icon>\r\n                        הבחירות שלי\r\n                    </mat-card-title>\r\n                </mat-card-header>\r\n\r\n                <mat-card-content class=\"prefers\">\r\n                    <div class=\"inner_div\" *ngFor=\"let u of positive\">\r\n                        <app-card-student [color]=\"'#54e69d'\" [user]=u></app-card-student>\r\n                    </div>\r\n                    <div class=\"inner_div\" *ngFor=\"let u of negative\">\r\n                        <app-card-student [user]=u [color]=\"'#ff7676'\"></app-card-student>\r\n                    </div>\r\n                </mat-card-content>\r\n            </mat-card>\r\n            <mat-card>\r\n                <mat-card-header>\r\n                    <mat-card-title>\r\n                        <mat-icon>\r\n                            help\r\n                        </mat-icon>\r\n                        עזרה וטיפים\r\n                    </mat-card-title>\r\n                </mat-card-header>\r\n                <ul>\r\n                    <li>\r\n                        כדי לבחור תלמידים שברצונך להשתבץ איתם, כנסו לעמוד \"השכבה שלי\" והתחילו לבחור\r\n                    </li>\r\n                    <li>\r\n                        לאחר שחלוקה לכיתות הסתיימה, תוכלו לראות את הכיתה שלכם בדף \"הכיתה שלי\"\r\n                    </li>\r\n                    <li>\r\n                        שיבוץ חכם יותר יתבצע אם תמלאו בהגדרות את שדה התחביבים\r\n                    </li>\r\n                </ul>\r\n                <mat-card-content>\r\n\r\n                </mat-card-content>\r\n            </mat-card>\r\n        </section>\r\n        <section>\r\n            <mat-card>\r\n                <mat-card-header>\r\n                    <mat-card-title>\r\n                        <mat-icon>\r\n                            feedback\r\n                        </mat-icon>\r\n                        משוב על שיבוץ\r\n                    </mat-card-title>\r\n                </mat-card-header>\r\n                <mat-card-content class=\"last_feedback_content\">\r\n\r\n                    <div class=\"feedback\" [class.odd]=\"i%2 != 0\" *ngFor=\"let f of feedback; let i = index\">\r\n                        <strong>\r\n                            {{f}}\r\n                        </strong>\r\n                        <mat-radio-group [(ngModel)]=\"result[i]\">\r\n                            <mat-radio-button *ngFor=\"let j of grade\" [value]=\"j\">\r\n                                {{j}}\r\n                            </mat-radio-button>\r\n                        </mat-radio-group>\r\n                    </div>\r\n                </mat-card-content>\r\n                <mat-card-actions>\r\n                    <button mat-raised-button (click)=\"authService.sendFeedback(result)\">\r\n                        שלח\r\n                        <mat-icon class=\"send_icon\">\r\n                            send\r\n                        </mat-icon>\r\n\r\n                    </button>\r\n                </mat-card-actions>\r\n            </mat-card>\r\n            <mat-card>\r\n                <mat-card-header>\r\n                    <mat-card-title>\r\n                        <mat-icon>\r\n                            info\r\n                        </mat-icon>\r\n                        פעולות אחרונות\r\n                    </mat-card-title>\r\n                </mat-card-header>\r\n                <mat-card-content>\r\n                    בפיתוח\r\n                </mat-card-content>\r\n            </mat-card>\r\n            <mat-card>\r\n                <mat-card-header>\r\n                    <mat-card-title>\r\n                        <mat-icon>\r\n                            message\r\n                        </mat-icon>\r\n                        הודעות אחרונות\r\n                    </mat-card-title>\r\n                </mat-card-header>\r\n                <mat-card-content>\r\n                    בפיתוח\r\n                </mat-card-content>\r\n            </mat-card>\r\n        </section>\r\n    </div>\r\n\r\n</div>"
 
 /***/ }),
 
@@ -204,11 +204,11 @@ var DashboardComponent = (function () {
         configurable: true
     });
     DashboardComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-dashboard',
             template: __webpack_require__("../../../../../src/app/client/dashboard/dashboard.component.html"),
             styles: [__webpack_require__("../../../../../src/app/client/dashboard/dashboard.component.scss")],
-            encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* ViewEncapsulation */].None
+            encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewEncapsulation"].None
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__service__["f" /* SchoolService */],
             __WEBPACK_IMPORTED_MODULE_1__service__["a" /* AuthService */],
@@ -295,11 +295,11 @@ var MyClassComponent = (function () {
     MyClassComponent.prototype.ngOnInit = function () {
     };
     MyClassComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-my-class',
             template: __webpack_require__("../../../../../src/app/client/my-class/my-class.component.html"),
             styles: [__webpack_require__("../../../../../src/app/client/my-class/my-class.component.scss")],
-            encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* ViewEncapsulation */].None
+            encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewEncapsulation"].None
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__service_index__["g" /* UserService */], __WEBPACK_IMPORTED_MODULE_1__service_index__["d" /* LayerService */], __WEBPACK_IMPORTED_MODULE_1__service_index__["a" /* AuthService */]])
     ], MyClassComponent);
@@ -420,11 +420,11 @@ var MyLayerComponent = (function () {
         }
     };
     MyLayerComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-my-layer',
             template: __webpack_require__("../../../../../src/app/client/my-layer/my-layer.component.html"),
             styles: [__webpack_require__("../../../../../src/app/client/my-layer/my-layer.component.scss")],
-            encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* ViewEncapsulation */].None
+            encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewEncapsulation"].None
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__service__["g" /* UserService */], __WEBPACK_IMPORTED_MODULE_1__service__["a" /* AuthService */]])
     ], MyLayerComponent);
@@ -510,11 +510,11 @@ var SettingsComponent = (function () {
     SettingsComponent.prototype.ngOnInit = function () {
     };
     SettingsComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-settings',
             template: __webpack_require__("../../../../../src/app/client/settings/settings.component.html"),
             styles: [__webpack_require__("../../../../../src/app/client/settings/settings.component.scss")],
-            encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* ViewEncapsulation */].None
+            encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewEncapsulation"].None
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__service_index__["a" /* AuthService */]])
     ], SettingsComponent);

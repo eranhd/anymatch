@@ -12,9 +12,9 @@ const UPDATE: string = "user/update"
 export class AuthService {
 
   public _user: User;
+  private _feedback: number[] = [];
 
   constructor(private http: HttpService) {
-
   }
 
   public async signup(user, id: string) {
@@ -43,6 +43,11 @@ export class AuthService {
           this._user = u["user"];
           localStorage.setItem("auth", JSON.stringify(user));
           console.log(this._user)
+          this.http.post<number[]>("feedback/all", null).then(res => {
+            this._feedback = res["results"];
+            this._feedback.unshift(0);
+            console.log(this._feedback);
+          });
         }
         res(u);
       });
@@ -122,9 +127,6 @@ export class AuthService {
   }
 
   public async addOperation(text, icon) {
-    //addOperation
-    // await this.http.post("user/addOperation", {
-    // user: this._user,
     let operation = {
       text: text,
       icon: icon
@@ -140,6 +142,15 @@ export class AuthService {
 
   public get lastOperation() {
     return this._user.lastOperation;
+  }
+
+  public async sendFeedback(result) {
+    await this.http.post("feedback/create", { feedback: { schoolId: this.schoolId, result: result } })
+    // this._user
+  }
+
+  public get feedback() {
+    return this._feedback;
   }
 
 

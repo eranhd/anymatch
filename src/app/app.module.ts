@@ -29,8 +29,12 @@ import { DialogNewLayer } from "./admin/dashboard/dialog new layer/dialog-new-la
 import { DialogEditLayer } from "./admin/dashboard/dialog-edit-layer/dialog-edit-layerconponent";
 import { SizeDirective } from './directives/size.directive';
 import { SocketIoModule, SocketIoConfig } from 'ng2-socket-io';
+import { ChartsModule } from 'ng2-charts';
 
-const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+const config: SocketIoConfig = {
+  url: (window.location.host == "localhost:3000" ? "http://" : "https://") + window.location.host + "/"
+  , options: {}
+};
 
 @NgModule({
   declarations: [
@@ -56,6 +60,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     ComponentsModule,
     NgbModule.forRoot(),
     // SocketIoModule.forRoot(config)
+    ChartsModule
   ],
   entryComponents: [
     LayoutComponent,

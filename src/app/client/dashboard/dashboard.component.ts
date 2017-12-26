@@ -30,7 +30,7 @@ export class DashboardComponent {
   public result: number[] = [3,3,3,3]
 
   constructor(public schoolService: SchoolService,
-    private authService: AuthService,
+    public authService: AuthService,
     public layerService: LayerService,
     private classService: ClassService,
     public userService: UserService) {

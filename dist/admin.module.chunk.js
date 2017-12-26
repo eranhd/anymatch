@@ -22,6 +22,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__help_help_component__ = __webpack_require__("../../../../../src/app/admin/help/help.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__layer_open_student_dialog_open_student_dialog_component__ = __webpack_require__("../../../../../src/app/admin/layer/open-student-dialog/open-student-dialog.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__layer_new_layer_charge_new_layer_charge_dialog_component__ = __webpack_require__("../../../../../src/app/admin/layer/new-layer-charge/new-layer-charge-dialog.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16_ng2_charts__ = __webpack_require__("../../../../ng2-charts/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16_ng2_charts___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16_ng2_charts__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -45,11 +47,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
 var AdminModule = (function () {
     function AdminModule() {
     }
     AdminModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["K" /* NgModule */])({
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
             imports: [
                 __WEBPACK_IMPORTED_MODULE_1__angular_common__["b" /* CommonModule */],
                 __WEBPACK_IMPORTED_MODULE_5__material_material_module__["a" /* MaterialModule */],
@@ -57,7 +60,8 @@ var AdminModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_6__angular_forms__["d" /* FormsModule */],
                 __WEBPACK_IMPORTED_MODULE_6__angular_forms__["i" /* ReactiveFormsModule */],
                 __WEBPACK_IMPORTED_MODULE_8__components_compontns_module__["a" /* ComponentsModule */],
-                __WEBPACK_IMPORTED_MODULE_9__ng_bootstrap_ng_bootstrap__["a" /* NgbModule */]
+                __WEBPACK_IMPORTED_MODULE_9__ng_bootstrap_ng_bootstrap__["a" /* NgbModule */],
+                __WEBPACK_IMPORTED_MODULE_16_ng2_charts__["ChartsModule"]
             ],
             declarations: [
                 __WEBPACK_IMPORTED_MODULE_2__dashboard_dashboard_component__["a" /* DashboardComponent */],
@@ -118,7 +122,7 @@ var routes = [
 /***/ "../../../../../src/app/admin/dashboard/dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"dashboard\">\n\n  <app-pages-header [items]=headerCards></app-pages-header>\n\n  <div class=\"two_column\">\n    <section>\n      <mat-card>\n        <mat-card-header>\n\n          <mat-card-title>\n            <mat-icon>\n              timer\n            </mat-icon>\n            זמן שנותר עד נעילת השיבוץ הקרוב\n          </mat-card-title>\n        </mat-card-header>\n\n      </mat-card>\n      <mat-card>\n        <mat-card-header>\n\n          <mat-card-title>\n            <mat-icon>\n              notifications\n            </mat-icon>\n            התראות\n          </mat-card-title>\n        </mat-card-header>\n        <mat-card-content>\n          בפיתוח\n        </mat-card-content>\n      </mat-card>\n      <mat-card>\n        <mat-card-header>\n          <mat-card-title>\n            <mat-icon>\n              help\n            </mat-icon>\n            עזרה וטיפים\n          </mat-card-title>\n        </mat-card-header>\n        <mat-card-content>\n          בפיתוח\n        </mat-card-content>\n      </mat-card>\n    </section>\n    <section>\n      <mat-card>\n        <mat-card-header>\n          <mat-card-title>\n            <mat-icon>\n              info\n            </mat-icon>\n            פעולות אחרונות\n          </mat-card-title>\n        </mat-card-header>\n        <mat-card-content class=\"last_operation_content\">\n          <div class=\"operation\" [class.odd]=\"i%2 != 0\" *ngFor=\"let o of authService.lastOperation; let i = index\">\n            <mat-icon>\n              {{o.icon}}\n            </mat-icon>\n            <span>\n              {{o.text}}\n            </span>\n          </div>\n        </mat-card-content>\n\n      </mat-card>\n      <mat-card>\n        <mat-card-header>\n          <mat-card-title>\n            <mat-icon>\n              message\n            </mat-icon>\n            הודעות אחרונות\n          </mat-card-title>\n        </mat-card-header>\n        <mat-card-content>\n          בפיתוח\n        </mat-card-content>\n      </mat-card>\n    </section>\n  </div>\n\n</div>"
+module.exports = "<div class=\"dashboard\">\n\n  <app-pages-header [items]=headerCards></app-pages-header>\n\n  <div class=\"two_column\">\n    <section>\n      <mat-card>\n        <mat-card-header>\n\n          <mat-card-title>\n            <mat-icon>\n              timer\n            </mat-icon>\n            זמן שנותר עד נעילת השיבוץ הקרוב\n          </mat-card-title>\n        </mat-card-header>\n\n      </mat-card>\n\n      <mat-card>\n        <mat-card-header>\n\n          <mat-card-title>\n            <mat-icon>\n              charts\n            </mat-icon>\n            פידבק מתלמידים שעברו שיבוץ\n          </mat-card-title>\n        </mat-card-header>\n        <mat-card-content>\n          <canvas baseChart \n          [data]=\"authService.feedback ? authService.feedback : [] \" \n          [labels]=\"[0, 1,2,3,4]\" \n          [options]=\"{ responsive: true }\" \n          [chartType]=\"'bar'\" \n          [colors]=\"[{\n            backgroundColor:'#9b9ba5'\n          }]\"\n          [labels]=\"['']\"\n          ></canvas>\n        </mat-card-content>\n      </mat-card>\n\n      <!-- \n            \n       -->\n      <mat-card>\n        <mat-card-header>\n\n          <mat-card-title>\n            <mat-icon>\n              notifications\n            </mat-icon>\n            התראות\n          </mat-card-title>\n        </mat-card-header>\n        <mat-card-content>\n          בפיתוח\n        </mat-card-content>\n      </mat-card>\n      <mat-card>\n        <mat-card-header>\n          <mat-card-title>\n            <mat-icon>\n              help\n            </mat-icon>\n            עזרה וטיפים\n          </mat-card-title>\n        </mat-card-header>\n        <mat-card-content>\n          בפיתוח\n        </mat-card-content>\n      </mat-card>\n    </section>\n    <section>\n      <mat-card>\n        <mat-card-header>\n          <mat-card-title>\n            <mat-icon>\n              info\n            </mat-icon>\n            פעולות אחרונות\n          </mat-card-title>\n        </mat-card-header>\n        <mat-card-content class=\"last_operation_content\">\n          <div class=\"operation\" [class.odd]=\"i%2 != 0\" *ngFor=\"let o of authService.lastOperation; let i = index\">\n            <mat-icon>\n              {{o.icon}}\n            </mat-icon>\n            <span>\n              {{o.text}}\n            </span>\n          </div>\n        </mat-card-content>\n\n      </mat-card>\n      <mat-card>\n        <mat-card-header>\n          <mat-card-title>\n            <mat-icon>\n              message\n            </mat-icon>\n            הודעות אחרונות\n          </mat-card-title>\n        </mat-card-header>\n        <mat-card-content>\n          בפיתוח\n        </mat-card-content>\n      </mat-card>\n    </section>\n  </div>\n\n</div>"
 
 /***/ }),
 
@@ -234,17 +238,17 @@ var DashboardComponent = (function () {
         });
     };
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_12" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_4__angular_material__["m" /* MatPaginator */]),
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__WEBPACK_IMPORTED_MODULE_4__angular_material__["m" /* MatPaginator */]),
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_4__angular_material__["m" /* MatPaginator */])
     ], DashboardComponent.prototype, "paginator", void 0);
     DashboardComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-dashboard',
             template: __webpack_require__("../../../../../src/app/admin/dashboard/dashboard.component.html"),
             styles: [__webpack_require__("../../../../../src/app/admin/dashboard/dashboard.component.scss")],
-            encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* ViewEncapsulation */].None
+            encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewEncapsulation"].None
         }),
-        __param(2, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Inject */])(__WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormBuilder */])),
+        __param(2, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormBuilder */])),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__service__["f" /* SchoolService */],
             __WEBPACK_IMPORTED_MODULE_1__service__["a" /* AuthService */],
             __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormBuilder */],
@@ -307,11 +311,11 @@ var HelpComponent = (function () {
     HelpComponent.prototype.ngOnInit = function () {
     };
     HelpComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-help',
             template: __webpack_require__("../../../../../src/app/admin/help/help.component.html"),
             styles: [__webpack_require__("../../../../../src/app/admin/help/help.component.scss")],
-            encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* ViewEncapsulation */].None
+            encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewEncapsulation"].None
         }),
         __metadata("design:paramtypes", [])
     ], HelpComponent);
@@ -648,13 +652,13 @@ var LayerComponent = (function (_super) {
         });
     };
     LayerComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-layer',
             template: __webpack_require__("../../../../../src/app/admin/layer/layer.component.html"),
             styles: [__webpack_require__("../../../../../src/app/admin/layer/layer.component.scss")],
-            encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* ViewEncapsulation */].None
+            encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewEncapsulation"].None
         }),
-        __param(3, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Inject */])(__WEBPACK_IMPORTED_MODULE_4__angular_forms__["b" /* FormBuilder */])),
+        __param(3, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_4__angular_forms__["b" /* FormBuilder */])),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */],
             __WEBPACK_IMPORTED_MODULE_3__service__["d" /* LayerService */],
             __WEBPACK_IMPORTED_MODULE_3__service__["g" /* UserService */],
@@ -730,13 +734,13 @@ var NewLayerChargeDialogComponent = (function () {
         this.dialogRef.close({ success: true, user: this.data.user });
     };
     NewLayerChargeDialogComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-new-layer-charge-dialog',
             template: __webpack_require__("../../../../../src/app/admin/layer/new-layer-charge/new-layer-charge-dialog.component.html"),
             styles: [__webpack_require__("../../../../../src/app/admin/layer/new-layer-charge/new-layer-charge-dialog.component.scss")],
-            encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* ViewEncapsulation */].None
+            encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewEncapsulation"].None
         }),
-        __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Q" /* Optional */])()), __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Inject */])(__WEBPACK_IMPORTED_MODULE_1__angular_material__["a" /* MAT_DIALOG_DATA */])),
+        __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Optional"])()), __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_1__angular_material__["a" /* MAT_DIALOG_DATA */])),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_material__["h" /* MatDialogRef */], Object])
     ], NewLayerChargeDialogComponent);
     return NewLayerChargeDialogComponent;
@@ -816,13 +820,13 @@ var OpenStudentDialogComponent = (function () {
         this.dialogRef.close({ success: true, user: this.data.user });
     };
     OpenStudentDialogComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-open-student-dialog',
             template: __webpack_require__("../../../../../src/app/admin/layer/open-student-dialog/open-student-dialog.component.html"),
             styles: [__webpack_require__("../../../../../src/app/admin/layer/open-student-dialog/open-student-dialog.component.scss")],
-            encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* ViewEncapsulation */].None
+            encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewEncapsulation"].None
         }),
-        __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Q" /* Optional */])()), __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Inject */])(__WEBPACK_IMPORTED_MODULE_1__angular_material__["a" /* MAT_DIALOG_DATA */])),
+        __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Optional"])()), __param(1, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_1__angular_material__["a" /* MAT_DIALOG_DATA */])),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_material__["h" /* MatDialogRef */], Object])
     ], OpenStudentDialogComponent);
     return OpenStudentDialogComponent;
@@ -946,11 +950,11 @@ var LayersComponent = (function (_super) {
     LayersComponent.prototype.search = function (str) {
     };
     LayersComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-layers',
             template: __webpack_require__("../../../../../src/app/admin/layers/layers.component.html"),
             styles: [__webpack_require__("../../../../../src/app/admin/layers/layers.component.scss")],
-            encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* ViewEncapsulation */].None
+            encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewEncapsulation"].None
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__service_index__["d" /* LayerService */],
             __WEBPACK_IMPORTED_MODULE_3__angular_material__["f" /* MatDialog */],
@@ -1034,11 +1038,11 @@ var SettingsComponent = (function () {
     SettingsComponent.prototype.ngOnInit = function () {
     };
     SettingsComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-settings',
             template: __webpack_require__("../../../../../src/app/admin/settings/settings.component.html"),
             styles: [__webpack_require__("../../../../../src/app/admin/settings/settings.component.scss")],
-            encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* ViewEncapsulation */].None
+            encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewEncapsulation"].None
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__service_index__["a" /* AuthService */]])
     ], SettingsComponent);
@@ -1142,11 +1146,11 @@ var StudentsComponent = (function (_super) {
             this.obs.unsubscribe();
     };
     StudentsComponent = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-students',
             template: __webpack_require__("../../../../../src/app/admin/students/students.component.html"),
             styles: [__webpack_require__("../../../../../src/app/admin/students/students.component.scss")],
-            encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* ViewEncapsulation */].None
+            encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewEncapsulation"].None
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__service_index__["g" /* UserService */],
             __WEBPACK_IMPORTED_MODULE_1__service_index__["a" /* AuthService */],

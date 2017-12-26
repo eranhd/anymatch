@@ -16,6 +16,34 @@
         </mat-card-header>
 
       </mat-card>
+
+      <mat-card>
+        <mat-card-header>
+
+          <mat-card-title>
+            <mat-icon>
+              charts
+            </mat-icon>
+            פידבק מתלמידים שעברו שיבוץ
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <canvas baseChart 
+          [data]="authService.feedback ? authService.feedback : [] " 
+          [labels]="[0, 1,2,3,4]" 
+          [options]="{ responsive: true }" 
+          [chartType]="'bar'" 
+          [colors]="[{
+            backgroundColor:'#9b9ba5'
+          }]"
+          [labels]="['']"
+          ></canvas>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- 
+            
+       -->
       <mat-card>
         <mat-card-header>
 

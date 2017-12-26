@@ -132,6 +132,7 @@ module.exports.Graph = class Graph {
          * grouping group 
          */
         let hasMore = false
+        this.buildDirectGraphWithWeight()
         this.reduceGroup()
         let numVerInGroup = this.vertices.length / numOfGroups
         // this.group.forEach(g => {
@@ -139,7 +140,7 @@ module.exports.Graph = class Graph {
         //         hasMore = true
         // })
         // hasMore ? this.buildDirectGraphWithWeight(numVerInGroup) : this.buildDirectGraphWithWeight()
-        this.buildDirectGraphWithWeight()
+        
 
         let dGroups = []
         this.group.forEach((graph, i) => {

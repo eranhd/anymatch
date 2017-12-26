@@ -13,4 +13,5 @@ export class User extends Item {
     negativePrefer: string[];
     group: number;
     gender: string;
+    lastOperation: any[] = [];
 }

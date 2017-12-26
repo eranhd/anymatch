@@ -27,7 +27,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(public schoolService: SchoolService,
-    private authService: AuthService,
+    public authService: AuthService,
     @Inject(FormBuilder) fb: FormBuilder,
     public layerService: LayerService,
     private classService: ClassService,

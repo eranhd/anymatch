@@ -52,6 +52,30 @@
     }
 }
 
+.last_operation_content{
+    .operation{
+        padding: 8px;
+        text-align: right;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        background-color: rgba($color: #9b9ba5, $alpha: .6);
+        border-bottom: 1px solid white;
+    }
+    .odd{
+        background-color: rgba($color: #9b9ba5, $alpha: .3);
+    }
+    :first-child{
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
+    }
+    :last-child{
+        border-bottom-right-radius: 10px;
+        border-bottom-left-radius: 10px;
+    }
+}
+
+
 
 // .dashboard{
 //     display: flex;

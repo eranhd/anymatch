@@ -28,7 +28,7 @@ router.post('/all/', (req, res, next) => {
         if (doc) {
             if (req.user[0].permission === "student") {
                 query.layerId = { $exists: false };
-                db.find(collection,"", query, projection).then(d => {
+                db.find(collection, "", query, projection).then(d => {
                     if (!d)
                         d = []
                     doc.forEach(u => {
@@ -39,7 +39,7 @@ router.post('/all/', (req, res, next) => {
             }
             else if (req.user[0].permission === "charge") {
                 query.layerId = { $exists: false };
-                db.find(collection,"", query, projection).then(d => {
+                db.find(collection, "", query, projection).then(d => {
                     if (!d)
                         d = []
                     doc.forEach(u => {
@@ -165,6 +165,17 @@ router.post('/upload/', (req, res, next) => {
 
 
 });
+
+router.post('/addOperation/', async (req, res, next) => {
+    let u = new user(req.body.user);
+    i.addOperation(u, req.body.operation, (err, doc) => {
+        if (err)
+            res.json({ success: false, message: `Failed to update user. Error: ${err}` });
+        else
+            res .write(JSON.stringify({ success: true, user: doc }, null, 2));
+        res.end();
+    })
+})
 
 
 module.exports = router;

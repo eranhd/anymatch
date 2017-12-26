@@ -16,7 +16,8 @@ const UserSchema = mongoose.Schema({
     positivePrefer: Array,
     negativePrefer: Array,
     group: Number,
-    gender: String
+    gender: String,
+    lastOperation: Array
 });
 
 
@@ -42,10 +43,37 @@ module.exports.add = (newUser, callback) => {
 
 module.exports.update = (user, callback) => {
     let u = new User(user);
-    // console.log("user:\n\n\n");
-    // console.log(u)
     User.findOneAndUpdate({ _id: u._id }, u, { upsert: true }, callback);
 }
+
+module.exports.addOperation = (user, operation, callback) => {
+    let u = new User(user);
+    User.findByIdAndUpdate(
+        u.id,
+        {
+            $push: {
+                "lastOperation": {
+                    $each: [operation],
+                    $position: 0,
+                    $slice: 5
+                }
+            }
+        },
+
+        {}
+    )
+}
+
+/**
+ * Contact.findByIdAndUpdate(
+    info._id,
+    {$push: {"messages": {title: title, msg: msg}}},
+    {safe: true, upsert: true},
+    function(err, model) {
+        console.log(err);
+    }
+);
+ */
 
 //Here we need to pass an id parameter to BUcketList.remove
 module.exports.deleteById = (id, callback) => {

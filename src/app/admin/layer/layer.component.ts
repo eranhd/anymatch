@@ -92,7 +92,7 @@ export class LayerComponent extends ComponentBase implements OnInit {
   public set lockTime(e) {
     // console.log(e)
     this._layer.lockTime = e;
-    console.log(this._layer);
+    // console.log(this._layer);
     this.layerService.updateLayer(this._layer).then(res => { })
   }
 
@@ -112,6 +112,7 @@ export class LayerComponent extends ComponentBase implements OnInit {
         u.fname = fname;
         u.lname = lname;
         u.permission = "student";
+        this.authService.addOperation("הוספת משתמש חדש", "person");
         this.userService.updateUser(u).then(ret => {
           this.form.reset();
         });

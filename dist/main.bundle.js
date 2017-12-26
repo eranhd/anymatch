@@ -996,7 +996,7 @@ var MessageComponent = (function () {
 /***/ "../../../../../src/app/components/messages/messages.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"messages_div\">\n  <div class=\"members\">\n    <app-contact *ngFor=\"let c of con\" [name]=\"getName(c)\" [time]=\"c.messages[0]?.date\" [lastMessage]=\"c.messages[0]?.text\"\n      (open)=\"messageService.currentConversation = c\"></app-contact>\n\n\n\n\n  </div>\n  <div class=\"messages\">\n    <app-message *ngIf=\"messageService.currentConversation\" [conversation]=messageService.currentConversation>\n      <!-- pass conversation -->\n    </app-message>\n  </div>\n</div>"
+module.exports = "<div class=\"messages_div\">\n  <div class=\"members\">\n    <app-contact *ngFor=\"let c of con\" [name]=\"getName(c)\" [time]=\"c.messages[0]?.date\" [lastMessage]=\"c.messages[0]?.text\"\n      (open)=\"messageService.currentConversation = c; messageService.conversationOpen(c._id)\"></app-contact>\n\n\n\n\n  </div>\n  <div class=\"messages\">\n    <app-message *ngIf=\"messageService.currentConversation\" [conversation]=messageService.currentConversation>\n      <!-- pass conversation -->\n    </app-message>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -2133,7 +2133,9 @@ var __extends = (this && this.__extends) || (function () {
 var User = (function (_super) {
     __extends(User, _super);
     function User() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.lastOperation = [];
+        return _this;
     }
     return User;
 }(__WEBPACK_IMPORTED_MODULE_0__Item_model__["a" /* Item */]));
@@ -2341,6 +2343,38 @@ var AuthService = (function () {
         enumerable: true,
         configurable: true
     });
+    AuthService.prototype.addOperation = function (text, icon) {
+        return __awaiter(this, void 0, void 0, function () {
+            var operation;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        operation = {
+                            text: text,
+                            icon: icon
+                        };
+                        this._user.lastOperation ?
+                            this._user.lastOperation.unshift(operation) : this._user.lastOperation = [operation];
+                        if (this._user.lastOperation.length > 5)
+                            this._user.lastOperation = this._user.lastOperation.slice(0, 5);
+                        // });
+                        return [4 /*yield*/, this.update()];
+                    case 1:
+                        // });
+                        _a.sent();
+                        console.log("add operation");
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    Object.defineProperty(AuthService.prototype, "lastOperation", {
+        get: function () {
+            return this._user.lastOperation;
+        },
+        enumerable: true,
+        configurable: true
+    });
     AuthService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__http_http_service__["a" /* HttpService */]])
@@ -2491,6 +2525,7 @@ var ControlerService = (function () {
         this.ALL = "all";
         this.UPDATE = "update";
         this.GETBYID = "getById";
+        this.PUSHTOARRAY = "pushToArray";
         this.path = path + "/";
         this.socketReplay = new __WEBPACK_IMPORTED_MODULE_1_rxjs__["ReplaySubject"]();
     }
@@ -2524,6 +2559,14 @@ var ControlerService = (function () {
     ControlerService.prototype.getById = function (id) {
         var temp = { _id: id };
         return this.http.post(this.path + this.GETBYID, temp);
+    };
+    ControlerService.prototype.pushToArray = function (item, id, arrayName) {
+        var temp = {
+            _id: id,
+            item: item,
+            arrayName: arrayName
+        };
+        return this.http.post(this.path + this.PUSHTOARRAY, temp);
     };
     return ControlerService;
 }());
@@ -2993,11 +3036,23 @@ var MessageService = (function (_super) {
         return __awaiter(this, void 0, void 0, function () {
             var c;
             return __generator(this, function (_a) {
-                c = this.getConversationById(id);
-                c.messages[0].isRead[this.authService.id] = true;
-                // await this.create({ conversation: c });
-                this.numOfNewMessage.next(this.notReadCount());
-                return [2 /*return*/, true];
+                switch (_a.label) {
+                    case 0:
+                        if (!id)
+                            return [2 /*return*/];
+                        c = this.getConversationById(id);
+                        if (!!c.messages[0].isRead[this.authService.id]) return [3 /*break*/, 2];
+                        return [4 /*yield*/, this.http.post(this.path + "read", { _id: id })];
+                    case 1:
+                        _a.sent();
+                        // console.log("read");
+                        this.numOfNewMessage.next(this.notReadCount());
+                        _a.label = 2;
+                    case 2:
+                        // await this.create({ conversation: c });
+                        this.numOfNewMessage.next(this.notReadCount());
+                        return [2 /*return*/, true];
+                }
             });
         });
     };
@@ -3013,13 +3068,18 @@ var MessageService = (function (_super) {
                         m.text = message;
                         m.isRead[this.authService.id] = true;
                         conversation.messages.unshift(m);
+                        if (!!conversation._id) return [3 /*break*/, 2];
                         return [4 /*yield*/, this.create({ conversation: conversation })];
                     case 1:
-                        // this.socket.emit("message", conversation);
                         conversation = (_a.sent());
-                        return [4 /*yield*/, this.getAllMessages()];
-                    case 2:
+                        return [3 /*break*/, 4];
+                    case 2: return [4 /*yield*/, this.pushToArray(m, conversation._id, "messages").then(function (doc) { console.log(doc); })];
+                    case 3:
                         _a.sent();
+                        _a.label = 4;
+                    case 4:
+                        // await this.getAllMessages();
+                        this.conversations = this.sortByDate();
                         return [2 /*return*/, conversation];
                 }
             });
@@ -3050,22 +3110,25 @@ var MessageService = (function (_super) {
                         this.currentConversation = this.conversations[0] ? this.conversations[0] : null;
                         if (this.conversations) {
                             this.numOfNewMessage.next(this.notReadCount());
-                            return [2 /*return*/, this.conversations
-                                    .sort(function (a, b) {
-                                    if (b.messages.length == 0)
-                                        return -1;
-                                    else if (a.messages.length == 0)
-                                        return 1;
-                                    else {
-                                        var dateA = a.messages[0].date;
-                                        var dateB = b.messages[0].date;
-                                        return (dateB + "").localeCompare(dateA + "");
-                                    }
-                                })];
+                            return [2 /*return*/, this.sortByDate()];
                         }
                         return [2 /*return*/, []];
                 }
             });
+        });
+    };
+    MessageService.prototype.sortByDate = function () {
+        return this.conversations
+            .sort(function (a, b) {
+            if (b.messages.length == 0)
+                return -1;
+            else if (a.messages.length == 0)
+                return 1;
+            else {
+                var dateA = a.messages[0].date;
+                var dateB = b.messages[0].date;
+                return (dateB + "").localeCompare(dateA + "");
+            }
         });
     };
     MessageService = __decorate([
@@ -3486,10 +3549,9 @@ var UserService = (function (_super) {
                             res["position"] = index;
                             return res;
                         });
-                        // console.log(this._users);
                         if (this.ob)
                             this.ob.next(this._users);
-                        return [2 /*return*/];
+                        return [2 /*return*/, this._users];
                 }
             });
         });

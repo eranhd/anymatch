@@ -29,6 +29,17 @@ DB.prototype.save = function (item, tableName, sId = "") {
     });
 }
 
+DB.prototype.pushToArray = function (item, _id, arrayName, tableName, sId = "") {
+    return new Promise((res, rej) => {
+        let id = mongojs.ObjectId(_id);
+        let push = {};
+        push[arrayName + ""] = { $each: [item], $position: 0 };
+        db.collection(tableName + sId).update({ _id: id }, { $push: push }, (err, doc) => {
+            res(doc);
+        })
+    });
+}
+
 DB.prototype.find = function (tableName, sId = "", query, projection) {
     // console.log(query)
     // console.log(tableName)

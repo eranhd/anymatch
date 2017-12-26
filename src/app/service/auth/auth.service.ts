@@ -87,7 +87,7 @@ export class AuthService {
 
   public changePassword(password, newPassword) {
     this.http.post("user/changePassword", { user: this._user, password: password, newPassword: newPassword }).then(u => {
-      if (u["success"]){
+      if (u["success"]) {
         this._user = u["user"];
         this._user.isLogin = true;
       }
@@ -113,12 +113,33 @@ export class AuthService {
     return !!this._user
   }
 
-  public get permission(){
+  public get permission() {
     return this._user ? this._user.permission : ""
   }
 
-  public get displayName(){
+  public get displayName() {
     return this._user.fname + " " + this._user.lname;
+  }
+
+  public async addOperation(text, icon) {
+    //addOperation
+    // await this.http.post("user/addOperation", {
+    // user: this._user,
+    let operation = {
+      text: text,
+      icon: icon
+    }
+    this._user.lastOperation ?
+      this._user.lastOperation.unshift(operation) : this._user.lastOperation = [operation];
+    if (this._user.lastOperation.length > 5)
+      this._user.lastOperation = this._user.lastOperation.slice(0, 5);
+    // });
+    await this.update()
+    console.log("add operation")
+  }
+
+  public get lastOperation() {
+    return this._user.lastOperation;
   }
 
 

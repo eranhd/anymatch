@@ -20,6 +20,15 @@ export class DashboardComponent {
   private _students: User[];
   private _layer: Layer;
 
+  public feedback: any[] = [
+    "האם שובצת עם תלמידים שרצית להשתבץ?",
+    "האם היית משנה את השיבוץ?",
+    "יש תלמידים אחרים שהיית מסיר מהכיתה שלך?",
+    "האם תהליך בחירת התלמידים היה קל?"
+  ];
+  public grade: number[] = [1, 2, 3, 4, 5];
+  public result: number[] = [3,3,3,3]
+
   constructor(public schoolService: SchoolService,
     private authService: AuthService,
     public layerService: LayerService,
@@ -70,7 +79,7 @@ export class DashboardComponent {
     return null
   }
 
-  
+
 
 }
 

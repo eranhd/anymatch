@@ -59,9 +59,9 @@ export class UserService extends ControlerService {
         res["position"] = index;
         return res;
       });
-    // console.log(this._users);
     if (this.ob)
       this.ob.next(this._users)
+    return this._users;
   }
 
   public get users(): Observable<User[]> {
@@ -80,10 +80,10 @@ export class UserService extends ControlerService {
     })
   }
 
-  public getUserById(id: string){
-    return this._users.find(u=> u._id == id)
+  public getUserById(id: string) {
+    return this._users.find(u => u._id == id)
   }
 
-  
+
 
 }

@@ -35,9 +35,11 @@ export class LayersComponent extends ComponentBase implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      if (result && result.success)
+      if (result && result.success) {
         this.layerService.addLayer(result.layer, this.authService.getUser().schoolId).then(res => {
+          this.authService.addOperation("הוספת שכבת לימוד חדשה", "add")
         });
+      }
     });
   }
 
@@ -66,8 +68,8 @@ export class LayersComponent extends ComponentBase implements OnInit {
 
   }
 
-  public search(str){
-    
+  public search(str) {
+
   }
 
 

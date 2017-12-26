@@ -65,12 +65,46 @@
                 <mat-card-header>
                     <mat-card-title>
                         <mat-icon>
+                            feedback
+                        </mat-icon>
+                        משוב על שיבוץ
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="last_feedback_content">
+
+                    <div class="feedback" [class.odd]="i%2 != 0" *ngFor="let f of feedback; let i = index">
+                        <strong>
+                            {{f}}
+                        </strong>
+                        <mat-radio-group [(ngModel)]="result[i]">
+                            <mat-radio-button *ngFor="let j of grade" [value]="j">
+                                {{j}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-raised-button>
+                            שלח
+                        <mat-icon class="send_icon">
+                            send
+                        </mat-icon>
+                        
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>
+                        <mat-icon>
                             info
                         </mat-icon>
                         פעולות אחרונות
                     </mat-card-title>
                 </mat-card-header>
-
+                <mat-card-content>
+                    בפיתוח
+                </mat-card-content>
             </mat-card>
             <mat-card>
                 <mat-card-header>
@@ -81,7 +115,9 @@
                         הודעות אחרונות
                     </mat-card-title>
                 </mat-card-header>
-
+                <mat-card-content>
+                    בפיתוח
+                </mat-card-content>
             </mat-card>
         </section>
     </div>

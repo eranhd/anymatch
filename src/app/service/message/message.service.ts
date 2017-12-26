@@ -81,8 +81,16 @@ export class MessageService extends ControlerService {
   }
 
   public async conversationOpen(id: string) {
+    if (!id)
+      return;
     let c = this.getConversationById(id);
-    c.messages[0].isRead[this.authService.id] = true;
+    // console.log(c)
+    // c.messages[0].isRead[this.authService.id] = true;
+    if (!c.messages[0].isRead[this.authService.id]){
+      await this.http.post(this.path + "read", {_id : id});
+      // console.log("read");
+      this.numOfNewMessage.next(this.notReadCount());
+    }
     // await this.create({ conversation: c });
     this.numOfNewMessage.next(this.notReadCount());
     return true;
@@ -97,8 +105,13 @@ export class MessageService extends ControlerService {
     conversation.messages.unshift(m);
 
     // this.socket.emit("message", conversation);
-    conversation = <Conversation>await this.create({ conversation: conversation });
-    await this.getAllMessages();
+    if (!conversation._id)
+      conversation = <Conversation>await this.create({ conversation: conversation });
+    else {
+      await this.pushToArray(m, conversation._id, "messages").then(doc => { console.log(doc) })
+    }
+    // await this.getAllMessages();
+    this.conversations = this.sortByDate();
     return conversation;
 
   }
@@ -122,20 +135,24 @@ export class MessageService extends ControlerService {
     this.currentConversation = this.conversations[0] ? this.conversations[0] : null;
     if (this.conversations) {
       this.numOfNewMessage.next(this.notReadCount());
-      return this.conversations
-        .sort((a, b) => {
-          if (b.messages.length == 0)
-            return -1;
-          else if (a.messages.length == 0)
-            return 1;
-          else {
-            let dateA = a.messages[0].date;
-            let dateB = b.messages[0].date;
-            return (dateB + "").localeCompare(dateA + "");
-          }
-        })
+      return this.sortByDate();
     }
     return [];
+  }
+
+  public sortByDate() {
+    return this.conversations
+      .sort((a, b) => {
+        if (b.messages.length == 0)
+          return -1;
+        else if (a.messages.length == 0)
+          return 1;
+        else {
+          let dateA = a.messages[0].date;
+          let dateB = b.messages[0].date;
+          return (dateB + "").localeCompare(dateA + "");
+        }
+      })
   }
 
 }

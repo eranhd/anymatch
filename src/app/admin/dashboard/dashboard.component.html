@@ -26,7 +26,9 @@
             התראות
           </mat-card-title>
         </mat-card-header>
-
+        <mat-card-content>
+          בפיתוח
+        </mat-card-content>
       </mat-card>
       <mat-card>
         <mat-card-header>
@@ -37,7 +39,9 @@
             עזרה וטיפים
           </mat-card-title>
         </mat-card-header>
-
+        <mat-card-content>
+          בפיתוח
+        </mat-card-content>
       </mat-card>
     </section>
     <section>
@@ -50,6 +54,16 @@
             פעולות אחרונות
           </mat-card-title>
         </mat-card-header>
+        <mat-card-content class="last_operation_content">
+          <div class="operation" [class.odd]="i%2 != 0" *ngFor="let o of authService.lastOperation; let i = index">
+            <mat-icon>
+              {{o.icon}}
+            </mat-icon>
+            <span>
+              {{o.text}}
+            </span>
+          </div>
+        </mat-card-content>
 
       </mat-card>
       <mat-card>
@@ -61,7 +75,9 @@
             הודעות אחרונות
           </mat-card-title>
         </mat-card-header>
-
+        <mat-card-content>
+          בפיתוח
+        </mat-card-content>
       </mat-card>
     </section>
   </div>

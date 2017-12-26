@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { UserService } from '../../service/index';
+import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { UserService, AuthService } from '../../service/index';
 import { ComponentBase } from '../../componentBase.model';
 import { NavService } from '../../service/nav/nav.service';
 
@@ -9,15 +9,25 @@ import { NavService } from '../../service/nav/nav.service';
   styleUrls: ['./students.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class StudentsComponent extends ComponentBase implements OnInit {
+export class StudentsComponent extends ComponentBase implements OnInit, OnDestroy {
 
   private _students;
+  private obs: any
   constructor(public userService: UserService,
+    public authService: AuthService,
     navService: NavService) {
     super(navService)
-    this.userService.getAll().then(u => {
-      this._students = u;
-    })
+    if (this.userService.num == 0)
+      this.userService.getAllUsers(this.authService.schoolId).then(u => {
+        this.obs = this.userService.users.subscribe(users => {
+          this._students = users;
+        });
+      });
+    else {
+      this.obs = this.userService.users.subscribe(users => {
+        this._students = users;
+      });
+    }
   }
 
   public get students() {
@@ -27,6 +37,11 @@ export class StudentsComponent extends ComponentBase implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy(){
+    if(this.obs)
+      this.obs.unsubscribe();
   }
 
 }

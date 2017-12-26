@@ -8,6 +8,7 @@ export class ControlerService {
     protected ALL: string = "all";
     protected UPDATE: string = "update";
     protected GETBYID: string = "getById";
+    protected PUSHTOARRAY: string = "pushToArray";
     protected socket;
     protected socketReplay: ReplaySubject<any>;
     protected observer: any;
@@ -53,6 +54,15 @@ export class ControlerService {
     public getById(id: string): Promise<any> {
         let temp = { _id: id };
         return this.http.post(this.path + this.GETBYID, temp);
+    }
+
+    public pushToArray<T>(item, id, arrayName){
+        let temp = {
+            _id: id,
+            item: item,
+            arrayName: arrayName
+        }
+        return this.http.post(this.path + this.PUSHTOARRAY, temp);
     }
 
 

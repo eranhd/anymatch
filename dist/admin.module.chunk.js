@@ -118,7 +118,7 @@ var routes = [
 /***/ "../../../../../src/app/admin/dashboard/dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"dashboard\">\n\n  <app-pages-header [items]=headerCards></app-pages-header>\n\n  <div class=\"two_column\">\n    <section>\n      <mat-card>\n        <mat-card-header>\n\n          <mat-card-title>\n            <mat-icon>\n              timer\n            </mat-icon>\n            זמן שנותר עד נעילת השיבוץ הקרוב\n          </mat-card-title>\n        </mat-card-header>\n\n      </mat-card>\n      <mat-card>\n        <mat-card-header>\n\n          <mat-card-title>\n            <mat-icon>\n              notifications\n            </mat-icon>\n            התראות\n          </mat-card-title>\n        </mat-card-header>\n\n      </mat-card>\n      <mat-card>\n        <mat-card-header>\n          <mat-card-title>\n            <mat-icon>\n              help\n            </mat-icon>\n            עזרה וטיפים\n          </mat-card-title>\n        </mat-card-header>\n\n      </mat-card>\n    </section>\n    <section>\n      <mat-card>\n        <mat-card-header>\n          <mat-card-title>\n            <mat-icon>\n              info\n            </mat-icon>\n            פעולות אחרונות\n          </mat-card-title>\n        </mat-card-header>\n\n      </mat-card>\n      <mat-card>\n        <mat-card-header>\n          <mat-card-title>\n            <mat-icon>\n              message\n            </mat-icon>\n            הודעות אחרונות\n          </mat-card-title>\n        </mat-card-header>\n\n      </mat-card>\n    </section>\n  </div>\n\n</div>"
+module.exports = "<div class=\"dashboard\">\n\n  <app-pages-header [items]=headerCards></app-pages-header>\n\n  <div class=\"two_column\">\n    <section>\n      <mat-card>\n        <mat-card-header>\n\n          <mat-card-title>\n            <mat-icon>\n              timer\n            </mat-icon>\n            זמן שנותר עד נעילת השיבוץ הקרוב\n          </mat-card-title>\n        </mat-card-header>\n\n      </mat-card>\n      <mat-card>\n        <mat-card-header>\n\n          <mat-card-title>\n            <mat-icon>\n              notifications\n            </mat-icon>\n            התראות\n          </mat-card-title>\n        </mat-card-header>\n        <mat-card-content>\n          בפיתוח\n        </mat-card-content>\n      </mat-card>\n      <mat-card>\n        <mat-card-header>\n          <mat-card-title>\n            <mat-icon>\n              help\n            </mat-icon>\n            עזרה וטיפים\n          </mat-card-title>\n        </mat-card-header>\n        <mat-card-content>\n          בפיתוח\n        </mat-card-content>\n      </mat-card>\n    </section>\n    <section>\n      <mat-card>\n        <mat-card-header>\n          <mat-card-title>\n            <mat-icon>\n              info\n            </mat-icon>\n            פעולות אחרונות\n          </mat-card-title>\n        </mat-card-header>\n        <mat-card-content class=\"last_operation_content\">\n          <div class=\"operation\" [class.odd]=\"i%2 != 0\" *ngFor=\"let o of authService.lastOperation; let i = index\">\n            <mat-icon>\n              {{o.icon}}\n            </mat-icon>\n            <span>\n              {{o.text}}\n            </span>\n          </div>\n        </mat-card-content>\n\n      </mat-card>\n      <mat-card>\n        <mat-card-header>\n          <mat-card-title>\n            <mat-icon>\n              message\n            </mat-icon>\n            הודעות אחרונות\n          </mat-card-title>\n        </mat-card-header>\n        <mat-card-content>\n          בפיתוח\n        </mat-card-content>\n      </mat-card>\n    </section>\n  </div>\n\n</div>"
 
 /***/ }),
 
@@ -130,7 +130,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".dashboard {\n  width: 100%; }\n  .dashboard .statistics {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    -ms-flex-wrap: wrap;\n        flex-wrap: wrap;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    padding: 28px; }\n    .dashboard .statistics .section {\n      width: 25%;\n      border-left: 1px solid #eeeeee;\n      border-right: 1px solid #eeeeee;\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-orient: horizontal;\n      -webkit-box-direction: normal;\n          -ms-flex-direction: row;\n              flex-direction: row;\n      -ms-flex-pack: distribute;\n          justify-content: space-around; }\n      .dashboard .statistics .section .number {\n        font-weight: bold;\n        font-size: 2em; }\n    .dashboard .statistics :last-child, .dashboard .statistics :first-child {\n      border: none; }\n  .dashboard .two_column {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between; }\n    .dashboard .two_column section {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n          -ms-flex-direction: column;\n              flex-direction: column;\n      width: 50%;\n      padding: 28px;\n      box-sizing: content-box; }\n      .dashboard .two_column section mat-card {\n        margin: 14px 0;\n        direction: rtl; }\n        .dashboard .two_column section mat-card .prefers {\n          display: -webkit-box;\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-wrap: wrap;\n              flex-wrap: wrap; }\n          .dashboard .two_column section mat-card .prefers .inner_div {\n            max-width: 100px;\n            margin: 16px; }\n", ""]);
+exports.push([module.i, ".dashboard {\n  width: 100%; }\n  .dashboard .statistics {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    -ms-flex-wrap: wrap;\n        flex-wrap: wrap;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    padding: 28px; }\n    .dashboard .statistics .section {\n      width: 25%;\n      border-left: 1px solid #eeeeee;\n      border-right: 1px solid #eeeeee;\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-orient: horizontal;\n      -webkit-box-direction: normal;\n          -ms-flex-direction: row;\n              flex-direction: row;\n      -ms-flex-pack: distribute;\n          justify-content: space-around; }\n      .dashboard .statistics .section .number {\n        font-weight: bold;\n        font-size: 2em; }\n    .dashboard .statistics :last-child, .dashboard .statistics :first-child {\n      border: none; }\n  .dashboard .two_column {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between; }\n    .dashboard .two_column section {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n          -ms-flex-direction: column;\n              flex-direction: column;\n      width: 50%;\n      padding: 28px;\n      box-sizing: content-box; }\n      .dashboard .two_column section mat-card {\n        margin: 14px 0;\n        direction: rtl; }\n        .dashboard .two_column section mat-card .prefers {\n          display: -webkit-box;\n          display: -ms-flexbox;\n          display: flex;\n          -ms-flex-wrap: wrap;\n              flex-wrap: wrap; }\n          .dashboard .two_column section mat-card .prefers .inner_div {\n            max-width: 100px;\n            margin: 16px; }\n\n.last_operation_content .operation {\n  padding: 8px;\n  text-align: right;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n  -webkit-box-pack: start;\n      -ms-flex-pack: start;\n          justify-content: flex-start;\n  background-color: rgba(155, 155, 165, 0.6);\n  border-bottom: 1px solid white; }\n\n.last_operation_content .odd {\n  background-color: rgba(155, 155, 165, 0.3); }\n\n.last_operation_content :first-child {\n  border-top-right-radius: 10px;\n  border-top-left-radius: 10px; }\n\n.last_operation_content :last-child {\n  border-bottom-right-radius: 10px;\n  border-bottom-left-radius: 10px; }\n", ""]);
 
 // exports
 
@@ -502,7 +502,7 @@ var LayerComponent = (function (_super) {
         set: function (e) {
             // console.log(e)
             this._layer.lockTime = e;
-            console.log(this._layer);
+            // console.log(this._layer);
             this.layerService.updateLayer(this._layer).then(function (res) { });
         },
         enumerable: true,
@@ -522,6 +522,7 @@ var LayerComponent = (function (_super) {
                 u.fname = fname;
                 u.lname = lname;
                 u.permission = "student";
+                _this.authService.addOperation("הוספת משתמש חדש", "person");
                 _this.userService.updateUser(u).then(function (ret) {
                     _this.form.reset();
                 });
@@ -913,9 +914,11 @@ var LayersComponent = (function (_super) {
         });
         dialogRef.afterClosed().subscribe(function (result) {
             console.log('The dialog was closed');
-            if (result && result.success)
+            if (result && result.success) {
                 _this.layerService.addLayer(result.layer, _this.authService.getUser().schoolId).then(function (res) {
+                    _this.authService.addOperation("הוספת שכבת לימוד חדשה", "add");
                 });
+            }
         });
     };
     LayersComponent.prototype.ngOnInit = function () {
@@ -1105,12 +1108,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var StudentsComponent = (function (_super) {
     __extends(StudentsComponent, _super);
-    function StudentsComponent(userService, navService) {
+    function StudentsComponent(userService, authService, navService) {
         var _this = _super.call(this, navService) || this;
         _this.userService = userService;
-        _this.userService.getAll().then(function (u) {
-            _this._students = u;
-        });
+        _this.authService = authService;
+        if (_this.userService.num == 0)
+            _this.userService.getAllUsers(_this.authService.schoolId).then(function (u) {
+                _this.obs = _this.userService.users.subscribe(function (users) {
+                    _this._students = users;
+                });
+            });
+        else {
+            _this.obs = _this.userService.users.subscribe(function (users) {
+                _this._students = users;
+            });
+        }
         return _this;
     }
     Object.defineProperty(StudentsComponent.prototype, "students", {
@@ -1125,6 +1137,10 @@ var StudentsComponent = (function (_super) {
     });
     StudentsComponent.prototype.ngOnInit = function () {
     };
+    StudentsComponent.prototype.ngOnDestroy = function () {
+        if (this.obs)
+            this.obs.unsubscribe();
+    };
     StudentsComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'app-students',
@@ -1133,6 +1149,7 @@ var StudentsComponent = (function (_super) {
             encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["_15" /* ViewEncapsulation */].None
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__service_index__["g" /* UserService */],
+            __WEBPACK_IMPORTED_MODULE_1__service_index__["a" /* AuthService */],
             __WEBPACK_IMPORTED_MODULE_3__service_nav_nav_service__["a" /* NavService */]])
     ], StudentsComponent);
     return StudentsComponent;

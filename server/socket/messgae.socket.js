@@ -7,11 +7,11 @@ class MessageSocket {
         this.socket["message"] = [];
     }
 
-    addSocket(id) {
+    addSocket(id, type) {
         io
-            .of("/massage/" + id)
+            .of("/" + type + "/" + id)
             .on("connection", (socket) => {
-                this.socket["message"][id] = socket;
+                this.socket[type][id] = socket;
                 socket.emit("connect", id + " connect!");
             });
 
@@ -21,7 +21,14 @@ class MessageSocket {
         ids.forEach(id => {
             if(this.socket["message"][id])
                 this.socket["message"][id].emit("newMessage", { message: message, conversation: con });
-        })
+        });
+    }
+
+    sendNotification(message, id, type) {
+        id.forEach(id => {
+            if(this.socket["notification"][id])
+                this.socket["notification"][id].emit("newNotification", {  });
+        });
     }
 }
 let socket;
@@ -29,14 +36,6 @@ let socket;
 module.exports.init = function initSocket(server) {
     socket = new MessageSocket();
     io = require('socket.io').listen(server);
-    // let db = new DB();
-    // db.find("users").then(doc => {
-    //     if (doc) {
-    //         doc.forEach(u => {
-    //             socket.addSocket(u._id)
-    //         });
-    //     }
-    // });
     return socket;
 }
 

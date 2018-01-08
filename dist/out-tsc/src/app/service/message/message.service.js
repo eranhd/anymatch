@@ -101,6 +101,13 @@ var MessageService = (function (_super) {
         });
         return _this;
     }
+    Object.defineProperty(MessageService.prototype, "rout", {
+        get: function () {
+            return this.authService.permission != "student" ? "admin" : "client";
+        },
+        enumerable: true,
+        configurable: true
+    });
     MessageService.prototype.notReadCount = function () {
         var _this = this;
         var count = 0;

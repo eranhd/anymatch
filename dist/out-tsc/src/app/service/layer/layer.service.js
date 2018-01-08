@@ -199,24 +199,53 @@ var LayerService = (function (_super) {
         return this.http.post("graph/graph", { layerId: id, groups: classes });
     };
     LayerService.prototype.saveMatch = function (groups, layerId) {
-        var _this = this;
-        var arr = [];
-        if (groups) {
-            groups.forEach(function (a) {
-                var group = [];
-                a.forEach(function (v) {
-                    group.push(v.id);
-                });
-                arr.push(group);
+        return __awaiter(this, void 0, void 0, function () {
+            var arr, l;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        arr = [];
+                        if (!groups) return [3 /*break*/, 2];
+                        groups.forEach(function (a) {
+                            var group = [];
+                            a.forEach(function (v) {
+                                group.push(v.id);
+                            });
+                            arr.push(group);
+                        });
+                        l = this.getLayerById(layerId);
+                        l.groups = arr;
+                        return [4 /*yield*/, this.updateLayer(l)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/, true];
+                    case 2: return [2 /*return*/];
+                }
             });
-            var l_1 = this.getLayerById(layerId);
-            l_1.groups = arr;
-            return new Promise(function (res, rej) {
-                _this.updateLayer(l_1).then(function (layer) {
-                    res(true);
-                });
+        });
+    };
+    LayerService.prototype.forbidden = function (id1, id2, layerId) {
+        return __awaiter(this, void 0, void 0, function () {
+            var item, l;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        item = {
+                            user1: id1,
+                            user2: id2,
+                        };
+                        l = this.getLayerById(layerId);
+                        if (!l.forbidden)
+                            l.forbidden = [item];
+                        else
+                            l.forbidden.push(item);
+                        return [4 /*yield*/, this.updateLayer(l)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/, true];
+                }
             });
-        }
+        });
     };
     LayerService = __decorate([
         core_1.Injectable(),

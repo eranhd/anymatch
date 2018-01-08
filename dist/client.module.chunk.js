@@ -214,7 +214,7 @@ var DashboardComponent = (function () {
             __WEBPACK_IMPORTED_MODULE_1__service__["a" /* AuthService */],
             __WEBPACK_IMPORTED_MODULE_1__service__["d" /* LayerService */],
             __WEBPACK_IMPORTED_MODULE_1__service__["b" /* ClassService */],
-            __WEBPACK_IMPORTED_MODULE_1__service__["g" /* UserService */]])
+            __WEBPACK_IMPORTED_MODULE_1__service__["h" /* UserService */]])
     ], DashboardComponent);
     return DashboardComponent;
 }());
@@ -303,7 +303,7 @@ var MyClassComponent = (function () {
             styles: [__webpack_require__("../../../../../src/app/client/my-class/my-class.component.scss")],
             encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewEncapsulation"].None
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__service_index__["g" /* UserService */], __WEBPACK_IMPORTED_MODULE_1__service_index__["d" /* LayerService */], __WEBPACK_IMPORTED_MODULE_1__service_index__["a" /* AuthService */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__service_index__["h" /* UserService */], __WEBPACK_IMPORTED_MODULE_1__service_index__["d" /* LayerService */], __WEBPACK_IMPORTED_MODULE_1__service_index__["a" /* AuthService */]])
     ], MyClassComponent);
     return MyClassComponent;
 }());
@@ -442,7 +442,7 @@ var MyLayerComponent = (function () {
             styles: [__webpack_require__("../../../../../src/app/client/my-layer/my-layer.component.scss")],
             encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewEncapsulation"].None
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__service__["g" /* UserService */], __WEBPACK_IMPORTED_MODULE_1__service__["a" /* AuthService */], __WEBPACK_IMPORTED_MODULE_1__service__["d" /* LayerService */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__service__["h" /* UserService */], __WEBPACK_IMPORTED_MODULE_1__service__["a" /* AuthService */], __WEBPACK_IMPORTED_MODULE_1__service__["d" /* LayerService */]])
     ], MyLayerComponent);
     return MyLayerComponent;
 }());

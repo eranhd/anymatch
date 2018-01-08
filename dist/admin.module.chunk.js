@@ -186,7 +186,7 @@ var DashboardComponent = (function () {
         this.dialog = dialog;
         this.displayedColumns = ['position', 'name', 'class_rooms', 'students'];
         this.layerService.layers.subscribe(function (res) {
-            _this.dataSource = new __WEBPACK_IMPORTED_MODULE_4__angular_material__["s" /* MatTableDataSource */](res);
+            _this.dataSource = new __WEBPACK_IMPORTED_MODULE_4__angular_material__["u" /* MatTableDataSource */](res);
         });
     }
     DashboardComponent.prototype.update = function () {
@@ -254,7 +254,7 @@ var DashboardComponent = (function () {
             __WEBPACK_IMPORTED_MODULE_3__angular_forms__["b" /* FormBuilder */],
             __WEBPACK_IMPORTED_MODULE_1__service__["d" /* LayerService */],
             __WEBPACK_IMPORTED_MODULE_1__service__["b" /* ClassService */],
-            __WEBPACK_IMPORTED_MODULE_1__service__["g" /* UserService */],
+            __WEBPACK_IMPORTED_MODULE_1__service__["h" /* UserService */],
             __WEBPACK_IMPORTED_MODULE_4__angular_material__["g" /* MatDialog */]])
     ], DashboardComponent);
     return DashboardComponent;
@@ -437,7 +437,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 
 var LayerComponent = (function (_super) {
     __extends(LayerComponent, _super);
-    function LayerComponent(activatedRoute, layerService, userService, fb, authService, http, schoolService, dialog, navService) {
+    function LayerComponent(activatedRoute, layerService, userService, fb, authService, http, schoolService, dialog, snakService, navService) {
         var _this = _super.call(this, navService) || this;
         _this.activatedRoute = activatedRoute;
         _this.layerService = layerService;
@@ -446,6 +446,7 @@ var LayerComponent = (function (_super) {
         _this.http = http;
         _this.schoolService = schoolService;
         _this.dialog = dialog;
+        _this.snakService = snakService;
         _this._addStudentFlag = false;
         _this.addStudentButtonText = "הוסף תלמיד";
         _this.showTable = false;
@@ -511,8 +512,11 @@ var LayerComponent = (function (_super) {
             return this._layer.lockTime;
         },
         set: function (e) {
+            var _this = this;
             this._layer.lockTime = e;
-            this.layerService.updateLayer(this._layer).then(function (res) { });
+            this.layerService.updateLayer(this._layer).then(function (res) {
+                _this.snakService.openSnackBar("נפתחה אפשרות לביצוע שינויים", "סגור");
+            });
         },
         enumerable: true,
         configurable: true
@@ -522,24 +526,35 @@ var LayerComponent = (function (_super) {
         return u.fname + " " + u.lname;
     };
     LayerComponent.prototype.addStudent = function (name, fname, lname) {
-        var _this = this;
-        var user = new __WEBPACK_IMPORTED_MODULE_2__models__["e" /* User */]();
-        user.schoolId = this.authService.getUser().schoolId;
-        user.username = name;
-        user.layerId = this._layer._id;
-        this.userService.addUser(user, user.schoolId).then(function (res) {
-            if (res["user"]) {
-                var u = res["user"];
-                u.schoolId = _this.authService.schoolId;
-                u.layerId = _this._layer._id;
-                u.fname = fname;
-                u.lname = lname;
-                u.permission = "student";
-                _this.authService.addOperation("הוספת משתמש חדש", "person");
-                _this.userService.updateUser(u).then(function (ret) {
-                    _this.form.reset();
-                });
-            }
+        return __awaiter(this, void 0, void 0, function () {
+            var user, res, u;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        user = new __WEBPACK_IMPORTED_MODULE_2__models__["e" /* User */]();
+                        user.schoolId = this.authService.getUser().schoolId;
+                        user.username = name;
+                        user.layerId = this._layer._id;
+                        return [4 /*yield*/, this.userService.addUser(user, user.schoolId)];
+                    case 1:
+                        res = _a.sent();
+                        if (!res["user"]) return [3 /*break*/, 3];
+                        u = res["user"];
+                        u.schoolId = this.authService.schoolId;
+                        u.layerId = this._layer._id;
+                        u.fname = fname;
+                        u.lname = lname;
+                        u.permission = "student";
+                        this.authService.addOperation("הוספת משתמש חדש", "person");
+                        return [4 /*yield*/, this.userService.updateUser(u)];
+                    case 2:
+                        _a.sent();
+                        this.form.reset();
+                        this.snakService.openSnackBar("נוסף תלמיד בהצלחה", "סגור");
+                        _a.label = 3;
+                    case 3: return [2 /*return*/];
+                }
+            });
         });
     };
     LayerComponent.prototype.fileChange = function (event) {
@@ -552,7 +567,7 @@ var LayerComponent = (function (_super) {
             var headers = new __WEBPACK_IMPORTED_MODULE_5__angular_http__["a" /* Headers */]();
             headers.append('Accept', 'application/json');
             var options = new __WEBPACK_IMPORTED_MODULE_5__angular_http__["d" /* RequestOptions */]({ headers: headers });
-            this.http.post(window.location.host + "/user/upload", formData, options).subscribe(function (res) {
+            this.http.post(window.location.origin + "/user/upload", formData, options).subscribe(function (res) {
                 var users = res.json();
                 if (users) {
                     users.forEach(function (e) {
@@ -563,9 +578,11 @@ var LayerComponent = (function (_super) {
                                 u.layerId = _this._layer._id;
                                 u.fname = e.fname;
                                 u.lname = e.lname;
+                                u.gender = e.gender;
                                 u.permission = "student";
                                 _this.userService.updateUser(u).then(function (ret) {
-                                    console.log(ret);
+                                    // console.log(ret)
+                                    _this.snakService.openSnackBar("נוספו תלמידים בהצלחה", "סגור");
                                 });
                             }
                         });
@@ -581,6 +598,7 @@ var LayerComponent = (function (_super) {
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
+                        this.snakService.openSnackBar("השרת מבצע שיבוץ, אנא המתן", "סגור");
                         _a = this;
                         return [4 /*yield*/, this.layerService.getGraph(this._layer._id, this._layer.classes > 0 ? this._layer.classes : 1)];
                     case 1:
@@ -612,6 +630,7 @@ var LayerComponent = (function (_super) {
                     case 0: return [4 /*yield*/, this.layerService.saveMatch(this.graph, this._layer._id)];
                     case 1:
                         _a.sent();
+                        this.snakService.openSnackBar("השיבוץ נשמר ונשלח לתלמידים", "סגור");
                         this.schoolService.addMatch();
                         return [2 /*return*/];
                 }
@@ -650,6 +669,7 @@ var LayerComponent = (function (_super) {
             // console.log(result.user)
             if (result && result.success)
                 _this.userService.addUser(result.user, _this.authService.schoolId).then(function (u) {
+                    _this.snakService.openSnackBar("יוצר אחראי שכבה חדש", "סגור");
                     if (u["user"]) {
                         s = u["user"];
                         s.fname = result.user.fname;
@@ -658,6 +678,7 @@ var LayerComponent = (function (_super) {
                         s.layerId = _this._layer._id;
                         s.schoolId = _this.authService.schoolId;
                         _this.userService.updateUser(s).then(function (ret) {
+                            _this.snakService.openSnackBar("האחראי נוצר", "סגור");
                             // console.log(ret)
                         });
                     }
@@ -674,11 +695,12 @@ var LayerComponent = (function (_super) {
         __param(3, Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Inject"])(__WEBPACK_IMPORTED_MODULE_4__angular_forms__["b" /* FormBuilder */])),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */],
             __WEBPACK_IMPORTED_MODULE_3__service__["d" /* LayerService */],
-            __WEBPACK_IMPORTED_MODULE_3__service__["g" /* UserService */],
+            __WEBPACK_IMPORTED_MODULE_3__service__["h" /* UserService */],
             __WEBPACK_IMPORTED_MODULE_4__angular_forms__["b" /* FormBuilder */],
             __WEBPACK_IMPORTED_MODULE_3__service__["a" /* AuthService */], __WEBPACK_IMPORTED_MODULE_5__angular_http__["b" /* Http */],
             __WEBPACK_IMPORTED_MODULE_3__service__["f" /* SchoolService */],
             __WEBPACK_IMPORTED_MODULE_6__angular_material__["g" /* MatDialog */],
+            __WEBPACK_IMPORTED_MODULE_3__service__["g" /* SnakService */],
             __WEBPACK_IMPORTED_MODULE_9__service_nav_nav_service__["a" /* NavService */]])
     ], LayerComponent);
     return LayerComponent;
@@ -1072,7 +1094,7 @@ var LayersComponent = (function (_super) {
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__service_index__["d" /* LayerService */],
             __WEBPACK_IMPORTED_MODULE_3__angular_material__["g" /* MatDialog */],
             __WEBPACK_IMPORTED_MODULE_1__service_index__["a" /* AuthService */],
-            __WEBPACK_IMPORTED_MODULE_1__service_index__["g" /* UserService */],
+            __WEBPACK_IMPORTED_MODULE_1__service_index__["h" /* UserService */],
             __WEBPACK_IMPORTED_MODULE_7__service_nav_nav_service__["a" /* NavService */]])
     ], LayersComponent);
     return LayersComponent;
@@ -1265,7 +1287,7 @@ var StudentsComponent = (function (_super) {
             styles: [__webpack_require__("../../../../../src/app/admin/students/students.component.scss")],
             encapsulation: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewEncapsulation"].None
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__service_index__["g" /* UserService */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__service_index__["h" /* UserService */],
             __WEBPACK_IMPORTED_MODULE_1__service_index__["a" /* AuthService */],
             __WEBPACK_IMPORTED_MODULE_3__service_nav_nav_service__["a" /* NavService */]])
     ], StudentsComponent);

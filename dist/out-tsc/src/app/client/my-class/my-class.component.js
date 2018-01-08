@@ -19,16 +19,18 @@ var MyClassComponent = (function () {
         this.authService = authService;
         this.groups = [];
         this.groups = layerService.getLayerById(this.authService.getUser().layerId).groups;
-        // console.log(this.groups)
-        this.groups = this.groups.map(function (g) {
-            if (g.includes(_this.authService.id))
-                return g;
-        });
-        this.userService.users.subscribe(function (users) {
-            _this._students = users.filter(function (user) {
-                return _this.groups[0].includes(user._id);
+        if (this.groups) {
+            this.groups = this.groups.filter(function (g) {
+                if (g.includes(_this.authService.id))
+                    return true;
+                return false;
             });
-        });
+            this.userService.users.subscribe(function (users) {
+                _this._students = users.filter(function (user) {
+                    return _this.groups[0].includes(user._id);
+                });
+            });
+        }
     }
     Object.defineProperty(MyClassComponent.prototype, "students", {
         get: function () {

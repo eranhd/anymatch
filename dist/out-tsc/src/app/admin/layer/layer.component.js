@@ -81,6 +81,7 @@ var LayerComponent = (function (_super) {
         _this.dialog = dialog;
         _this._addStudentFlag = false;
         _this.addStudentButtonText = "הוסף תלמיד";
+        _this.showTable = false;
         _this.form = fb.group({
             username: ["", forms_1.Validators.required],
             fname: "",
@@ -88,7 +89,9 @@ var LayerComponent = (function (_super) {
         });
         _this.activatedRoute.params.subscribe(function (res) {
             _this._layer = _this.layerService.getLayerById(res["id"]);
-            // console.log(res["id"]);
+            _this.classesName = [];
+            for (var i = 0; i < _this._layer.classes; i++)
+                _this.classesName.push(_this._layer.name + " " + (i + 1));
             _this.userService.users.subscribe(function (users) {
                 if (users)
                     _this._students = users.filter(function (u) {
@@ -96,7 +99,7 @@ var LayerComponent = (function (_super) {
                         return u.layerId === res["id"];
                     }).sort(function (a, b) {
                         return a.username.localeCompare(b.username);
-                    });
+                    }).sort(function (a, b) { return a.group ? (a.group > b.group ? 1 : -1) : -1; });
             });
         });
         return _this;
@@ -137,6 +140,9 @@ var LayerComponent = (function (_super) {
         this._addStudentFlag = !this._addStudentFlag;
     };
     Object.defineProperty(LayerComponent.prototype, "lockTime", {
+        get: function () {
+            return this._layer.lockTime;
+        },
         set: function (e) {
             this._layer.lockTime = e;
             this.layerService.updateLayer(this._layer).then(function (res) { });
@@ -144,6 +150,10 @@ var LayerComponent = (function (_super) {
         enumerable: true,
         configurable: true
     });
+    LayerComponent.prototype.displayName = function (id) {
+        var u = this._students.find(function (u) { return id == u._id; });
+        return u.fname + " " + u.lname;
+    };
     LayerComponent.prototype.addStudent = function (name, fname, lname) {
         var _this = this;
         var user = new models_1.User();
@@ -175,7 +185,7 @@ var LayerComponent = (function (_super) {
             var headers = new http_1.Headers();
             headers.append('Accept', 'application/json');
             var options = new http_1.RequestOptions({ headers: headers });
-            this.http.post(window.location.host + "/user/upload", formData, options).subscribe(function (res) {
+            this.http.post(window.location.origin + "/user/upload", formData, options).subscribe(function (res) {
                 var users = res.json();
                 if (users) {
                     users.forEach(function (e) {
@@ -186,6 +196,7 @@ var LayerComponent = (function (_super) {
                                 u.layerId = _this._layer._id;
                                 u.fname = e.fname;
                                 u.lname = e.lname;
+                                u.gender = e.gender;
                                 u.permission = "student";
                                 _this.userService.updateUser(u).then(function (ret) {
                                     console.log(ret);
@@ -215,6 +226,7 @@ var LayerComponent = (function (_super) {
                                     u.group = i;
                             });
                         });
+                        this._students = this._students.sort(function (a, b) { return a.group > b.group ? 1 : -1; });
                         return [2 /*return*/];
                 }
             });
@@ -249,7 +261,8 @@ var LayerComponent = (function (_super) {
                 user: s,
                 positivePrefer: this.userService.getUsersByLayer(this._layer._id).filter(function (u) { return s.positivePrefer.includes(u._id); }),
                 negativePrefer: this.userService.getUsersByLayer(this._layer._id).filter(function (u) { return s.negativePrefer.includes(u._id); }),
-                students: this._students
+                students: this._students,
+                layerId: this._layer._id
             }
         });
         dialogRef.afterClosed().subscribe(function (result) {

@@ -53,12 +53,17 @@ var service_1 = require("../service");
 var router_1 = require("@angular/router");
 var LoginComponent = (function () {
     function LoginComponent(fb, schoolService, authService, router) {
+        var _this = this;
         this.schoolService = schoolService;
         this.authService = authService;
         this.router = router;
         this.title = "כניסה";
         this._createNewSchool = false;
         this._showProgress = false;
+        this.move = false;
+        setInterval(function () {
+            _this.move = !_this.move;
+        }, 7000);
         this.form = fb.group({
             login: fb.group({
                 username: ["", forms_1.Validators.required],

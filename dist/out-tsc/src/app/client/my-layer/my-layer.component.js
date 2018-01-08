@@ -12,10 +12,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var service_1 = require("../../service");
 var MyLayerComponent = (function () {
-    function MyLayerComponent(userService, authService) {
+    function MyLayerComponent(userService, authService, layerService) {
         var _this = this;
         this.userService = userService;
         this.authService = authService;
+        this.layerService = layerService;
         this.userService.users.subscribe(function (users) {
             if (users) {
                 if (users[0].fname)
@@ -26,6 +27,7 @@ var MyLayerComponent = (function () {
                     _this._students = users;
             }
         });
+        this._layer = this.layerService.getLayerById(this.authService.getUser().layerId);
     }
     MyLayerComponent.prototype.ngOnInit = function () {
     };
@@ -77,6 +79,18 @@ var MyLayerComponent = (function () {
             this.save();
         }
     };
+    Object.defineProperty(MyLayerComponent.prototype, "lock", {
+        get: function () {
+            var d = new Date();
+            if (this._layer)
+                if (this._layer.lockTime) {
+                    var d2 = new Date(this._layer.lockTime);
+                    return d2.getFullYear() <= d.getFullYear() && d2.getMonth() <= d.getMonth() && d2.getDate() <= d.getDate();
+                }
+        },
+        enumerable: true,
+        configurable: true
+    });
     MyLayerComponent = __decorate([
         core_1.Component({
             selector: 'app-my-layer',
@@ -84,7 +98,7 @@ var MyLayerComponent = (function () {
             styleUrls: ['./my-layer.component.scss'],
             encapsulation: core_1.ViewEncapsulation.None
         }),
-        __metadata("design:paramtypes", [service_1.UserService, service_1.AuthService])
+        __metadata("design:paramtypes", [service_1.UserService, service_1.AuthService, service_1.LayerService])
     ], MyLayerComponent);
     return MyLayerComponent;
 }());

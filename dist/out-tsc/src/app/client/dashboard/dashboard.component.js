@@ -72,7 +72,7 @@ var DashboardComponent = (function () {
             if (this._layer)
                 if (this._layer.lockTime) {
                     var d2 = new Date(this._layer.lockTime);
-                    console.log(d2.toLocaleDateString());
+                    // console.log(d2.toLocaleDateString())
                     return d2.getFullYear() <= d.getFullYear() && d2.getMonth() <= d.getMonth() && d2.getDate() <= d.getDate() ? null : d2;
                 }
             return null;

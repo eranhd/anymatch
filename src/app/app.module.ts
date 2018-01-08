@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
-import { HttpService, SchoolService, AuthService, ClassService, LayerService, UserService, MessageService } from "./service";
+import { HttpService, SchoolService, AuthService, ClassService, LayerService, UserService, MessageService, SnakService } from "./service";
 
 import { MaterialModule } from "./material/material.module";
 import { LoginComponent } from './login/login.component';
@@ -30,6 +30,7 @@ import { DialogEditLayer } from "./admin/dashboard/dialog-edit-layer/dialog-edit
 import { SizeDirective } from './directives/size.directive';
 import { SocketIoModule, SocketIoConfig } from 'ng2-socket-io';
 import { ChartsModule } from 'ng2-charts';
+
 
 const config: SocketIoConfig = {
   url: (window.location.host == "localhost:3000" ? "http://" : "https://") + window.location.host + "/"
@@ -81,7 +82,8 @@ const config: SocketIoConfig = {
     AdminGuard,
     NavService,
     MessageService,
-    SizeDirective
+    SizeDirective,
+    SnakService
   ],
   bootstrap: [AppComponent]
 })

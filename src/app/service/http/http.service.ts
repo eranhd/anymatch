@@ -6,7 +6,7 @@ import { Http, Headers, RequestOptions } from "@angular/http";
 export class HttpService {
 
 
-  public path: string = (window.location.host == "localhost:3000" ? "http://" : "https://") + window.location.host + "/"
+  public path: string = window.location.origin + "/"
   private header: Headers;
   private options;
   constructor(private http: Http) {

@@ -97,7 +97,8 @@ app.post('/login', (req, res, next) => {
             if (err) {
                 return res.send({ success: false, code: 2, message: 'authentication failed' });
             }
-            s.addSocket(user._id.toString());
+            s.addSocket(user._id.toString(), "massage");
+            s.addSocket(user._id.toString(), "notification");
             return res.send({ success: true, message: 'authentication succeeded', user: user });
         });
     })(req, res, next);

@@ -65,13 +65,13 @@ var AdminGuard = (function () {
                         });
                     }
                     else {
-                        console.log(3);
+                        // console.log(3);
                         _this.router.navigate(["/login"]);
                         return false;
                     }
                 });
             else {
-                console.log(4);
+                // console.log(4);
                 this.router.navigate(["/login"]);
                 return false;
             }
@@ -95,11 +95,11 @@ var AuthGuard = (function () {
         this.layerService = layerService;
         this.classService = classService;
         this.router = router;
-        console.log("in auth guard");
+        // console.log("in auth guard");
     }
     AuthGuard.prototype.canActivate = function (next, state) {
+        // console.log("in auth guards");
         var _this = this;
-        console.log("in auth guards");
         if (this.authService.isAuth()) {
             return new Promise(function (resolve, rej) {
                 _this.schoolService.initSchool(_this.authService.getUser().schoolId)

@@ -25,7 +25,8 @@ var CardStudentComponent = (function () {
     };
     CardStudentComponent.prototype.msgClick = function () {
         this.msgService.startConversationWith(this.user._id);
-        this.router.navigate(["/layout/admin/messages"]);
+        console.log("/layout/" + this.msgService.rout + "/messages");
+        this.router.navigate(["/layout/" + this.msgService.rout + "/messages"]);
     };
     __decorate([
         core_1.Input(),

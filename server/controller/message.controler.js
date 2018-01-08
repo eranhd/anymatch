@@ -14,7 +14,6 @@ router.post('/all/', (req, res, next) => {
 
 
 router.post("/create/", (req, res, next) => {
-    // console.log(req.body.schoolId +", "+ collection);
     let db = new DB();
     db.save(req.body.conversation, collection).then(resolve => {
         socket.sendMessage(null, resolve, resolve.participants.filter(u => u != req.user[0].id));

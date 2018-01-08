@@ -227,7 +227,7 @@ module.exports.Graph = class Graph {
 
 
     recursiveRedusce(g, target, length, i) {
-        if (length == 0)
+        if (length <= 0)
             return target;
         else if (i == g.length)
             return null;

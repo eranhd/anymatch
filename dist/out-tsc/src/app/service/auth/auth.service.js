@@ -101,12 +101,14 @@ var AuthService = (function () {
                 if (u["success"]) {
                     _this._user = u["user"];
                     localStorage.setItem("auth", JSON.stringify(user));
-                    console.log(_this._user);
-                    _this.http.post("feedback/all", null).then(function (res) {
-                        _this._feedback = res["results"];
-                        _this._feedback.unshift(0);
-                        console.log(_this._feedback);
-                    });
+                    // console.log(this._user)
+                    if (_this._user.permission != "student") {
+                        _this.http.post("feedback/all", null).then(function (res) {
+                            _this._feedback = res["results"];
+                            _this._feedback.unshift(0);
+                            // console.log(this._feedback);
+                        });
+                    }
                 }
                 res(u);
             });

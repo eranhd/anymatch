@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
 import { Layer, User, HeaderCard } from "../../models";
-import { SchoolService, AuthService, LayerService, ClassService, UserService } from "../../service";
+import { SchoolService, AuthService, LayerService, ClassService, UserService, SnakService } from "../../service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { RequestOptions, Headers, Http } from "@angular/http";
 import { Observable } from "rxjs";
@@ -36,6 +36,7 @@ export class LayerComponent extends ComponentBase implements OnInit {
     private authService: AuthService, private http: Http,
     private schoolService: SchoolService,
     public dialog: MatDialog,
+    private snakService: SnakService,
     navService: NavService) {
 
     super(navService)
@@ -101,7 +102,9 @@ export class LayerComponent extends ComponentBase implements OnInit {
 
   public set lockTime(e) {
     this._layer.lockTime = e;
-    this.layerService.updateLayer(this._layer).then(res => { })
+    this.layerService.updateLayer(this._layer).then(res => {
+      this.snakService.openSnackBar("נפתחה אפשרות לביצוע שינויים", "סגור");
+    })
   }
 
   public get lockTime() {
@@ -113,28 +116,29 @@ export class LayerComponent extends ComponentBase implements OnInit {
     return u.fname + " " + u.lname;
   }
 
-  public addStudent(name: string, fname: string, lname: string) {
+  public async addStudent(name: string, fname: string, lname: string) {
 
     let user = new User();
     user.schoolId = this.authService.getUser().schoolId;
     user.username = name;
     user.layerId = this._layer._id;
 
-    this.userService.addUser(user, user.schoolId).then(res => {
+    let res = await this.userService.addUser(user, user.schoolId)
 
-      if (res["user"]) {
-        let u = res["user"];
-        u.schoolId = this.authService.schoolId;
-        u.layerId = this._layer._id;
-        u.fname = fname;
-        u.lname = lname;
-        u.permission = "student";
-        this.authService.addOperation("הוספת משתמש חדש", "person");
-        this.userService.updateUser(u).then(ret => {
-          this.form.reset();
-        });
-      }
-    })
+    if (res["user"]) {
+      let u = res["user"];
+      u.schoolId = this.authService.schoolId;
+      u.layerId = this._layer._id;
+      u.fname = fname;
+      u.lname = lname;
+      u.permission = "student";
+      this.authService.addOperation("הוספת משתמש חדש", "person");
+      await this.userService.updateUser(u);
+      this.form.reset();
+      this.snakService.openSnackBar("נוסף תלמיד בהצלחה", "סגור");
+
+    }
+
   }
 
   fileChange(event) {
@@ -148,7 +152,7 @@ export class LayerComponent extends ComponentBase implements OnInit {
 
       headers.append('Accept', 'application/json');
       let options = new RequestOptions({ headers: headers });
-      this.http.post(window.location.host + "/user/upload", formData, options).subscribe(res => {
+      this.http.post(window.location.origin + "/user/upload", formData, options).subscribe(res => {
         let users = res.json();
         if (users) {
           users.forEach(e => {
@@ -159,9 +163,11 @@ export class LayerComponent extends ComponentBase implements OnInit {
                 u.layerId = this._layer._id;
                 u.fname = e.fname;
                 u.lname = e.lname;
+                u.gender = e.gender;
                 u.permission = "student";
                 this.userService.updateUser(u).then(ret => {
-                  console.log(ret)
+                  // console.log(ret)
+                  this.snakService.openSnackBar("נוספו תלמידים בהצלחה", "סגור");
                 });
               }
             });
@@ -173,6 +179,7 @@ export class LayerComponent extends ComponentBase implements OnInit {
 
 
   public async startMatch() {
+    this.snakService.openSnackBar("השרת מבצע שיבוץ, אנא המתן", "סגור");
     this.graph = await this.layerService.getGraph(this._layer._id, this._layer.classes > 0 ? this._layer.classes : 1)
     this._students.forEach(u => {
       this.graph.forEach((g, i) => {
@@ -190,6 +197,7 @@ export class LayerComponent extends ComponentBase implements OnInit {
 
   public async saveMatch() {
     await this.layerService.saveMatch(this.graph, this._layer._id);
+    this.snakService.openSnackBar("השיבוץ נשמר ונשלח לתלמידים", "סגור");
     this.schoolService.addMatch();
   }
 
@@ -230,6 +238,7 @@ export class LayerComponent extends ComponentBase implements OnInit {
       // console.log(result.user)
       if (result && result.success)
         this.userService.addUser(result.user, this.authService.schoolId).then(u => {
+          this.snakService.openSnackBar("יוצר אחראי שכבה חדש", "סגור");
           if (u["user"]) {
             s = u["user"];
             s.fname = result.user.fname;
@@ -239,6 +248,7 @@ export class LayerComponent extends ComponentBase implements OnInit {
             s.schoolId = this.authService.schoolId;
 
             this.userService.updateUser(s).then(ret => {
+              this.snakService.openSnackBar("האחראי נוצר", "סגור");
               // console.log(ret)
             });
           }

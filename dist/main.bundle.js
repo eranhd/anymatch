@@ -363,7 +363,7 @@ var routes = [
 /***/ "../../../../../src/app/components/card-student/card-student.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<mat-card class=\"card-student\" [style.background-color]=\"color ? color : 'white'\">\n  <mat-card-header>\n    <mat-card-title>\n      <img width=\"24px\" matTooltip=\"תמונת התלמיד\" src=\"http://excadetsforum.com/profile_images/no_img.png\" /> {{user.fname}} {{user.lname}} {{user.username}}\n    </mat-card-title>\n  </mat-card-header>\n\n  <mat-card-content>\n    <div class=\"prefer\">\n      <div class=\"positive_prefer\" matTooltip=\"התלמיד בחר העדפות חיוביות\" *ngIf=\"user.positivePrefer?.length > 0\">\n\n      </div>\n\n      <div class=\"negative_prefer\" matTooltip=\"התלמיד בחר העדפות שליליות\" *ngIf=\"user.negativePrefer?.length > 0\">\n\n\n      </div>\n      <i *ngIf=\"user?.isLogin\" matTooltip=\"משתמש ביצע כניסה ראשונית\" class=\"material-icons\">verified_user</i>\n    </div>\n  </mat-card-content>\n\n  <mat-card-actions *ngIf=\"showActions\">\n    <button mat-icon-button (click)=\"open.emit(user)\">\n      <mat-icon>\n        open_in_new\n      </mat-icon>\n      <!-- פתח -->\n    </button>\n    <button mat-icon-button (click)=\"msgClick()\">\n      <mat-icon>\n        message\n      </mat-icon>\n      <!-- שלח הודעה -->\n    </button>\n  </mat-card-actions>\n</mat-card>"
+module.exports = "<mat-card class=\"card-student\" [style.background-color]=\"color ? color : 'white'\">\n  <mat-card-header>\n    <mat-card-title>\n      <img width=\"24px\" matTooltip=\"תמונת התלמיד\" [src]=\"user.gender ? (user.gender == 'male' ? '/assets/male.png' : '/assets/female.png') : '/assets/male.png'\" /> {{user.fname}} {{user.lname}} {{user.username}}\n    </mat-card-title>\n  </mat-card-header>\n\n  <mat-card-content>\n    <div class=\"prefer\">\n      <div class=\"positive_prefer\" matTooltip=\"התלמיד בחר העדפות חיוביות\" *ngIf=\"user.positivePrefer?.length > 0\">\n\n      </div>\n\n      <div class=\"negative_prefer\" matTooltip=\"התלמיד בחר העדפות שליליות\" *ngIf=\"user.negativePrefer?.length > 0\">\n\n\n      </div>\n      <!-- <i *ngIf=\"user?.isLogin\" matTooltip=\"משתמש ביצע כניסה ראשונית\" class=\"material-icons\">verified_user</i> -->\n    </div>\n  </mat-card-content>\n\n  <mat-card-actions>\n    <button mat-icon-button *ngIf=\"showActions\" (click)=\"open.emit(user)\">\n      <mat-icon>\n        open_in_new\n      </mat-icon>\n      <!-- פתח -->\n    </button>\n    <button mat-icon-button  (click)=\"msgClick()\">\n      <mat-icon>\n        message\n      </mat-icon>\n      <!-- שלח הודעה -->\n    </button>\n  </mat-card-actions>\n</mat-card>"
 
 /***/ }),
 
@@ -419,7 +419,8 @@ var CardStudentComponent = (function () {
     };
     CardStudentComponent.prototype.msgClick = function () {
         this.msgService.startConversationWith(this.user._id);
-        this.router.navigate(["/layout/admin/messages"]);
+        console.log("/layout/" + this.msgService.rout + "/messages");
+        this.router.navigate(["/layout/" + this.msgService.rout + "/messages"]);
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
@@ -1259,13 +1260,13 @@ var AdminGuard = (function () {
                         });
                     }
                     else {
-                        console.log(3);
+                        // console.log(3);
                         _this.router.navigate(["/login"]);
                         return false;
                     }
                 });
             else {
-                console.log(4);
+                // console.log(4);
                 this.router.navigate(["/login"]);
                 return false;
             }
@@ -1289,11 +1290,11 @@ var AuthGuard = (function () {
         this.layerService = layerService;
         this.classService = classService;
         this.router = router;
-        console.log("in auth guard");
+        // console.log("in auth guard");
     }
     AuthGuard.prototype.canActivate = function (next, state) {
+        // console.log("in auth guards");
         var _this = this;
-        console.log("in auth guards");
         if (this.authService.isAuth()) {
             return new Promise(function (resolve, rej) {
                 _this.schoolService.initSchool(_this.authService.getUser().schoolId)
@@ -1581,7 +1582,7 @@ var NavComponent = (function () {
 /***/ "../../../../../src/app/login/login.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"page login-page\">\r\n  <div class=\"container d-flex align-items-center\">\r\n    <div class=\"form-holder has-shadow\">\r\n      <div class=\"row\">\r\n\r\n        <div class=\"col-lg-6\">\r\n          <div class=\"info d-flex align-items-center\">\r\n            <div class=\"content\">\r\n              <div class=\"logo\">\r\n                <h1>Any Match</h1>\r\n              </div>\r\n              <p>Connecting Pepole To Optimal Group</p>\r\n            </div>\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"col-lg-6 bg-white\">\r\n          <div class=\"form d-flex align-items-center\">\r\n            <div class=\"content\">\r\n\r\n\r\n\r\n              <form id=\"login-form\" [formGroup]=\"form\">\r\n\r\n                <div formGroupName=\"login\">\r\n                  <mat-form-field>\r\n                    <input matInput type=\"text\" formControlName=username placeholder=\"שם משתמש\">\r\n                  </mat-form-field>\r\n                  <div formGroupName=\"pass\">\r\n                    <mat-form-field>\r\n                      <input matInput type=\"password\" formControlName=password placeholder=\"סיסמה\">\r\n                    </mat-form-field>\r\n                    <mat-form-field *ngIf=\"createNewSchool\">\r\n                      <input matInput type=\"password\" formControlName=verifyPassword placeholder=\"אימות סיסמה\">\r\n                    </mat-form-field>\r\n                  </div>\r\n                </div>\r\n\r\n                <div *ngIf=\"createNewSchool\" formGroupName=\"newSchool\">\r\n                  <mat-form-field>\r\n                    <input matInput type=\"text\" formControlName=name placeholder=\"שם בית הספר\">\r\n                  </mat-form-field>\r\n                  <mat-form-field>\r\n                    <input matInput type=\"text\" formControlName=code placeholder=\"קוד בית הספר\">\r\n                  </mat-form-field>\r\n                </div>\r\n\r\n                <mat-spinner [diameter]=24 *ngIf=\"showProgress\" [strokeWidth]=\"5\"></mat-spinner>\r\n                <button *ngIf=\"!createNewSchool && !showProgress\" id=\"login\" class=\"btn btn-primary\" (click)=\"login()\">Login</button>\r\n                <button *ngIf=\"createNewSchool && !showProgress\" mat-raised-button color=primary (click)=\"signup()\">Sign Up</button>\r\n\r\n\r\n              </form>\r\n\r\n\r\n\r\n              <a href=\"#\" class=\"forgot-pass\">Forgot Password?</a>\r\n              <br>\r\n              <small *ngIf=\"!createNewSchool\">Do not have an account? </small>\r\n              <button *ngIf=\"!createNewSchool\" class=\"signup\" class=\"btn btn-primary\" (click)=\"changeCreateSchool()\">Create new school</button>\r\n\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n</div>"
+module.exports = "<div class=\"page login-page\">\r\n  <div class=\"container d-flex align-items-center\">\r\n    <div class=\"form-holder has-shadow\">\r\n      <div class=\"row\">\r\n\r\n        <div class=\"col-lg-6\">\r\n          <div class=\"info d-flex align-items-center\">\r\n            <div class=\"content\">\r\n              <div class=\"logo\">\r\n                <img [ngClass]=\"{move : move, not_move: !move}\" src=\"/assets/connect.png\">\r\n                <h1>A ny Match</h1>\r\n              </div>\r\n              <p>Connecting Pepole To Optimal Group</p>\r\n            </div>\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"col-lg-6 bg-white\">\r\n          <div class=\"form d-flex align-items-center\">\r\n            <div class=\"content\">\r\n\r\n\r\n\r\n              <form id=\"login-form\" [formGroup]=\"form\">\r\n\r\n                <div formGroupName=\"login\">\r\n                  <mat-form-field>\r\n                    <input matInput type=\"text\" formControlName=username placeholder=\"שם משתמש\">\r\n                  </mat-form-field>\r\n                  <div formGroupName=\"pass\">\r\n                    <mat-form-field>\r\n                      <input matInput type=\"password\" formControlName=password placeholder=\"סיסמה\">\r\n                    </mat-form-field>\r\n                    <mat-form-field *ngIf=\"createNewSchool\">\r\n                      <input matInput type=\"password\" formControlName=verifyPassword placeholder=\"אימות סיסמה\">\r\n                    </mat-form-field>\r\n                  </div>\r\n                </div>\r\n\r\n                <div *ngIf=\"createNewSchool\" formGroupName=\"newSchool\">\r\n                  <mat-form-field>\r\n                    <input matInput type=\"text\" formControlName=name placeholder=\"שם בית הספר\">\r\n                  </mat-form-field>\r\n                  <mat-form-field>\r\n                    <input matInput type=\"text\" formControlName=code placeholder=\"קוד בית הספר\">\r\n                  </mat-form-field>\r\n                </div>\r\n\r\n                <mat-spinner [diameter]=24 *ngIf=\"showProgress\" [strokeWidth]=\"5\"></mat-spinner>\r\n                <button *ngIf=\"!createNewSchool && !showProgress\" id=\"login\" class=\"btn btn-primary\" (click)=\"login()\">Login</button>\r\n                <button *ngIf=\"createNewSchool && !showProgress\" mat-raised-button color=primary (click)=\"signup()\">Sign Up</button>\r\n\r\n\r\n              </form>\r\n\r\n\r\n\r\n              <a href=\"#\" class=\"forgot-pass\">Forgot Password?</a>\r\n              <br>\r\n              <small *ngIf=\"!createNewSchool\">Do not have an account? </small>\r\n              <button *ngIf=\"!createNewSchool\" class=\"signup\" class=\"btn btn-primary\" (click)=\"changeCreateSchool()\">Create new school</button>\r\n\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n</div>"
 
 /***/ }),
 
@@ -1593,7 +1594,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "/*\r\n\r\n\r\n.app_main{\r\n    display: flex;\r\n    flex-direction: row;\r\n    justify-content: center;\r\n    align-items: center;\r\n    width: 100%;\r\n    height: 100%;\r\n    mat-card{\r\n        display: flex;\r\n        flex-direction: column;\r\n        justify-content: space-around;\r\n        width: 100vw;\r\n        height: 100vh;\r\n        overflow-x: hidden;\r\n        overflow-y: scroll; \r\n        input{\r\n            font-size: 50px;\r\n        }\r\n        mat-form-field{\r\n            display: block;\r\n        }\r\n        mat-card-actions{\r\n            text-align: center;\r\n        }\r\n    }\r\n\r\n    h3{\r\n        border-bottom: 3px solid black;\r\n        margin-top: 50x;\r\n    }\r\n\r\n    mat-card-actions{\r\n        display: flex;\r\n        flex-direction: column;\r\n    }\r\n}\r\n\r\n*/\n", ""]);
+exports.push([module.i, "/*\r\n\r\n\r\n.app_main{\r\n    display: flex;\r\n    flex-direction: row;\r\n    justify-content: center;\r\n    align-items: center;\r\n    width: 100%;\r\n    height: 100%;\r\n    mat-card{\r\n        display: flex;\r\n        flex-direction: column;\r\n        justify-content: space-around;\r\n        width: 100vw;\r\n        height: 100vh;\r\n        overflow-x: hidden;\r\n        overflow-y: scroll; \r\n        input{\r\n            font-size: 50px;\r\n        }\r\n        mat-form-field{\r\n            display: block;\r\n        }\r\n        mat-card-actions{\r\n            text-align: center;\r\n        }\r\n    }\r\n\r\n    h3{\r\n        border-bottom: 3px solid black;\r\n        margin-top: 50x;\r\n    }\r\n\r\n    mat-card-actions{\r\n        display: flex;\r\n        flex-direction: column;\r\n    }\r\n}\r\n\r\n*/\n.logo {\n  position: relative; }\n  .logo h1 {\n    font-size: 67px;\n    color: #8db7da;\n    font-family: \"Calibri\" !important;\n    text-shadow: 1.5px 2.598px 3px rgba(0, 0, 0, 0.57); }\n  .logo img {\n    width: 250px;\n    position: absolute;\n    bottom: -25px;\n    left: -139px;\n    transition: -webkit-transform 3s;\n    transition: transform 3s;\n    transition: transform 3s, -webkit-transform 3s; }\n  .logo .move {\n    -webkit-transform: rotate(720deg);\n            transform: rotate(720deg); }\n  .logo .not_move {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg); }\n", ""]);
 
 // exports
 
@@ -1665,12 +1666,17 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 
 var LoginComponent = (function () {
     function LoginComponent(fb, schoolService, authService, router) {
+        var _this = this;
         this.schoolService = schoolService;
         this.authService = authService;
         this.router = router;
         this.title = "כניסה";
         this._createNewSchool = false;
         this._showProgress = false;
+        this.move = false;
+        setInterval(function () {
+            _this.move = !_this.move;
+        }, 7000);
         this.form = fb.group({
             login: fb.group({
                 username: ["", __WEBPACK_IMPORTED_MODULE_1__angular_forms__["j" /* Validators */].required],
@@ -2263,12 +2269,14 @@ var AuthService = (function () {
                 if (u["success"]) {
                     _this._user = u["user"];
                     localStorage.setItem("auth", JSON.stringify(user));
-                    console.log(_this._user);
-                    _this.http.post("feedback/all", null).then(function (res) {
-                        _this._feedback = res["results"];
-                        _this._feedback.unshift(0);
-                        console.log(_this._feedback);
-                    });
+                    // console.log(this._user)
+                    if (_this._user.permission != "student") {
+                        _this.http.post("feedback/all", null).then(function (res) {
+                            _this._feedback = res["results"];
+                            _this._feedback.unshift(0);
+                            // console.log(this._feedback);
+                        });
+                    }
                 }
                 res(u);
             });
@@ -2902,24 +2910,53 @@ var LayerService = (function (_super) {
         return this.http.post("graph/graph", { layerId: id, groups: classes });
     };
     LayerService.prototype.saveMatch = function (groups, layerId) {
-        var _this = this;
-        var arr = [];
-        if (groups) {
-            groups.forEach(function (a) {
-                var group = [];
-                a.forEach(function (v) {
-                    group.push(v.id);
-                });
-                arr.push(group);
+        return __awaiter(this, void 0, void 0, function () {
+            var arr, l;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        arr = [];
+                        if (!groups) return [3 /*break*/, 2];
+                        groups.forEach(function (a) {
+                            var group = [];
+                            a.forEach(function (v) {
+                                group.push(v.id);
+                            });
+                            arr.push(group);
+                        });
+                        l = this.getLayerById(layerId);
+                        l.groups = arr;
+                        return [4 /*yield*/, this.updateLayer(l)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/, true];
+                    case 2: return [2 /*return*/];
+                }
             });
-            var l_1 = this.getLayerById(layerId);
-            l_1.groups = arr;
-            return new Promise(function (res, rej) {
-                _this.updateLayer(l_1).then(function (layer) {
-                    res(true);
-                });
+        });
+    };
+    LayerService.prototype.forbidden = function (id1, id2, layerId) {
+        return __awaiter(this, void 0, void 0, function () {
+            var item, l;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        item = {
+                            user1: id1,
+                            user2: id2,
+                        };
+                        l = this.getLayerById(layerId);
+                        if (!l.forbidden)
+                            l.forbidden = [item];
+                        else
+                            l.forbidden.push(item);
+                        return [4 /*yield*/, this.updateLayer(l)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/, true];
+                }
             });
-        }
+        });
     };
     LayerService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
@@ -3046,6 +3083,13 @@ var MessageService = (function (_super) {
         });
         return _this;
     }
+    Object.defineProperty(MessageService.prototype, "rout", {
+        get: function () {
+            return this.authService.permission != "student" ? "admin" : "client";
+        },
+        enumerable: true,
+        configurable: true
+    });
     MessageService.prototype.notReadCount = function () {
         var _this = this;
         var count = 0;

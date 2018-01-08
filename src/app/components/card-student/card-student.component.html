@@ -1,7 +1,7 @@
 <mat-card class="card-student" [style.background-color]="color ? color : 'white'">
   <mat-card-header>
     <mat-card-title>
-      <img width="24px" matTooltip="תמונת התלמיד" src="http://excadetsforum.com/profile_images/no_img.png" /> {{user.fname}} {{user.lname}} {{user.username}}
+      <img width="24px" matTooltip="תמונת התלמיד" [src]="user.gender ? (user.gender == 'male' ? '/assets/male.png' : '/assets/female.png') : '/assets/male.png'" /> {{user.fname}} {{user.lname}} {{user.username}}
     </mat-card-title>
   </mat-card-header>
 
@@ -15,18 +15,18 @@
 
 
       </div>
-      <i *ngIf="user?.isLogin" matTooltip="משתמש ביצע כניסה ראשונית" class="material-icons">verified_user</i>
+      <!-- <i *ngIf="user?.isLogin" matTooltip="משתמש ביצע כניסה ראשונית" class="material-icons">verified_user</i> -->
     </div>
   </mat-card-content>
 
-  <mat-card-actions *ngIf="showActions">
-    <button mat-icon-button (click)="open.emit(user)">
+  <mat-card-actions>
+    <button mat-icon-button *ngIf="showActions" (click)="open.emit(user)">
       <mat-icon>
         open_in_new
       </mat-icon>
       <!-- פתח -->
     </button>
-    <button mat-icon-button (click)="msgClick()">
+    <button mat-icon-button  (click)="msgClick()">
       <mat-icon>
         message
       </mat-icon>

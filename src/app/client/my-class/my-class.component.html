@@ -1,6 +1,10 @@
-<div class="myLayer_div main_div">
-
-  <mat-card>
+<div class="my_class_div main_div">
+  <div *ngIf="!groups || groups.length <= 0">
+    <h1>
+      אינך משוייך כרגע לאף כיתה
+    </h1>
+  </div>
+  <mat-card class="card_all" *ngIf="groups && groups.length > 0">
     <mat-card-header>
       <mat-card-title>
         <mat-icon>

@@ -25,8 +25,10 @@ export class LayerComponent extends ComponentBase implements OnInit {
 
   private _students: User[];
   public form: FormGroup;
+  public classesName;
 
   public graph;
+  public showTable = false;
   constructor(private activatedRoute: ActivatedRoute,
     private layerService: LayerService,
     public userService: UserService,
@@ -41,12 +43,17 @@ export class LayerComponent extends ComponentBase implements OnInit {
       username: ["", Validators.required],
       fname: "",
       lname: ""
-    })
+    });
 
 
     this.activatedRoute.params.subscribe(res => {
       this._layer = this.layerService.getLayerById(res["id"]);
-      // console.log(res["id"]);
+
+
+      this.classesName = [];
+      for (let i = 0; i < this._layer.classes; i++)
+        this.classesName.push(this._layer.name + " " + (i + 1));
+
       this.userService.users.subscribe(users => {
 
         if (users)
@@ -55,9 +62,11 @@ export class LayerComponent extends ComponentBase implements OnInit {
             return u.layerId === res["id"];
           }).sort((a, b) => {
             return a.username.localeCompare(b.username)
-          })
+          }).sort((a, b) => a.group ? (a.group > b.group ? 1 : -1) : -1);
       })
     });
+
+
 
 
   }
@@ -93,6 +102,15 @@ export class LayerComponent extends ComponentBase implements OnInit {
   public set lockTime(e) {
     this._layer.lockTime = e;
     this.layerService.updateLayer(this._layer).then(res => { })
+  }
+
+  public get lockTime() {
+    return this._layer.lockTime;
+  }
+
+  public displayName(id) {
+    let u = this._students.find(u => id == u._id)
+    return u.fname + " " + u.lname;
   }
 
   public addStudent(name: string, fname: string, lname: string) {
@@ -160,9 +178,10 @@ export class LayerComponent extends ComponentBase implements OnInit {
       this.graph.forEach((g, i) => {
         let group = g.find(v => v.id == u._id);
         if (group)
-          u.group = i
+          u.group = i;
       });
-    })
+    });
+    this._students = this._students.sort((a, b) => a.group > b.group ? 1 : -1);
   }
 
   public get hasGraph() {
@@ -182,7 +201,8 @@ export class LayerComponent extends ComponentBase implements OnInit {
         user: s,
         positivePrefer: this.userService.getUsersByLayer(this._layer._id).filter(u => s.positivePrefer.includes(u._id)),
         negativePrefer: this.userService.getUsersByLayer(this._layer._id).filter(u => s.negativePrefer.includes(u._id)),
-        students: this._students  
+        students: this._students,
+        layerId: this._layer._id
       }
     });
 

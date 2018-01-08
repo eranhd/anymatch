@@ -88,7 +88,7 @@ export class LayerService extends ControlerService {
     })
   }
 
-  
+
 
 
   public addClass(id: string, layerId: string) {
@@ -137,7 +137,7 @@ export class LayerService extends ControlerService {
     return this.http.post("graph/graph", { layerId: id, groups: classes })
   }
 
-  public saveMatch(groups, layerId) {
+  public async saveMatch(groups, layerId) {
     let arr = []
     if (groups) {
       groups.forEach(a => {
@@ -147,17 +147,29 @@ export class LayerService extends ControlerService {
         })
         arr.push(group)
       });
-      let l = this.getLayerById(layerId)
+      let l = this.getLayerById(layerId);
       l.groups = arr;
-      return new Promise((res, rej) => {
-        this.updateLayer(l).then(layer => {
-          res(true)
-        })
-      })
+
+      await this.updateLayer(l)
+      return true;
+
     }
 
 
   }
 
+  public async forbidden(id1: string, id2: string, layerId: string) {
+    let item = {
+      user1: id1,
+      user2: id2,
+    };
+    let l = this.getLayerById(layerId);
+    if (!l.forbidden)
+      l.forbidden = [item];
+    else
+      l.forbidden.push(item);
+    await this.updateLayer(l)
+    return true;
+  }
 
 }

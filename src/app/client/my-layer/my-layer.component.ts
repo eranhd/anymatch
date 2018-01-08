@@ -14,9 +14,11 @@ export class MyLayerComponent implements OnInit {
 
 
   private _students: User[];
+  private _layer: Layer;
+
 
   constructor(
-    public userService: UserService, private authService: AuthService) {
+    public userService: UserService, private authService: AuthService, public layerService: LayerService) {
     this.userService.users.subscribe(users => {
       if (users) {
         if (users[0].fname)
@@ -27,9 +29,11 @@ export class MyLayerComponent implements OnInit {
           this._students = users
       }
     });
+
+    this._layer = this.layerService.getLayerById(this.authService.getUser().layerId);
   }
 
-  ngOnInit(){
+  ngOnInit() {
 
   }
 
@@ -71,6 +75,15 @@ export class MyLayerComponent implements OnInit {
       this.authService.getUser().positivePrefer = [];
       this.save();
     }
+  }
+
+  get lock() {
+    let d = new Date();
+    if (this._layer)
+      if (this._layer.lockTime) {
+        let d2 = new Date(this._layer.lockTime);
+        return d2.getFullYear() <= d.getFullYear() && d2.getMonth() <= d.getMonth() && d2.getDate() <= d.getDate()
+      }
   }
 
 }

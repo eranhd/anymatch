@@ -22,7 +22,8 @@ export class CardStudentComponent implements OnInit {
 
   msgClick(){
     this.msgService.startConversationWith(this.user._id);
-    this.router.navigate(["/layout/admin/messages"]);
+    console.log("/layout/" + this.msgService.rout + "/messages");
+    this.router.navigate(["/layout/" + this.msgService.rout + "/messages"]);
   }
 
 }

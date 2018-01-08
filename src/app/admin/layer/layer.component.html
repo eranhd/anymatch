@@ -1,50 +1,6 @@
 <div class="layer">
   <app-pages-header [items]=headerCards></app-pages-header>
-  <div class="div_action">
-    <button mat-mini-fab matTooltip="הוסף תלמיד חדש" (click)="changeFlag()">
-      <mat-icon>
-        add
-      </mat-icon>
-    </button>
 
-    <button mat-mini-fab matTooltip="הוסף אחראי שיבוץ חדש" (click)="addNewCharge()">
-      <mat-icon>
-        add
-      </mat-icon>
-    </button>
-
-    <button mat-mini-fab (click)="fileInput.click()" matTooltip="העלה קובץ xls">
-      <mat-icon>
-        file_upload
-      </mat-icon>
-      <span>
-        <input class="btn_upload" type="file" #fileInput (change)="fileChange($event)" accept=".xlsx">
-      </span>
-    </button>
-
-    <button mat-mini-fab matTooltip="חלק קבוצה זו" (click)="startMatch()">
-      <mat-icon>
-        group_work
-      </mat-icon>
-    </button>
-
-    <button mat-mini-fab matTooltip="שמור שיבוץ זה" *ngIf="hasGraph" (click)="saveMatch()">
-      <mat-icon>
-        save
-      </mat-icon>
-    </button>
-
-
-    <mat-form-field [hidden]="true">
-      <input matInput [matDatepicker]="picker" [(ngModel)]="lockTime" placeholder="Choose a date">
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-    <button mat-mini-fab matTooltip="פתח זמן לשיבוץ"(click)="picker.open()">
-      <mat-icon>
-        timer
-      </mat-icon>
-    </button>
-  </div>
 
   <mat-card class="layer_data" *ngIf="addStudentFlag">
 
@@ -76,14 +32,92 @@
         <mat-icon>
           group
         </mat-icon>
-        כל התלמידים
+        כל התלמידים |
+        <span *ngIf="layer.lockTime">
+           תהליך הבחירה פתוח עד ל {{layer.lockTime | date:"dd.MM.yy"}}
+        </span>
+        <span *ngIf="!layer.lockTime">
+          התלמידים אינם יכולים לבחור שיבוץ
+        </span>
       </mat-card-title>
+      <mat-card-subtitle>
+        <div class="div_action">
+          <button mat-icon-button matTooltip="הוסף תלמיד חדש" (click)="changeFlag()">
+            <mat-icon>
+              add
+            </mat-icon>
+          </button>
+
+          <button mat-icon-button matTooltip="הוסף אחראי שיבוץ חדש" (click)="addNewCharge()">
+            <mat-icon>
+              add
+            </mat-icon>
+          </button>
+
+          <button mat-icon-button (click)="fileInput.click()" matTooltip="העלה קובץ xls">
+            <mat-icon>
+              file_upload
+            </mat-icon>
+            <span>
+              <input class="btn_upload" type="file" #fileInput (change)="fileChange($event)" accept=".xlsx">
+            </span>
+          </button>
+
+          <button mat-icon-button matTooltip="חלק קבוצה זו" (click)="startMatch()">
+            <mat-icon>
+              group_work
+            </mat-icon>
+          </button>
+
+          <button mat-icon-button matTooltip="שמור שיבוץ זה" *ngIf="hasGraph" (click)="saveMatch()">
+            <mat-icon>
+              save
+            </mat-icon>
+          </button>
+
+          <button mat-icon-button matTooltip="שנה תצוגה לטבלה" *ngIf="layer.groups" (click)="showTable = !showTable">
+            <mat-icon>
+              swap_horiz
+            </mat-icon>
+          </button>
+
+
+          <mat-form-field [hidden]="true">
+            <input matInput [matDatepicker]="picker" [(ngModel)]="lockTime" placeholder="Choose a date">
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <button mat-icon-button matTooltip="פתח זמן לשיבוץ" (click)="picker.open()">
+            <mat-icon>
+              timer
+            </mat-icon>
+          </button>
+        </div>
+      </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <div class="div_card_student">
+      <div *ngIf="!showTable" class="div_card_student">
         <div class="inner_div" *ngFor="let u of students">
           <app-card-student [showActions]=true [user]=u [color]="colors[u.group]" (open)="openStudent($event)"></app-card-student>
         </div>
+
+      </div>
+      <div class="inner_div" *ngIf="layer.groups && showTable">
+        <table>
+          <thead>
+            <th *ngFor="let name of classesName; let i = index">
+              {{name}}
+            </th>
+          </thead>
+          <tbody>
+            <td *ngFor="let name of classesName; let i = index">
+              <table>
+                <tr *ngFor="let g of layer.groups[i]">
+                  {{displayName(g)}}
+                </tr>
+              </table>
+            </td>
+          </tbody>
+        </table>
       </div>
     </mat-card-content>
   </mat-card>

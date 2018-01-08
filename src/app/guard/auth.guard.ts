@@ -61,13 +61,13 @@ export class AdminGuard implements CanActivate {
               });
           }
           else {
-            console.log(3);
+            // console.log(3);
             this.router.navigate(["/login"])
             return false;
           }
         });
       else {
-        console.log(4);
+        // console.log(4);
         this.router.navigate(["/login"])
         return false;
       }
@@ -86,12 +86,12 @@ export class AuthGuard implements CanActivate {
     private layerService: LayerService,
     private classService: ClassService,
     private router: Router) {
-      console.log("in auth guard");
+      // console.log("in auth guard");
      }
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-      console.log("in auth guards");
+      // console.log("in auth guards");
 
 
 

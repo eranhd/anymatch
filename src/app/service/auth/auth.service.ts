@@ -42,12 +42,14 @@ export class AuthService {
         if (u["success"]) {
           this._user = u["user"];
           localStorage.setItem("auth", JSON.stringify(user));
-          console.log(this._user)
-          this.http.post<number[]>("feedback/all", null).then(res => {
-            this._feedback = res["results"];
-            this._feedback.unshift(0);
-            console.log(this._feedback);
-          });
+          // console.log(this._user)
+          if (this._user.permission != "student") {
+            this.http.post<number[]>("feedback/all", null).then(res => {
+              this._feedback = res["results"];
+              this._feedback.unshift(0);
+              // console.log(this._feedback);
+            });
+          }
         }
         res(u);
       });

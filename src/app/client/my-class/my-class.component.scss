@@ -1,0 +1,15 @@
+.my_class_div{
+    .card_all{
+        width: 100%;
+        .div_card_student{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            .inner_div{
+                width: max-content;
+                margin: 10px;
+            }
+        }
+        
+    }
+}

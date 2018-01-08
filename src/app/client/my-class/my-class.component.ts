@@ -11,20 +11,22 @@ import { User } from '../../models/index';
 export class MyClassComponent implements OnInit {
 
   private _students: User[]
-  private groups = []
+  public groups = []
 
   constructor(public userService: UserService, public layerService: LayerService, private authService: AuthService) {
-    this.groups = layerService.getLayerById(this.authService.getUser().layerId).groups
-    // console.log(this.groups)
-    this.groups = this.groups.map(g => {
-      if (g.includes(this.authService.id))
-        return g
-    })
-    this.userService.users.subscribe(users => {
-      this._students = users.filter(user => {
-        return this.groups[0].includes(user._id)
+    this.groups = layerService.getLayerById(this.authService.getUser().layerId).groups;
+    if (this.groups) {
+      this.groups = this.groups.filter(g => {
+        if (g.includes(this.authService.id))
+          return true;
+        return false;
       })
-    })
+      this.userService.users.subscribe(users => {
+        this._students = users.filter(user => {
+          return this.groups[0].includes(user._id)
+        })
+      })
+    }
   }
 
   public get students() {

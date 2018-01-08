@@ -16,12 +16,17 @@ export class LoginComponent {
   public list;
   public title: string = "כניסה";
   private _createNewSchool: boolean = false;
-  public _showProgress: boolean = false
+  public _showProgress: boolean = false;
+
+  move: boolean = false;
 
   constructor( @Inject(FormBuilder) fb: FormBuilder,
     private schoolService: SchoolService,
     private authService: AuthService,
     private router: Router) {
+    setInterval(() => {
+      this.move = !this.move;
+    }, 7000);
     this.form = fb.group({
       login: fb.group({
         username: ["", Validators.required],

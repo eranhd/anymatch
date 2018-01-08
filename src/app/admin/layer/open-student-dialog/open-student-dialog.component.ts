@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, Inject, Optional } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { LayerService } from '../../../service';
 
 @Component({
   selector: 'app-open-student-dialog',
@@ -11,7 +12,7 @@ export class OpenStudentDialogComponent implements OnInit {
 
   public _addUser
   constructor(public dialogRef: MatDialogRef<OpenStudentDialogComponent>,
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: any, private layerService: LayerService) { }
 
   ngOnInit() {
   }
@@ -65,6 +66,10 @@ export class OpenStudentDialogComponent implements OnInit {
     this.data.user.negativePrefer.push(u._id);
     this.data.negativePrefer ? this.data.negativePrefer.push(u) : this.data.negativePrefer = [u];
     this._addUser = "";
+  }
+
+  public async addForbidden() {
+    await this.layerService.forbidden(this._addUser, this.data.user._id, this.data.layerId);
   }
 
 

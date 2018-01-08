@@ -56,6 +56,10 @@ export class MessageService extends ControlerService {
     });
   }
 
+  public get rout(){
+    return this.authService.permission != "student" ? "admin" : "client";
+  }
+
   private notReadCount() {
     let count = 0;
     this.conversations.forEach(c => {

@@ -6,4 +6,5 @@ export class Layer extends Item {
     classes: number = 0;
     groups: string[];
     lockTime: Date;
+    forbidden: any[];
 }

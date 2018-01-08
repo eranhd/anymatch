@@ -12,8 +12,8 @@
                         תאריך אחרון לבחירת העדפות
                     </mat-card-title>
                 </mat-card-header>
-                <mat-card-content>
-                    {{timer ?( timer | date:"dd.MM.yyy") : "שיבוץ נעול"}}
+                <mat-card-content class="timer_data">
+                    <h1>{{timer ?( timer | date:"dd.MM.yyy") : "שיבוץ נעול"}}</h1>
                 </mat-card-content>
             </mat-card>
             <mat-card>

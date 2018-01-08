@@ -1,4 +1,4 @@
-@media screen and (max-width: 500px){
+/*@media screen and (max-width: 500px){
     
     .div_card_student{
         display: flex;
@@ -11,7 +11,7 @@
     .div_action{
         text-align: center;
     }
-}
+}*/
 @media screen and (min-width: 500px){
     .myLayer_div{
         display: flex;
@@ -91,7 +91,8 @@
         .inner_div{
             margin: 8px;
             width: 200px;
-            height: 100px;
+            // height: 100px;
+            margin: 10px;
         }
     }
 }

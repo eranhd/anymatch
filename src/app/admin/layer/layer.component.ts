@@ -180,8 +180,8 @@ export class LayerComponent extends ComponentBase implements OnInit {
       width: '600px',
       data: {
         user: s,
-        positive: this.userService.getUsersByLayer(this._layer._id).filter(u => s.positivePrefer.includes(u._id)),
-        negative: this.userService.getUsersByLayer(this._layer._id).filter(u => s.negativePrefer.includes(u._id)),
+        positivePrefer: this.userService.getUsersByLayer(this._layer._id).filter(u => s.positivePrefer.includes(u._id)),
+        negativePrefer: this.userService.getUsersByLayer(this._layer._id).filter(u => s.negativePrefer.includes(u._id)),
         students: this._students  
       }
     });

@@ -14,18 +14,22 @@ router.post('/graph/', (req, res, next) => {
             g.addVertex(e._id, e.fname + " " + e.lname);
         });
 
+        let deg = [3,2,1];
+
         doc.forEach(e => {
             e.positivePrefer.forEach((pp, index) => {
-                g.addEdge(e._id, pp, e.positivePrefer.length - index);
+                g.addEdge(e._id, pp, deg[index]);
             })
             e.negativePrefer.forEach((np, index) => {
-                g.addEdge(e._id, np, -1 * (e.negativePrefer.length - index));
+                g.addEdge(e._id, np, -1 * deg[index] );
             })
         });
 
         res.send(g.match(req.body.groups));
     });
 });
+
+
 
 
 

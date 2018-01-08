@@ -73,11 +73,12 @@ var UserService = (function (_super) {
         var _this = this;
         return new Promise(function (res, rej) {
             _this.update(user).then(function (updateduser) {
-                _this._users.map(function (u) {
+                _this._users = _this._users.map(function (u) {
                     if (u._id != user._id)
                         return u;
+                    return user;
                 });
-                _this._users.push(user);
+                // this._users.push(user);
                 _this.ob.next(_this._users);
                 res(updateduser);
             });

@@ -61,7 +61,7 @@ export class OpenStudentDialogComponent implements OnInit {
   }
 
   public addToNegative() {
-    let u = this.students.find(u => u.username = this._addUser);
+    let u = this.students.find(u => u.username == this._addUser);
     this.data.user.negativePrefer.push(u._id);
     this.data.negativePrefer ? this.data.negativePrefer.push(u) : this.data.negativePrefer = [u];
     this._addUser = "";

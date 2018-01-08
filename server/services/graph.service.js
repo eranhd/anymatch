@@ -6,7 +6,6 @@ module.exports.Graph = class Graph {
 
     constructor() {
         this.vertices = []
-        this.dfsForest = []
         this.gmls = []
         this.groups = []
         this.groupMap = []
@@ -14,70 +13,7 @@ module.exports.Graph = class Graph {
 
     }
 
-    addVertex(id, text) {
-        if (!this.vertices)
-            this.vertices = [];
-        this.vertices.push(new Vertex(id, text));
-    }
 
-    addEdge(from, to, weight) {
-        let v = this.vertices.find(res => res.id === from);
-        v.addEdge(to, weight);
-    }
-
-    getVeretxById(id) {
-        return this.vertices.find(res => res.id == id);
-    }
-
-    calcDegree() {
-        let edges = []
-        this.vertices.forEach(v => {
-            v.edges.forEach(e => {
-                if (!edges[e.to])
-                    edges[e.to] = 0
-                edges[e.to]++
-            })
-        })
-        this.vertices.forEach(v => {
-            v.degree = edges[v.id]
-        })
-    }
-
-    sortByDegree() {
-        this.vertices.sort((a, b) => a.degree < b.degree)
-        console.log(this.vertices)
-    }
-
-    /**
-     * create dfs forest for the group
-     */
-    dfs() {
-        if (!this.vertices)
-            return
-        this.calcDegree()
-        this.sortByDegree()
-        this.vertices.forEach(v => {
-            if (!v.visit) {
-                v.group = this.dfsForest.length;
-                this.dfsFrom(v)
-            }
-        })
-        return this.dfsForest
-    }
-
-    dfsFrom(v) {
-        v.visit = true;
-        if (!this.dfsForest[v.group])
-            this.dfsForest[v.group] = []
-        this.dfsForest[v.group].push(v)
-        v.edges.forEach(e => {
-            let ver = this.getVeretxById(e.to);
-            if (!ver.visit) {
-                ver.group = v.group
-                this.dfsFrom(ver)
-            }
-        })
-    }
 
 
     /**
@@ -91,33 +27,20 @@ module.exports.Graph = class Graph {
         this.vertices.forEach(v => {
             if (!this.groupMap[v.id]) {//if v not contain to group
                 let flag = false
-                for (let i = 0; i < v.edges.length; i++) { // for each edge in v, if e has group and positive, add v to e group
-                    // if (e.weight > 0) {
+                for (let i = 0; i < v.edges.length; i++) { // for each edge in v, if e has group, add v to e group
+
                     let e = v.edges[i]
                     let ver = this.getVeretxById(e.to)
                     if (this.groupMap[ver.id] && !flag) {
                         flag = true
-                        let g = ver.group
-                        v.group = g
-                        for (i = 0; i < v.edges.length; i++) {
-                            e = v.edges[i]
-                            ver = this.getVeretxById(e.to)
-                            ver.group = g
-                            this.groupMap[v.id] = true
-                        }
+                        this.changeGroup(ver.group, v);
+                        break;
                     }
-                    // }
+
                 }
                 if (!flag) {//need to open new group
-                    this.groupMap[v.id] = true
-                    v.group = count
+                    this.changeGroup(count, v);
                     count++
-                    v.edges.forEach(e => {
-                        let ver = this.getVeretxById(e.to)
-
-                        ver.group = v.group
-                        this.groupMap[ver.id] = true
-                    })
                 }
 
             }
@@ -134,24 +57,30 @@ module.exports.Graph = class Graph {
         let hasMore = false
         this.reduceGroup()
         let numVerInGroup = this.vertices.length / numOfGroups
-        // this.group.forEach(g => {
-        //     if (g.length > numVerInGroup)//need to divide the group
-        //         hasMore = true
-        // })
-        // hasMore ? this.buildDirectGraphWithWeight(numVerInGroup) : this.buildDirectGraphWithWeight()
         this.buildDirectGraphWithWeight()
 
         let dGroups = []
         this.group.forEach((graph, i) => {
             if (graph.length > numVerInGroup) {//need to divide the group
 
-                let graphAndMap = this.buildDirectGraphWithWeightForFF(graph, numVerInGroup / graph.length)
-                let g = graphAndMap.g
-                let arrMap = graphAndMap.arrMap
-                let count = this.group.length
-                let dividedGraph = this.divideGroup(arrMap, count, g)
-                this.group[i] = dividedGraph.g1
-                dGroups.push(dividedGraph.g2)
+                let g2;
+                do {
+                    let reduceG = this.recursiveRedusce(graph.toArray(), new Group(i), numVerInGroup, 0);
+
+                    let g1 = reduceG;
+                    g2 = new Group(this.group.length + i);
+                    let arr = reduceG.toArray();
+                    graph.toArray().forEach(item => {
+                        if (!arr.find(v => item.id == v.id))
+                            g2.addVertex(item);
+                    });
+                    delete this.group[i];
+                    dGroups.push(g1);
+                    if (g2.length <= numVerInGroup)
+                        dGroups.push(g2);
+                    else
+                        graph = g2;
+                } while (g2.length > numVerInGroup)
             }
         })
         if (dGroups.length > 0) {
@@ -160,62 +89,6 @@ module.exports.Graph = class Graph {
 
         this.reduceGroup()
         return this.grouping(numVerInGroup, numOfGroups)
-    }
-
-    /**
-     * delete all empty group from group
-     */
-    reduceGroup() {
-        for (let i = this.group.length - 1; i >= 0; i--) {
-            if (!this.group[i] || this.group[i].length == 0)
-                this.group.splice(i, 1);
-        }
-    }
-
-    buildDirectGraphWithWeightForFF(graph, reduce) {
-        let arr = graph.toArray();
-        let arrMap = []
-        let toMap = []
-        arr.forEach((v, i) => {
-            arrMap[v.id] = i + 2;
-        })
-        let g = new jsgraphs.FlowNetwork(arr.length + 2);
-        arr.forEach((v, i) => {
-            let sum = 0
-            v.edges.forEach(e => {
-                g.node(i).label = v._text
-                if (arrMap[e.to]) {
-                    if (e.weight > 0) {
-                        sum += e.weight
-                        toMap[e.to] ? toMap[e.to] += e.weight : toMap[e.to] = e.weight
-                    }
-                    g.addEdge(new jsgraphs.FlowEdge(arrMap[v.id], arrMap[e.to], e.weight));
-                }
-            })
-            //add edge from start to v
-            g.addEdge(new jsgraphs.FlowEdge(0, arrMap[v.id], sum));
-
-
-
-        })
-        arr.forEach(v => {//add edge from v to last 
-            let id = v.id.toString()
-            let w = toMap[id]
-            if (w && reduce)
-                w = (w * reduce).toFixed(2)
-            g.addEdge(new jsgraphs.FlowEdge(arrMap[v.id], 1, w ? w : -1));
-        })
-        return { g: g, arrMap: arrMap }
-    }
-
-    getIdFromArrMap(arrMap, f) {
-        let id = ""
-        for (let key in arrMap)
-            if (arrMap[key] == f) {
-                id = key
-                break;
-            }
-        return id
     }
 
     divideGroup(arrMap, count, g) {
@@ -274,9 +147,15 @@ module.exports.Graph = class Graph {
                 let g = graphAndMap.g
                 let arrMap = graphAndMap.arrMap
                 let count = gs.length
-                let dividedGraph = this.divideGroup(arrMap, count, g)
-                gs.push(dividedGraph.g1)
-                gs.push(dividedGraph.g2)
+                let maxGml = g.length > 1 ? this.divideGroup(arrMap, count, g[1]) : this.divideGroup(arrMap, count, g[0])
+                for (let i = 1; i < g.length; i++) {
+                    let dividedGraph = this.divideGroup(arrMap, count, g[i])
+                    if (dividedGraph.g1.getGml() > maxGml.g1.getGml())
+                        maxGml = dividedGraph
+                }
+
+                gs.push(maxGml.g1)
+                gs.push(maxGml.g2)
             }
             else
                 gs.push(graph)
@@ -284,6 +163,95 @@ module.exports.Graph = class Graph {
         })
 
         this.group = gs
+    }
+
+    buildDirectGraphWithWeightForFF(graph, reduce) {
+        let arr = graph.toArray();
+        let arrMap = []
+        let toMap = []
+        let negative = []
+        arr.forEach((v, i) => {
+            arrMap[v.id] = i + 2;
+        })
+        let g = new jsgraphs.FlowNetwork(arr.length + 2);
+        arr.forEach((v, i) => {
+            let sum = 0
+            v.edges.forEach(e => {
+                g.node(i).label = v._text
+                if (arrMap[e.to]) {
+                    if (e.weight > 0) {
+                        sum += e.weight
+                        toMap[e.to] ? toMap[e.to] += e.weight : toMap[e.to] = e.weight
+                    }
+                    else if (e.weight <= 0) {
+                        negative[e.to] = true
+                        negative[v.id.toString()] = true
+                    }
+                    g.addEdge(new jsgraphs.FlowEdge(arrMap[v.id], arrMap[e.to], e.weight));
+                }
+            })
+            //add edge from start to v
+            g.addEdge(new jsgraphs.FlowEdge(0, arrMap[v.id], sum));
+
+
+
+        })
+
+        let graphs = []
+
+        arr.forEach(v => {//add edge from v to last 
+
+            let id = v.id.toString()
+            if (!negative[id]) {
+                let w = toMap[id]
+                if (w && reduce)
+                    w = (w * reduce).toFixed(2)
+                g.addEdge(new jsgraphs.FlowEdge(arrMap[v.id], 1, w ? w : -1));
+            }
+        })
+        graphs.push(g)
+        for (let key in negative) {
+
+            let w = toMap[key]
+            if (w && reduce)
+                w = (w * reduce).toFixed(2)
+            let temp = this.cloneGraph(g)
+            for (let id in negative) {
+                if (id != key)
+                    temp.addEdge(new jsgraphs.FlowEdge(arrMap[id], 1, w ? w : -1));
+            }
+            graphs.push(temp)
+        }
+        return { g: graphs, arrMap: arrMap }
+    }
+
+
+    recursiveRedusce(g, target, length, i) {
+        if (length == 0)
+            return target;
+        else if (i == g.length)
+            return null;
+        let a = target.clone();
+        a.addVertex(g[i]);
+        let b = this.recursiveRedusce(g, a, length - 1, i + 1)
+        let c = this.recursiveRedusce(g, target, length, i + 1)
+        if (!b)
+            return c;
+        else if (!c)
+            return b;
+        return b.getGml() > c.getGml() ? b : c
+    }
+
+
+    changeGroup(num, v) {
+        if (!v || v.group == num)
+            return;
+        v.group = num;
+        this.groupMap[v.id] = true
+        v.edges.forEach(e => {
+            let vertex = this.getVeretxById(e.to);
+            this.changeGroup(num, vertex);
+        });
     }
 
     /**
@@ -389,7 +357,49 @@ module.exports.Graph = class Graph {
         });
     }
 
+    cloneGraph(g) {
+        let temp = new jsgraphs.FlowNetwork(g.V)
+        for (let i = 0; i < g.adjList.length; i++)
+            for (let j = 0; j < g.adjList[i].length; j++)
+                if (i == g.adjList[i][j].v)
+                    temp.addEdge(new jsgraphs.FlowEdge(g.adjList[i][j].v, g.adjList[i][j].w, g.adjList[i][j].capacity))
+        return temp
+    }
 
+    getIdFromArrMap(arrMap, f) {
+        let id = ""
+        for (let key in arrMap)
+            if (arrMap[key] == f) {
+                id = key
+                break;
+            }
+        return id
+    }
+
+    /**
+     * delete all empty group from group
+     */
+    reduceGroup() {
+        for (let i = this.group.length - 1; i >= 0; i--) {
+            if (!this.group[i] || this.group[i].length == 0)
+                this.group.splice(i, 1);
+        }
+    }
+
+    addVertex(id, text) {
+        if (!this.vertices)
+            this.vertices = [];
+        this.vertices.push(new Vertex(id, text));
+    }
+
+    addEdge(from, to, weight) {
+        let v = this.vertices.find(res => res.id === from);
+        v.addEdge(to, weight);
+    }
+
+    getVeretxById(id) {
+        return this.vertices.find(res => res.id == id);
+    }
 }
 
 class Group {
@@ -407,6 +417,14 @@ class Group {
 
     }
 
+    clone() {
+        let g = new Group(this.num);
+        for (let i in this.vertices) {
+            g.addVertex(this.vertices[i]);
+        }
+        return g;
+    }
+
     /**
      * for (let id in this.vertices) {
             let v = this.vertices[id]
@@ -422,7 +440,9 @@ class Group {
     addVertex(v) {
         this.vertices[v.id] = v
 
-        v.edges.forEach(e => { // add edges to negatove and positive array
+        // add edges to negatove and positive array
+        for (let i = 0; i < v.edges.length; i++) {
+            let e = v.edges[i];
             if (!this.vertices[e.to]) {
                 if (this.positiveEdge[e.to])
                     this.positiveEdge[e.to].weight += e.weight
@@ -431,12 +451,12 @@ class Group {
 
                 if (!this.positiveEdge[e.to] || this.negativeEdge[e.to]) {
                     if (e.weight > 0)
-                        this.positiveEdge[e.to] = e
+                        this.positiveEdge[e.to] = Object.assign({}, e)
                     else
-                        this.negativeEdge[e.to] = e
+                        this.negativeEdge[e.to] = Object.assign({}, e)
                 }
             }
-        })
+        }
 
         if (this.positiveEdge[v.id])
             delete this.positiveEdge[v.id]
@@ -446,6 +466,9 @@ class Group {
         this.calcGml()
 
     }
+
+
+
 
     getGml() {
         return this.gml + 1

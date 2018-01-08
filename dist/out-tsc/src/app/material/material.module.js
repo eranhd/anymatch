@@ -30,7 +30,8 @@ var MaterialModule = (function () {
                 material_1.MatRadioModule,
                 material_1.MatDatepickerModule,
                 material_1.MatNativeDateModule,
-                material_1.MatProgressSpinnerModule
+                material_1.MatProgressSpinnerModule,
+                material_1.MatAutocompleteModule
             ],
             exports: [
                 material_1.MatButtonModule,
@@ -48,7 +49,8 @@ var MaterialModule = (function () {
                 material_1.MatRadioModule,
                 material_1.MatDatepickerModule,
                 material_1.MatNativeDateModule,
-                material_1.MatProgressSpinnerModule
+                material_1.MatProgressSpinnerModule,
+                material_1.MatAutocompleteModule
             ],
             declarations: []
         })

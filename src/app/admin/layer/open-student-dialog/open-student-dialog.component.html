@@ -36,7 +36,7 @@
         </button>
       </form>
     </h3>
-    <h3>
+    <h3 *ngIf="data?.positive?.length != 0 || data?.negative?.length != 0 ">
       תלמידים שנבחרו
     </h3>
     <div class="div_card_student">

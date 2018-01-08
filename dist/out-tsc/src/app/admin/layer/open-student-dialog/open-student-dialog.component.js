@@ -37,6 +37,55 @@ var OpenStudentDialogComponent = (function () {
     OpenStudentDialogComponent.prototype.save = function () {
         this.dialogRef.close({ success: true, user: this.data.user });
     };
+    Object.defineProperty(OpenStudentDialogComponent.prototype, "students", {
+        get: function () {
+            return this.data.students;
+            // return this.data.students.map(u =>  u.fname + " " + u.lname );
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(OpenStudentDialogComponent.prototype, "addUser", {
+        get: function () {
+            return this._addUser;
+        },
+        set: function (u) {
+            console.log(u);
+            this._addUser = u;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    OpenStudentDialogComponent.prototype.addtoPositive = function () {
+        var _this = this;
+        var u = this.students.find(function (u) { return u.username == _this._addUser; });
+        // console.log(u)
+        this.data.user.positivePrefer.push(u._id);
+        this.data.positivePrefer ? this.data.positivePrefer.push(u) : this.data.positivePrefer = [u];
+        console.log(this.data.user);
+        this._addUser = "";
+    };
+    OpenStudentDialogComponent.prototype.addToNegative = function () {
+        var _this = this;
+        var u = this.students.find(function (u) { return u.username == _this._addUser; });
+        this.data.user.negativePrefer.push(u._id);
+        this.data.negativePrefer ? this.data.negativePrefer.push(u) : this.data.negativePrefer = [u];
+        this._addUser = "";
+    };
+    Object.defineProperty(OpenStudentDialogComponent.prototype, "pos", {
+        get: function () {
+            return this.data.positivePrefer ? this.data.positivePrefer : [];
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(OpenStudentDialogComponent.prototype, "neg", {
+        get: function () {
+            return this.data.negativePrefer ? this.data.negativePrefer : [];
+        },
+        enumerable: true,
+        configurable: true
+    });
     OpenStudentDialogComponent = __decorate([
         core_1.Component({
             selector: 'app-open-student-dialog',

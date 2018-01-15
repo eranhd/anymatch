@@ -1,11 +1,7 @@
-/* You can add global styles to this file, and also import other style files */
-/* @import "~@angular/material/prebuilt-themes/deeppurple-amber.css"; */
-
 body{
     margin: 0;
     direction: rtl !important;
     font-family: "Calibri";
-    /* background-image: url("https://s-media-cache-ak0.pinimg.com/originals/10/7c/55/107c55c9834abb0e8ce17dc5e5c139ca.jpg"); */
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -40,6 +36,7 @@ input{
 
 mat-card{
     padding: 8px;
+    border-radius: 20px;
 }
 
 h2.title{
@@ -265,7 +262,7 @@ ul, li{
   }
 
   .mat-card {
-    font-family: Roboto, "Helvetica Neue", sans-serif
+    border-radius: 20px;
   }
 
   .mat-card-title {

@@ -17,6 +17,7 @@ export class LoginComponent {
   public title: string = "כניסה";
   private _createNewSchool: boolean = false;
   public _showProgress: boolean = false;
+  public rememberMe: boolean = false;
 
   move: boolean = false;
 
@@ -24,9 +25,6 @@ export class LoginComponent {
     private schoolService: SchoolService,
     private authService: AuthService,
     private router: Router) {
-    setInterval(() => {
-      this.move = !this.move;
-    }, 7000);
     this.form = fb.group({
       login: fb.group({
         username: ["", Validators.required],
@@ -56,7 +54,7 @@ export class LoginComponent {
     let u = {};
     u["username"] = this.form.controls.login["controls"].username.value;
     u["password"] = this.form.controls.login["controls"].pass.value.password;
-    let user = await this.authService.login(u);
+    let user = await this.authService.login(u, this.rememberMe);
     // console.log(user);
     this._showProgress = false;
     if (!user["success"]) {

@@ -40,7 +40,7 @@ export class AdminGuard implements CanActivate {
     else {
       let user = JSON.parse(localStorage.getItem("auth"));
       if (user)
-        this.authService.login(user).then(u => {
+        this.authService.login(user, true).then(u => {
           if (this.authService.isAuth()) {
             return new Promise(
               (resolve, rej) => {
@@ -115,7 +115,7 @@ export class AuthGuard implements CanActivate {
     else {
       let user = JSON.parse(localStorage.getItem("auth"));
       if (user)
-        this.authService.login(user).then(u => {
+        this.authService.login(user, true).then(u => {
           if (this.authService.isAuth()) {
             return new Promise(
               (resolve, rej) => {

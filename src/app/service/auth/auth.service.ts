@@ -35,13 +35,14 @@ export class AuthService {
     }
   }
 
-  public login(user) {
+  public login(user, save: boolean) {
     return new Promise((res, error) => {
       // console.log("in auth");
       this.http.post(LOGIN, user).then(u => {
         if (u["success"]) {
           this._user = u["user"];
-          localStorage.setItem("auth", JSON.stringify(user));
+          if (save)
+            localStorage.setItem("auth", JSON.stringify(user));
           // console.log(this._user)
           if (this._user.permission != "student") {
             this.http.post<number[]>("feedback/all", null).then(res => {

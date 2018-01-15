@@ -12,23 +12,18 @@
               <strong>Dashboard</strong> -->
               <img src="/assets/logo.png">
             </div>
-            <div class="brand-text brand-small">
-              <strong>AM</strong>
+            <div class="brand-text brand-small logo">
+                <img src="/assets/logo.png">
             </div>
           </a>
-          <!-- Toggle Button-->
-          <a id="toggle-btn" class="menu-btn active">
-            <span></span>
-            <span></span>
-            <span></span>
-          </a>
+          
         </div>
         <!-- Navbar Menu -->
         <div class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
           <!-- Search-->
 
           <mat-form-field class="search-form-field">
-            <input matInput type="text" placeholder="חיפוש" [(ngModel)]="searchValue" (change)="search.emit(searchValue)" />
+            <input matInput type="text" placeholder="חיפוש" [(ngModel)]="searchValue" (keyup)="search.emit(searchValue)" />
             <button mat-button *ngIf="searchValue" matSuffix mat-icon-button aria-label="Clear" (click)="search.emit(searchValue)">
               <mat-icon>search</mat-icon>
             </button>

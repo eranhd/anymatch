@@ -58,13 +58,21 @@ export class LayerComponent extends ComponentBase implements OnInit {
       this.userService.users.subscribe(users => {
 
         if (users)
-          this._students = users.filter(u => {
-            // console.log(u.layerId + " ," + res["id"])
+          this._students = users.filter(u => {//filter all student with same layer id
             return u.layerId === res["id"];
           }).sort((a, b) => {
             return a.username.localeCompare(b.username)
           }).sort((a, b) => a.group ? (a.group > b.group ? 1 : -1) : -1);
-      })
+        if (this._layer.groups) {
+          this._layer.groups.forEach((group, i) => {
+            group.forEach(id => {
+              let s = this._students.find(stu => stu._id == id);
+              // console.log(s)
+              s.group = i;
+            });
+          });
+        }
+      });
     });
 
 
@@ -180,7 +188,13 @@ export class LayerComponent extends ComponentBase implements OnInit {
 
   public async startMatch() {
     this.snakService.openSnackBar("השרת מבצע שיבוץ, אנא המתן", "סגור");
-    this.graph = await this.layerService.getGraph(this._layer._id, this._layer.classes > 0 ? this._layer.classes : 1)
+    this.graph = await this.layerService.getGraph(
+      this._layer._id, 
+      this._layer.classes > 0 ? this._layer.classes : 1,
+      this._layer.maleAndFemale ? this._layer.maleAndFemale : null,
+      this._layer.maleClasses ? this._layer.maleClasses : null,
+      this._layer.femaleClasses ? this._layer.femaleClasses : null
+    )
     this._students.forEach(u => {
       this.graph.forEach((g, i) => {
         let group = g.find(v => v.id == u._id);

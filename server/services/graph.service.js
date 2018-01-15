@@ -314,7 +314,7 @@ module.exports.Graph = class Graph {
             Math.abs(l - length) < 0.5 && Math.abs(l - length) != 0 ? flag = true : l = l
             let g = this.knapsack01Dp(l, 0);
             if (g.length == 0 && flag)
-                g = this.knapsack01Dp(l + 1, (l/10).toFixed(0));
+                g = this.knapsack01Dp(l + 1, (l / 10).toFixed(0));
             groups.push(g)
             this.removeChoose(g)
 
@@ -401,7 +401,8 @@ module.exports.Graph = class Graph {
 
     addEdge(from, to, weight) {
         let v = this.vertices.find(res => res.id === from);
-        v.addEdge(to, weight);
+        if (v)
+            v.addEdge(to, weight);
     }
 
     getVeretxById(id) {

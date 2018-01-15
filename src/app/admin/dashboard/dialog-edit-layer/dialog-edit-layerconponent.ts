@@ -16,14 +16,17 @@ export class DialogEditLayer {
     constructor(
         public dialogRef: MatDialogRef<DialogEditLayer>,
         private router: Router,
-        @Inject(MAT_DIALOG_DATA) public data: any, 
+        @Inject(MAT_DIALOG_DATA) public data: any,
         @Inject(FormBuilder) fb: FormBuilder) {
 
         this.layer = data;
         this.form = fb.group({
 
             name: [this.layer.name, Validators.required],
-            classes: [this.layer.classes, Validators.required]
+            classes: [this.layer.classes, Validators.required],
+            maleAndFemale: [this.layer.maleAndFemale ? this.layer.maleAndFemale : false],
+            maleClasses: [this.layer.maleClasses ? this.layer.maleClasses : 0],
+            femaleClasses: [this.layer.femaleClasses ? this.layer.femaleClasses : 0]
 
         });
 
@@ -37,7 +40,7 @@ export class DialogEditLayer {
         this.dialogRef.close({ success: true, layer: this.form.value })
     }
 
-    openLayer(){
+    openLayer() {
 
         this.router.navigate(["layout/admin/layer", this.layer._id]);
         this.dialogRef.close({ success: false })

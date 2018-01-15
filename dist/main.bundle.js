@@ -58,7 +58,10 @@ var DialogNewLayer = (function () {
         this.data = data;
         this.form = fb.group({
             name: ["", __WEBPACK_IMPORTED_MODULE_1__angular_forms__["j" /* Validators */].required],
-            classes: [0, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["j" /* Validators */].required]
+            classes: [0, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["j" /* Validators */].required],
+            maleAndFemale: [false],
+            maleClasses: [0],
+            femaleClasses: [0]
         });
     }
     DialogNewLayer.prototype.onNoClick = function () {
@@ -85,14 +88,14 @@ var DialogNewLayer = (function () {
 /***/ "../../../../../src/app/admin/dashboard/dialog new layer/dialog-new-layer.html":
 /***/ (function(module, exports) {
 
-module.exports = "<mat-card>\r\n    <mat-card-header>\r\n        <mat-card-title>יצירת שכבה חדשה</mat-card-title>\r\n    </mat-card-header>\r\n    <mat-card-content>\r\n        <form [formGroup]=\"form\">\r\n            <mat-form-field>\r\n                <input matInput text=\"text\" formControlName=\"name\" placeholder=\"שם\" />\r\n            </mat-form-field>\r\n            <mat-form-field>\r\n                <input matInput type=\"number\" formControlName=\"classes\" placeholder=\"מספר כיתות\" />\r\n            </mat-form-field>\r\n        </form>\r\n    </mat-card-content>\r\n    <mat-card-actions>\r\n        <button mat-button (click)=\"addLayer()\">Add</button>\r\n        <button mat-button>Clear</button>\r\n    </mat-card-actions>\r\n</mat-card>"
+module.exports = "<mat-card>\r\n    <mat-card-header>\r\n        <mat-card-title>\r\n            <mat-icon>\r\n                add\r\n            </mat-icon>\r\n            הוספת שכבה חדשה\r\n        </mat-card-title>\r\n    </mat-card-header>\r\n    <mat-card-content>\r\n        <form [formGroup]=\"form\">\r\n            <mat-form-field>\r\n                <input matInput text=\"text\" formControlName=\"name\" placeholder=\"שם\" />\r\n            </mat-form-field>\r\n            <mat-form-field>\r\n                <input matInput type=\"number\" formControlName=\"classes\" placeholder=\"מספר כיתות\" />\r\n            </mat-form-field>\r\n            <mat-checkbox formControlName=\"maleAndFemale\">הפרד שכבה זו בין בנים לבנות</mat-checkbox>\r\n            <span *ngIf=\"form.controls['maleAndFemale'].value\">\r\n                <mat-form-field>\r\n                    <input matInput text=\"text\" formControlName=\"maleClasses\" placeholder=\"מספר כיתות לבנים\" />\r\n                </mat-form-field>\r\n                <mat-form-field>\r\n                    <input matInput text=\"text\" formControlName=\"femaleClasses\" placeholder=\"מספר כיתות לבנות\" />\r\n                </mat-form-field>\r\n            </span>\r\n        </form>\r\n    </mat-card-content>\r\n    <mat-card-actions>\r\n        <button mat-button (click)=\"addLayer()\">Add</button>\r\n        <button mat-button>Clear</button>\r\n    </mat-card-actions>\r\n</mat-card>"
 
 /***/ }),
 
 /***/ "../../../../../src/app/admin/dashboard/dialog-edit-layer/dialog-edit-layerconponent.html":
 /***/ (function(module, exports) {
 
-module.exports = "<mat-card>\r\n    <mat-card-header>\r\n        <mat-card-title>עריכת שכבה</mat-card-title>\r\n    </mat-card-header>\r\n    <mat-card-content>\r\n        <form [formGroup]=\"form\">\r\n            <mat-form-field>\r\n                <input matInput text=\"text\" formControlName=\"name\" placeholder=\"שם השכבה\" />\r\n            </mat-form-field>\r\n            <mat-form-field>\r\n                <input matInput type=\"number\" formControlName=\"classes\" placeholder=\"מספר הכיתות\" />\r\n            </mat-form-field>\r\n        </form>\r\n    </mat-card-content>\r\n    <mat-card-actions>\r\n        <button mat-button (click)=\"addLayer()\">שמור</button>\r\n        <button mat-button (click)=\"openLayer()\">פתח שכבה</button>\r\n    </mat-card-actions>\r\n</mat-card>"
+module.exports = "<mat-card>\r\n    <mat-card-header>\r\n        <mat-card-title>\r\n            <mat-icon>\r\n                edit\r\n            </mat-icon>\r\n            עריכת שכבה\r\n        </mat-card-title>\r\n    </mat-card-header>\r\n    <mat-card-content>\r\n        <form [formGroup]=\"form\">\r\n            <mat-form-field>\r\n                <input matInput text=\"text\" formControlName=\"name\" placeholder=\"שם השכבה\" />\r\n            </mat-form-field>\r\n            <mat-form-field>\r\n                <input matInput type=\"number\" formControlName=\"classes\" placeholder=\"מספר הכיתות\" />\r\n            </mat-form-field>\r\n            <mat-checkbox formControlName=\"maleAndFemale\">הפרד שכבה זו בין בנים לבנות</mat-checkbox>\r\n            <span *ngIf=\"form.controls['maleAndFemale'].value\">\r\n                <mat-form-field>\r\n                    <input matInput text=\"text\" formControlName=\"maleClasses\" placeholder=\"מספר כיתות לבנים\" />\r\n                </mat-form-field>\r\n                <mat-form-field>\r\n                    <input matInput text=\"text\" formControlName=\"femaleClasses\" placeholder=\"מספר כיתות לבנות\" />\r\n                </mat-form-field>\r\n            </span>\r\n        </form>\r\n    </mat-card-content>\r\n    <mat-card-actions>\r\n        <button mat-button (click)=\"addLayer()\">שמור</button>\r\n        <button mat-button (click)=\"openLayer()\">פתח שכבה</button>\r\n    </mat-card-actions>\r\n</mat-card>"
 
 /***/ }),
 
@@ -129,7 +132,10 @@ var DialogEditLayer = (function () {
         this.layer = data;
         this.form = fb.group({
             name: [this.layer.name, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["j" /* Validators */].required],
-            classes: [this.layer.classes, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["j" /* Validators */].required]
+            classes: [this.layer.classes, __WEBPACK_IMPORTED_MODULE_1__angular_forms__["j" /* Validators */].required],
+            maleAndFemale: [this.layer.maleAndFemale ? this.layer.maleAndFemale : false],
+            maleClasses: [this.layer.maleClasses ? this.layer.maleClasses : 0],
+            femaleClasses: [this.layer.femaleClasses ? this.layer.femaleClasses : 0]
         });
     }
     DialogEditLayer.prototype.onNoClick = function () {
@@ -2936,8 +2942,14 @@ var LayerService = (function (_super) {
             });
         });
     };
-    LayerService.prototype.getGraph = function (id, classes) {
-        return this.http.post("graph/graph", { layerId: id, groups: classes });
+    LayerService.prototype.getGraph = function (id, classes, maleAndFemale, maleGroups, femaleGroups) {
+        return this.http.post("graph/graph", {
+            layerId: id,
+            groups: classes,
+            maleAndFemale: maleAndFemale,
+            maleGroups: maleGroups,
+            femaleGroups: femaleGroups
+        });
     };
     LayerService.prototype.saveMatch = function (groups, layerId) {
         return __awaiter(this, void 0, void 0, function () {
@@ -2988,6 +3000,7 @@ var LayerService = (function (_super) {
             });
         });
     };
+    //swaping
     LayerService.prototype.swapRequest = function (id) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {

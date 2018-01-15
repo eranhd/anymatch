@@ -20,7 +20,10 @@ export class DialogNewLayer {
         this.form = fb.group({
 
             name: ["", Validators.required],
-            classes: [0, Validators.required]
+            classes: [0, Validators.required],
+            maleAndFemale : [false],
+            maleClasses: [0],
+            femaleClasses: [0]
 
         });
     }
@@ -30,6 +33,7 @@ export class DialogNewLayer {
     }
 
     public addLayer() {
+        
         this.dialogRef.close({ success: true, layer: this.form.value})
     }
 

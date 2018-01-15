@@ -463,11 +463,19 @@ var LayerComponent = (function (_super) {
             _this.userService.users.subscribe(function (users) {
                 if (users)
                     _this._students = users.filter(function (u) {
-                        // console.log(u.layerId + " ," + res["id"])
                         return u.layerId === res["id"];
                     }).sort(function (a, b) {
                         return a.username.localeCompare(b.username);
                     }).sort(function (a, b) { return a.group ? (a.group > b.group ? 1 : -1) : -1; });
+                if (_this._layer.groups) {
+                    _this._layer.groups.forEach(function (group, i) {
+                        group.forEach(function (id) {
+                            var s = _this._students.find(function (stu) { return stu._id == id; });
+                            // console.log(s)
+                            s.group = i;
+                        });
+                    });
+                }
             });
         });
         return _this;
@@ -600,7 +608,7 @@ var LayerComponent = (function (_super) {
                     case 0:
                         this.snakService.openSnackBar("השרת מבצע שיבוץ, אנא המתן", "סגור");
                         _a = this;
-                        return [4 /*yield*/, this.layerService.getGraph(this._layer._id, this._layer.classes > 0 ? this._layer.classes : 1)];
+                        return [4 /*yield*/, this.layerService.getGraph(this._layer._id, this._layer.classes > 0 ? this._layer.classes : 1, this._layer.maleAndFemale ? this._layer.maleAndFemale : null, this._layer.maleClasses ? this._layer.maleClasses : null, this._layer.femaleClasses ? this._layer.femaleClasses : null)];
                     case 1:
                         _a.graph = _b.sent();
                         this._students.forEach(function (u) {
@@ -1050,12 +1058,12 @@ var LayersComponent = (function (_super) {
     LayersComponent.prototype.addLayer = function () {
         var _this = this;
         var dialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_4__dashboard_dialog_new_layer_dialog_new_layer_conponent__["a" /* DialogNewLayer */], {
-            width: '250px'
+            width: '600px'
         });
         dialogRef.afterClosed().subscribe(function (result) {
-            console.log('The dialog was closed');
+            // console.log('The dialog was closed');
             if (result && result.success) {
-                _this.layerService.addLayer(result.layer, _this.authService.getUser().schoolId).then(function (res) {
+                _this.layerService.addLayer(result.layer, _this.authService.schoolId).then(function (res) {
                     _this.authService.addOperation("הוספת שכבת לימוד חדשה", "add");
                 });
             }
@@ -1072,13 +1080,16 @@ var LayersComponent = (function (_super) {
         var _this = this;
         console.log(layer);
         var dialogRef = this.dialog.open(__WEBPACK_IMPORTED_MODULE_5__dashboard_dialog_edit_layer_dialog_edit_layerconponent__["a" /* DialogEditLayer */], {
-            width: '350px',
+            width: '600px',
             data: layer
         });
         dialogRef.afterClosed().subscribe(function (result) {
             if (result && result.success) {
                 layer.classes = result.layer.classes;
                 layer.name = result.layer.name;
+                layer.maleClasses = result.layer.maleClasses;
+                layer.femaleClasses = result.layer.femaleClasses;
+                layer.maleAndFemale = result.layer.maleAndFemale;
                 _this.layerService.updateLayer(layer);
             }
         });

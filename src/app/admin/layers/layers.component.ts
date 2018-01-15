@@ -29,14 +29,14 @@ export class LayersComponent extends ComponentBase implements OnInit {
 
 
     let dialogRef = this.dialog.open(DialogNewLayer, {
-      width: '250px'
+      width: '600px'
 
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      // console.log('The dialog was closed');
       if (result && result.success) {
-        this.layerService.addLayer(result.layer, this.authService.getUser().schoolId).then(res => {
+        this.layerService.addLayer(result.layer, this.authService.schoolId).then(res => {
           this.authService.addOperation("הוספת שכבת לימוד חדשה", "add")
         });
       }
@@ -54,14 +54,17 @@ export class LayersComponent extends ComponentBase implements OnInit {
   editLayer(layer: Layer) {
     console.log(layer);
     let dialogRef = this.dialog.open(DialogEditLayer, {
-      width: '350px',
+      width: '600px',
       data: layer
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result && result.success) {
-        layer.classes = result.layer.classes
-        layer.name = result.layer.name
+        layer.classes = result.layer.classes;
+        layer.name = result.layer.name;
+        layer.maleClasses = result.layer.maleClasses;
+        layer.femaleClasses = result.layer.femaleClasses;
+        layer.maleAndFemale = result.layer.maleAndFemale;
         this.layerService.updateLayer(layer);
       }
     });

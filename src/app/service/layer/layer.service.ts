@@ -149,9 +149,15 @@ export class LayerService extends ControlerService {
     return true
   }
 
-  public getGraph(id, classes) {
+  public getGraph(id, classes, maleAndFemale?, maleGroups?, femaleGroups?) {
 
-    return this.http.post("graph/graph", { layerId: id, groups: classes })
+    return this.http.post("graph/graph", { 
+      layerId: id, 
+      groups: classes, 
+      maleAndFemale: maleAndFemale, 
+      maleGroups: maleGroups, 
+      femaleGroups: femaleGroups 
+    });
   }
 
   public async saveMatch(groups, layerId) {
@@ -188,6 +194,10 @@ export class LayerService extends ControlerService {
     await this.updateLayer(l)
     return true;
   }
+
+
+  //swaping
+
 
   public async swapRequest(id) {
     return await this.http.post(this.path + "swap_request", { swapId: id });

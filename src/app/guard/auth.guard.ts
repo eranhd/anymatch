@@ -24,6 +24,7 @@ export class AdminGuard implements CanActivate {
             this.schoolService.initSchool(this.authService.schoolId)
               .then(res => {
                 this.layerService.getAllLayers(this.authService.schoolId).then(_ => {
+                  this.layerService.initSocket();
                   this.classService.getAllClass(this.authService.schoolId).then(_ => {
                     resolve(true);
                   })
@@ -47,6 +48,7 @@ export class AdminGuard implements CanActivate {
                   this.schoolService.initSchool(this.authService.getUser().schoolId)
                     .then(res => {
                       this.layerService.getAllLayers(this.authService.getUser().schoolId).then(_ => {
+                        this.layerService.initSocket();
                         this.classService.getAllClass(this.authService.getUser().schoolId).then(_ => {
                           this.router.navigate(["/layout/admin"])
                           resolve(true);
@@ -102,6 +104,7 @@ export class AuthGuard implements CanActivate {
           this.schoolService.initSchool(this.authService.getUser().schoolId)
             .then(res => {
               this.layerService.getAllLayers(this.authService.getUser().schoolId).then(_ => {
+                this.layerService.initSocket();
                 this.classService.getAllClass(this.authService.getUser().schoolId).then(_ => {
                   resolve(true);
                 })
@@ -119,6 +122,7 @@ export class AuthGuard implements CanActivate {
                 this.schoolService.initSchool(this.authService.getUser().schoolId)
                   .then(res => {
                     this.layerService.getAllLayers(this.authService.getUser().schoolId).then(_ => {
+                      this.layerService.initSocket();
                       this.classService.getAllClass(this.authService.getUser().schoolId).then(_ => {
                         this.router.navigate(["/layout/client"])
                         resolve(true);

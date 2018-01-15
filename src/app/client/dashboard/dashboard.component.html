@@ -65,9 +65,62 @@
                 <mat-card-header>
                     <mat-card-title>
                         <mat-icon>
+                            swap_horiz
+                        </mat-icon>
+                        בקשות החלפה
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div *ngIf="swaps.length == 0">
+                        <h1>
+                            אין בקשות החלפה כרגע
+                        </h1>
+                    </div>
+                    <table *ngIf="swaps.length != 0">
+                        <thead>
+                            <th>
+                                שם
+                            </th>
+                            <th>
+                                כיתה
+                            </th>
+                            <th>
+                                תשובתך
+                            </th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let s of swaps">
+                                <td>
+                                    {{s.name}}
+                                </td>
+                                <td>
+                                    {{s.class}}
+                                </td>
+                                <td>
+                                    <button matTooltip="אשר הצעה" mat-icon-button (click)="swapResponse(s.id, 1)">
+                                        <mat-icon>
+                                            done
+                                        </mat-icon>
+                                    </button>
+                                    <button matTooltip="דחה הצעה" mat-icon-button (click)="swapResponse(s.id, 2)">
+                                        <mat-icon>
+                                            cancel
+                                        </mat-icon>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </mat-card-content>
+            </mat-card>
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>
+                        <mat-icon>
                             feedback
                         </mat-icon>
-                        משוב על שיבוץ
+                        משוב
                     </mat-card-title>
                 </mat-card-header>
                 <mat-card-content class="last_feedback_content">

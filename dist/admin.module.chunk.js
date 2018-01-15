@@ -215,10 +215,10 @@ var DashboardComponent = (function () {
     };
     DashboardComponent.prototype.ngOnInit = function () {
         this.headerCards = [
-            new __WEBPACK_IMPORTED_MODULE_2__models__["c" /* HeaderCard */]("person", "מספר סטודנטים", this.userService.num, "#ff7676"),
+            new __WEBPACK_IMPORTED_MODULE_2__models__["c" /* HeaderCard */]("person", "מספר תלמידים", this.userService.num, "#ff7676"),
             new __WEBPACK_IMPORTED_MODULE_2__models__["c" /* HeaderCard */]("school", "מספר שכבות", this.layerService.num, "#796aee"),
             new __WEBPACK_IMPORTED_MODULE_2__models__["c" /* HeaderCard */]("done", "שיבוצים שבוצעו", this.schoolService.numOfMatch, "#ffc36d"),
-            new __WEBPACK_IMPORTED_MODULE_2__models__["c" /* HeaderCard */]("sync", "שיבוצים בתהליך", this.userService.num, "#54e69d")
+            new __WEBPACK_IMPORTED_MODULE_2__models__["c" /* HeaderCard */]("sync", "שיבוצים בתהליך", this.layerService.matchInProcess, "#54e69d")
         ];
     };
     DashboardComponent.prototype.ngAfterViewInit = function () {

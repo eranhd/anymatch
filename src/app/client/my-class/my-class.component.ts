@@ -15,22 +15,23 @@ export class MyClassComponent implements OnInit {
 
   constructor(public userService: UserService, public layerService: LayerService, private authService: AuthService) {
     this.groups = layerService.getLayerById(this.authService.getUser().layerId).groups;
-    if (this.groups) {
-      this.groups = this.groups.filter(g => {
-        if (g.includes(this.authService.id))
-          return true;
-        return false;
-      })
-      this.userService.users.subscribe(users => {
-        this._students = users.filter(user => {
-          return this.groups[0].includes(user._id)
-        })
-      })
-    }
+    this.userService.users.subscribe(users => {
+      this._students = users;
+    });
   }
 
   public get students() {
     return this._students ? this._students : []
+  }
+
+  public getStudentsByGroup(i) {
+    return this.students.filter(user => {
+      return this.groups[i].includes(user._id)
+    });
+  }
+
+  public async swap(id){
+    await this.layerService.swapRequest(id);
   }
 
 

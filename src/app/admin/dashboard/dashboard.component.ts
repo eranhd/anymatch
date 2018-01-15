@@ -73,10 +73,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.headerCards = [
-      new HeaderCard("person", "מספר סטודנטים", this.userService.num, "#ff7676"),
+      new HeaderCard("person", "מספר תלמידים", this.userService.num, "#ff7676"),
       new HeaderCard("school", "מספר שכבות", this.layerService.num, "#796aee"),
       new HeaderCard("done", "שיבוצים שבוצעו", this.schoolService.numOfMatch, "#ffc36d"),
-      new HeaderCard("sync", "שיבוצים בתהליך", this.userService.num, "#54e69d")
+      new HeaderCard("sync", "שיבוצים בתהליך", this.layerService.matchInProcess, "#54e69d")
     ]
   }
 

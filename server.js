@@ -13,7 +13,7 @@ const socket = require("./server/socket/messgae.socket");
 require('./server/config/passport')(passport); // pass passport for configuration
 
 let message = require("./server/controller/message.controler");
-
+let layer = require("./server/controller/layer.controller");
 const app = express();
 // let server = require('http').Server(app);
 //Middleware for CORS
@@ -22,7 +22,7 @@ let s;
 
 let useControler = () => {
     const school = require("./server/controller/school.controler");
-    const layer = require("./server/controller/layer.controller");
+    
     const student = require("./server/controller/student.controler");
     const user = require("./server/controller/user.controler");
     const clas = require("./server/controller/class.controler");
@@ -125,5 +125,6 @@ let server = app.listen((process.env.PORT ||3000), () => { console.log("listen t
 //init socket for any user
 s = socket.init(server);
 message.setSocket(s);
+layer.setSocket(s);
 
 

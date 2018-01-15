@@ -10,15 +10,23 @@
         <mat-icon>
           group
         </mat-icon>
-        כל התלמידים
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <div class="div_card_student">
-        <div class="inner_div" *ngFor="let u of students">
-          <app-card-student [user]=u></app-card-student>
-        </div>
-      </div>
+      <mat-tab-group>
+        <mat-tab *ngFor="let g of groups; let i = index">
+          <ng-template mat-tab-label>
+            <mat-icon>group</mat-icon> {{i}}
+          </ng-template>
+          <!-- <h1>Terrible sushi restaurants</h1> -->
+          <div class="div_card_student">
+            <div class="inner_div" *ngFor="let u of getStudentsByGroup(i)">
+              <app-card-student [showSwap]=true (swap)="swap($event)" [user]=u></app-card-student>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+
     </mat-card-content>
   </mat-card>
 

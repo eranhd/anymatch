@@ -13,8 +13,10 @@ export class CardStudentComponent implements OnInit {
   @Input() user: User;
   @Input() color: string;
   @Input() showActions: boolean = false;
-  @Output() open: EventEmitter<User> = new EventEmitter<User>()
-  @Output() message: EventEmitter<User> = new EventEmitter<User>()
+  @Input() showSwap: boolean = false;
+  @Output() open: EventEmitter<User> = new EventEmitter<User>();
+  @Output() message: EventEmitter<User> = new EventEmitter<User>();
+  @Output() swap: EventEmitter<string> = new EventEmitter<string>();
   constructor(private msgService: MessageService, private router: Router ) { }
 
   ngOnInit() {

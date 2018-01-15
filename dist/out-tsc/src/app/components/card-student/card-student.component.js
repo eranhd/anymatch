@@ -18,8 +18,10 @@ var CardStudentComponent = (function () {
         this.msgService = msgService;
         this.router = router;
         this.showActions = false;
+        this.showSwap = false;
         this.open = new core_1.EventEmitter();
         this.message = new core_1.EventEmitter();
+        this.swap = new core_1.EventEmitter();
     }
     CardStudentComponent.prototype.ngOnInit = function () {
     };
@@ -41,6 +43,10 @@ var CardStudentComponent = (function () {
         __metadata("design:type", Boolean)
     ], CardStudentComponent.prototype, "showActions", void 0);
     __decorate([
+        core_1.Input(),
+        __metadata("design:type", Boolean)
+    ], CardStudentComponent.prototype, "showSwap", void 0);
+    __decorate([
         core_1.Output(),
         __metadata("design:type", core_1.EventEmitter)
     ], CardStudentComponent.prototype, "open", void 0);
@@ -48,6 +54,10 @@ var CardStudentComponent = (function () {
         core_1.Output(),
         __metadata("design:type", core_1.EventEmitter)
     ], CardStudentComponent.prototype, "message", void 0);
+    __decorate([
+        core_1.Output(),
+        __metadata("design:type", core_1.EventEmitter)
+    ], CardStudentComponent.prototype, "swap", void 0);
     CardStudentComponent = __decorate([
         core_1.Component({
             selector: 'app-card-student',

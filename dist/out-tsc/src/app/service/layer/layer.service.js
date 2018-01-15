@@ -68,6 +68,14 @@ var LayerService = (function (_super) {
             _this.initObservable([]);
         return _this;
     }
+    LayerService.prototype.initSocket = function () {
+        this.connectToSocket("notification/" + this.authService.id, "newNotification");
+        this.socketReplay.subscribe(function (res) {
+            if (res["event"] == "newNotification") {
+                console.log(res);
+            }
+        });
+    };
     LayerService.prototype.initObservable = function (data) {
         var _this = this;
         this.obLayers = new rxjs_1.Observable(function (o) {
@@ -243,6 +251,58 @@ var LayerService = (function (_super) {
                     case 1:
                         _a.sent();
                         return [2 /*return*/, true];
+                }
+            });
+        });
+    };
+    LayerService.prototype.swapRequest = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.http.post(this.path + "swap_request", { swapId: id })];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    LayerService.prototype.swapResponse = function (swap, answer) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        swap.status = answer;
+                        return [4 /*yield*/, this.http.post(this.path + "swap_response", { swap: swap })];
+                    case 1:
+                        response = _a.sent();
+                        if (response.success)
+                            return [2 /*return*/, true];
+                        return [2 /*return*/, false];
+                }
+            });
+        });
+    };
+    Object.defineProperty(LayerService.prototype, "swaps", {
+        get: function () {
+            return this._swaps ? this._swaps : [];
+        },
+        enumerable: true,
+        configurable: true
+    });
+    LayerService.prototype.allSwaps = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _a;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        // console.log("fff")
+                        _a = this;
+                        return [4 /*yield*/, this.http.post(this.path + "allSwaps", [])];
+                    case 1:
+                        // console.log("fff")
+                        _a._swaps = _b.sent();
+                        // console.log("fff")
+                        return [2 /*return*/, this._swaps];
                 }
             });
         });

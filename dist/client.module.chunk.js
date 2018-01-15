@@ -93,7 +93,7 @@ var routes = [
 /***/ "../../../../../src/app/client/dashboard/dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"dashboard_client\">\r\n    <app-pages-header [items]=headerCards></app-pages-header>\r\n\r\n    <div class=\"two_column\">\r\n        <section>\r\n            <mat-card>\r\n                <mat-card-header>\r\n                    <mat-card-title>\r\n                        <mat-icon>\r\n                            access_time\r\n                        </mat-icon>\r\n                        תאריך אחרון לבחירת העדפות\r\n                    </mat-card-title>\r\n                </mat-card-header>\r\n                <mat-card-content class=\"timer_data\">\r\n                    <h1>{{timer ?( timer | date:\"dd.MM.yyy\") : \"שיבוץ נעול\"}}</h1>\r\n                </mat-card-content>\r\n            </mat-card>\r\n            <mat-card>\r\n                <mat-card-header>\r\n                    <mat-card-title>\r\n                        <mat-icon>\r\n                            person\r\n                        </mat-icon>\r\n                        הבחירות שלי\r\n                    </mat-card-title>\r\n                </mat-card-header>\r\n\r\n                <mat-card-content class=\"prefers\">\r\n                    <div class=\"inner_div\" *ngFor=\"let u of positive\">\r\n                        <app-card-student [color]=\"'#54e69d'\" [user]=u></app-card-student>\r\n                    </div>\r\n                    <div class=\"inner_div\" *ngFor=\"let u of negative\">\r\n                        <app-card-student [user]=u [color]=\"'#ff7676'\"></app-card-student>\r\n                    </div>\r\n                </mat-card-content>\r\n            </mat-card>\r\n            <mat-card>\r\n                <mat-card-header>\r\n                    <mat-card-title>\r\n                        <mat-icon>\r\n                            help\r\n                        </mat-icon>\r\n                        עזרה וטיפים\r\n                    </mat-card-title>\r\n                </mat-card-header>\r\n                <ul>\r\n                    <li>\r\n                        כדי לבחור תלמידים שברצונך להשתבץ איתם, כנסו לעמוד \"השכבה שלי\" והתחילו לבחור\r\n                    </li>\r\n                    <li>\r\n                        לאחר שחלוקה לכיתות הסתיימה, תוכלו לראות את הכיתה שלכם בדף \"הכיתה שלי\"\r\n                    </li>\r\n                    <li>\r\n                        שיבוץ חכם יותר יתבצע אם תמלאו בהגדרות את שדה התחביבים\r\n                    </li>\r\n                </ul>\r\n                <mat-card-content>\r\n\r\n                </mat-card-content>\r\n            </mat-card>\r\n        </section>\r\n        <section>\r\n            <mat-card>\r\n                <mat-card-header>\r\n                    <mat-card-title>\r\n                        <mat-icon>\r\n                            feedback\r\n                        </mat-icon>\r\n                        משוב על שיבוץ\r\n                    </mat-card-title>\r\n                </mat-card-header>\r\n                <mat-card-content class=\"last_feedback_content\">\r\n\r\n                    <div class=\"feedback\" [class.odd]=\"i%2 != 0\" *ngFor=\"let f of feedback; let i = index\">\r\n                        <strong>\r\n                            {{f}}\r\n                        </strong>\r\n                        <mat-radio-group [(ngModel)]=\"result[i]\">\r\n                            <mat-radio-button *ngFor=\"let j of grade\" [value]=\"j\">\r\n                                {{j}}\r\n                            </mat-radio-button>\r\n                        </mat-radio-group>\r\n                    </div>\r\n                </mat-card-content>\r\n                <mat-card-actions>\r\n                    <button mat-raised-button (click)=\"authService.sendFeedback(result)\">\r\n                        שלח\r\n                        <mat-icon class=\"send_icon\">\r\n                            send\r\n                        </mat-icon>\r\n\r\n                    </button>\r\n                </mat-card-actions>\r\n            </mat-card>\r\n            <mat-card>\r\n                <mat-card-header>\r\n                    <mat-card-title>\r\n                        <mat-icon>\r\n                            info\r\n                        </mat-icon>\r\n                        פעולות אחרונות\r\n                    </mat-card-title>\r\n                </mat-card-header>\r\n                <mat-card-content>\r\n                    בפיתוח\r\n                </mat-card-content>\r\n            </mat-card>\r\n            <mat-card>\r\n                <mat-card-header>\r\n                    <mat-card-title>\r\n                        <mat-icon>\r\n                            message\r\n                        </mat-icon>\r\n                        הודעות אחרונות\r\n                    </mat-card-title>\r\n                </mat-card-header>\r\n                <mat-card-content>\r\n                    בפיתוח\r\n                </mat-card-content>\r\n            </mat-card>\r\n        </section>\r\n    </div>\r\n\r\n</div>"
+module.exports = "<div class=\"dashboard_client\">\r\n    <app-pages-header [items]=headerCards></app-pages-header>\r\n\r\n    <div class=\"two_column\">\r\n        <section>\r\n            <mat-card>\r\n                <mat-card-header>\r\n                    <mat-card-title>\r\n                        <mat-icon>\r\n                            access_time\r\n                        </mat-icon>\r\n                        תאריך אחרון לבחירת העדפות\r\n                    </mat-card-title>\r\n                </mat-card-header>\r\n                <mat-card-content class=\"timer_data\">\r\n                    <h1>{{timer ?( timer | date:\"dd.MM.yyy\") : \"שיבוץ נעול\"}}</h1>\r\n                </mat-card-content>\r\n            </mat-card>\r\n            <mat-card>\r\n                <mat-card-header>\r\n                    <mat-card-title>\r\n                        <mat-icon>\r\n                            person\r\n                        </mat-icon>\r\n                        הבחירות שלי\r\n                    </mat-card-title>\r\n                </mat-card-header>\r\n\r\n                <mat-card-content class=\"prefers\">\r\n                    <div class=\"inner_div\" *ngFor=\"let u of positive\">\r\n                        <app-card-student [color]=\"'#54e69d'\" [user]=u></app-card-student>\r\n                    </div>\r\n                    <div class=\"inner_div\" *ngFor=\"let u of negative\">\r\n                        <app-card-student [user]=u [color]=\"'#ff7676'\"></app-card-student>\r\n                    </div>\r\n                </mat-card-content>\r\n            </mat-card>\r\n            <mat-card>\r\n                <mat-card-header>\r\n                    <mat-card-title>\r\n                        <mat-icon>\r\n                            help\r\n                        </mat-icon>\r\n                        עזרה וטיפים\r\n                    </mat-card-title>\r\n                </mat-card-header>\r\n                <ul>\r\n                    <li>\r\n                        כדי לבחור תלמידים שברצונך להשתבץ איתם, כנסו לעמוד \"השכבה שלי\" והתחילו לבחור\r\n                    </li>\r\n                    <li>\r\n                        לאחר שחלוקה לכיתות הסתיימה, תוכלו לראות את הכיתה שלכם בדף \"הכיתה שלי\"\r\n                    </li>\r\n                    <li>\r\n                        שיבוץ חכם יותר יתבצע אם תמלאו בהגדרות את שדה התחביבים\r\n                    </li>\r\n                </ul>\r\n                <mat-card-content>\r\n\r\n                </mat-card-content>\r\n            </mat-card>\r\n        </section>\r\n        <section>\r\n            <mat-card>\r\n                <mat-card-header>\r\n                    <mat-card-title>\r\n                        <mat-icon>\r\n                            swap_horiz\r\n                        </mat-icon>\r\n                        בקשות החלפה\r\n                    </mat-card-title>\r\n                </mat-card-header>\r\n                <mat-card-content>\r\n                    <div *ngIf=\"swaps.length == 0\">\r\n                        <h1>\r\n                            אין בקשות החלפה כרגע\r\n                        </h1>\r\n                    </div>\r\n                    <table *ngIf=\"swaps.length != 0\">\r\n                        <thead>\r\n                            <th>\r\n                                שם\r\n                            </th>\r\n                            <th>\r\n                                כיתה\r\n                            </th>\r\n                            <th>\r\n                                תשובתך\r\n                            </th>\r\n                        </thead>\r\n                        <tbody>\r\n                            <tr *ngFor=\"let s of swaps\">\r\n                                <td>\r\n                                    {{s.name}}\r\n                                </td>\r\n                                <td>\r\n                                    {{s.class}}\r\n                                </td>\r\n                                <td>\r\n                                    <button matTooltip=\"אשר הצעה\" mat-icon-button (click)=\"swapResponse(s.id, 1)\">\r\n                                        <mat-icon>\r\n                                            done\r\n                                        </mat-icon>\r\n                                    </button>\r\n                                    <button matTooltip=\"דחה הצעה\" mat-icon-button (click)=\"swapResponse(s.id, 2)\">\r\n                                        <mat-icon>\r\n                                            cancel\r\n                                        </mat-icon>\r\n                                    </button>\r\n                                </td>\r\n                            </tr>\r\n                        </tbody>\r\n                    </table>\r\n\r\n                </mat-card-content>\r\n            </mat-card>\r\n            <mat-card>\r\n                <mat-card-header>\r\n                    <mat-card-title>\r\n                        <mat-icon>\r\n                            feedback\r\n                        </mat-icon>\r\n                        משוב\r\n                    </mat-card-title>\r\n                </mat-card-header>\r\n                <mat-card-content class=\"last_feedback_content\">\r\n\r\n                    <div class=\"feedback\" [class.odd]=\"i%2 != 0\" *ngFor=\"let f of feedback; let i = index\">\r\n                        <strong>\r\n                            {{f}}\r\n                        </strong>\r\n                        <mat-radio-group [(ngModel)]=\"result[i]\">\r\n                            <mat-radio-button *ngFor=\"let j of grade\" [value]=\"j\">\r\n                                {{j}}\r\n                            </mat-radio-button>\r\n                        </mat-radio-group>\r\n                    </div>\r\n                </mat-card-content>\r\n                <mat-card-actions>\r\n                    <button mat-raised-button (click)=\"authService.sendFeedback(result)\">\r\n                        שלח\r\n                        <mat-icon class=\"send_icon\">\r\n                            send\r\n                        </mat-icon>\r\n\r\n                    </button>\r\n                </mat-card-actions>\r\n            </mat-card>\r\n            <mat-card>\r\n                <mat-card-header>\r\n                    <mat-card-title>\r\n                        <mat-icon>\r\n                            info\r\n                        </mat-icon>\r\n                        פעולות אחרונות\r\n                    </mat-card-title>\r\n                </mat-card-header>\r\n                <mat-card-content>\r\n                    בפיתוח\r\n                </mat-card-content>\r\n            </mat-card>\r\n            <mat-card>\r\n                <mat-card-header>\r\n                    <mat-card-title>\r\n                        <mat-icon>\r\n                            message\r\n                        </mat-icon>\r\n                        הודעות אחרונות\r\n                    </mat-card-title>\r\n                </mat-card-header>\r\n                <mat-card-content>\r\n                    בפיתוח\r\n                </mat-card-content>\r\n            </mat-card>\r\n        </section>\r\n    </div>\r\n\r\n</div>"
 
 /***/ }),
 
@@ -105,7 +105,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".dashboard_client .two_column {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between; }\n  .dashboard_client .two_column section {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    width: 50%;\n    padding: 28px;\n    box-sizing: content-box; }\n    .dashboard_client .two_column section mat-card {\n      margin: 14px 0;\n      direction: rtl; }\n      .dashboard_client .two_column section mat-card .prefers {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap; }\n        .dashboard_client .two_column section mat-card .prefers .inner_div {\n          max-width: 100px;\n          margin: 16px; }\n      .dashboard_client .two_column section mat-card .timer_data {\n        text-align: center; }\n\n.send_icon {\n  -webkit-transform: rotate(180deg);\n          transform: rotate(180deg); }\n\n.last_feedback_content .feedback {\n  padding: 8px;\n  text-align: right;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  background-color: rgba(155, 155, 165, 0.6);\n  border-bottom: 1px solid white; }\n\n.last_feedback_content .odd {\n  background-color: rgba(155, 155, 165, 0.3); }\n\n.last_feedback_content :first-child {\n  border-top-right-radius: 10px;\n  border-top-left-radius: 10px; }\n\n.last_feedback_content :last-child {\n  border-bottom-right-radius: 10px;\n  border-bottom-left-radius: 10px; }\n", ""]);
+exports.push([module.i, ".dashboard_client .two_column {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between; }\n  .dashboard_client .two_column section {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    width: 50%;\n    padding: 28px;\n    box-sizing: content-box; }\n    .dashboard_client .two_column section mat-card {\n      margin: 14px 0;\n      direction: rtl; }\n      .dashboard_client .two_column section mat-card .prefers {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-wrap: wrap;\n            flex-wrap: wrap; }\n        .dashboard_client .two_column section mat-card .prefers .inner_div {\n          max-width: 100px;\n          margin: 16px; }\n      .dashboard_client .two_column section mat-card .timer_data {\n        text-align: center; }\n\n.send_icon {\n  -webkit-transform: rotate(180deg);\n          transform: rotate(180deg); }\n\n.last_feedback_content .feedback {\n  padding: 8px;\n  text-align: right;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  background-color: rgba(155, 155, 165, 0.6);\n  border-bottom: 1px solid white; }\n\n.last_feedback_content .odd {\n  background-color: rgba(155, 155, 165, 0.3); }\n\n.last_feedback_content :first-child {\n  border-top-right-radius: 10px;\n  border-top-left-radius: 10px; }\n\n.last_feedback_content :last-child {\n  border-bottom-right-radius: 10px;\n  border-bottom-left-radius: 10px; }\n\ntable {\n  width: 100%;\n  font-size: 20px; }\n", ""]);
 
 // exports
 
@@ -143,20 +143,22 @@ var DashboardComponent = (function () {
         this.layerService = layerService;
         this.classService = classService;
         this.userService = userService;
+        this._swaps = [];
+        this._swapsView = [];
         this.feedback = [
             "האם שובצת עם תלמידים שרצית להשתבץ?",
             "האם היית משנה את השיבוץ?",
-            "יש תלמידים אחרים שהיית מסיר מהכיתה שלך?",
             "האם תהליך בחירת התלמידים היה קל?"
         ];
         this.grade = [1, 2, 3, 4, 5];
-        this.result = [3, 3, 3, 3];
+        this.result = [3, 3, 3];
         this.headerCards = [
             new __WEBPACK_IMPORTED_MODULE_2__models__["c" /* HeaderCard */]("group", "מספר תלמידים בשכבה", this.userService.num, "#ff7676"),
             new __WEBPACK_IMPORTED_MODULE_2__models__["c" /* HeaderCard */]("done_all", "מספר התלמידים שבחרו", this.layerService.num, "#796aee"),
             new __WEBPACK_IMPORTED_MODULE_2__models__["c" /* HeaderCard */]("sync", "בחירה פתוחה", null, "#54e69d")
         ];
         this._layer = this.layerService.getLayerById(this.authService.getUser().layerId);
+        this.groups = layerService.getLayerById(this.authService.getUser().layerId).groups;
         this.userService.users.subscribe(function (users) {
             if (users) {
                 if (users[0].fname)
@@ -167,13 +169,50 @@ var DashboardComponent = (function () {
                     _this._students = users;
             }
         });
+        this._swaps = this.layerService.swaps;
+        // console.log(this._swaps)
+        if (this._swaps.length == 0) {
+            this.layerService.allSwaps(this.authService.id).then(function (s) {
+                // console.log(s);
+                _this._swaps = s;
+                _this.getSwaps();
+            });
+        }
     }
+    DashboardComponent.prototype.swapResponse = function (id, status) {
+        var s = this._swaps.find(function (s) { return s._id == id; });
+        this.layerService.swapResponse(s, status);
+    };
     Object.defineProperty(DashboardComponent.prototype, "positive", {
         get: function () {
             var _this = this;
             return this._students.filter(function (res) {
                 return _this.authService.getUser().positivePrefer.includes(res._id);
             });
+        },
+        enumerable: true,
+        configurable: true
+    });
+    DashboardComponent.prototype.getSwaps = function () {
+        var _this = this;
+        this._swapsView = this._swaps.map(function (s) {
+            var u = _this.userService.getUserById(s.from);
+            var g = 0;
+            _this.groups.forEach(function (group, i) {
+                if (group.includes(function (ids) { return s.to == ids; }))
+                    g = i;
+            });
+            return {
+                name: u.fname + " " + u.lname,
+                class: g,
+                id: s._id
+            };
+        });
+        return this._swapsView;
+    };
+    Object.defineProperty(DashboardComponent.prototype, "swaps", {
+        get: function () {
+            return this._swapsView ? this._swapsView : [];
         },
         enumerable: true,
         configurable: true
@@ -226,7 +265,7 @@ var DashboardComponent = (function () {
 /***/ "../../../../../src/app/client/my-class/my-class.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"my_class_div main_div\">\n  <div *ngIf=\"!groups || groups.length <= 0\">\n    <h1>\n      אינך משוייך כרגע לאף כיתה\n    </h1>\n  </div>\n  <mat-card class=\"card_all\" *ngIf=\"groups && groups.length > 0\">\n    <mat-card-header>\n      <mat-card-title>\n        <mat-icon>\n          group\n        </mat-icon>\n        כל התלמידים\n      </mat-card-title>\n    </mat-card-header>\n    <mat-card-content>\n      <div class=\"div_card_student\">\n        <div class=\"inner_div\" *ngFor=\"let u of students\">\n          <app-card-student [user]=u></app-card-student>\n        </div>\n      </div>\n    </mat-card-content>\n  </mat-card>\n\n\n</div>"
+module.exports = "<div class=\"my_class_div main_div\">\n  <div *ngIf=\"!groups || groups.length <= 0\">\n    <h1>\n      אינך משוייך כרגע לאף כיתה\n    </h1>\n  </div>\n  <mat-card class=\"card_all\" *ngIf=\"groups && groups.length > 0\">\n    <mat-card-header>\n      <mat-card-title>\n        <mat-icon>\n          group\n        </mat-icon>\n      </mat-card-title>\n    </mat-card-header>\n    <mat-card-content>\n      <mat-tab-group>\n        <mat-tab *ngFor=\"let g of groups; let i = index\">\n          <ng-template mat-tab-label>\n            <mat-icon>group</mat-icon> {{i}}\n          </ng-template>\n          <!-- <h1>Terrible sushi restaurants</h1> -->\n          <div class=\"div_card_student\">\n            <div class=\"inner_div\" *ngFor=\"let u of getStudentsByGroup(i)\">\n              <app-card-student [showSwap]=true (swap)=\"swap($event)\" [user]=u></app-card-student>\n            </div>\n          </div>\n        </mat-tab>\n      </mat-tab-group>\n\n    </mat-card-content>\n  </mat-card>\n\n\n</div>"
 
 /***/ }),
 
@@ -264,6 +303,41 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
 
 
 var MyClassComponent = (function () {
@@ -274,18 +348,9 @@ var MyClassComponent = (function () {
         this.authService = authService;
         this.groups = [];
         this.groups = layerService.getLayerById(this.authService.getUser().layerId).groups;
-        if (this.groups) {
-            this.groups = this.groups.filter(function (g) {
-                if (g.includes(_this.authService.id))
-                    return true;
-                return false;
-            });
-            this.userService.users.subscribe(function (users) {
-                _this._students = users.filter(function (user) {
-                    return _this.groups[0].includes(user._id);
-                });
-            });
-        }
+        this.userService.users.subscribe(function (users) {
+            _this._students = users;
+        });
     }
     Object.defineProperty(MyClassComponent.prototype, "students", {
         get: function () {
@@ -294,6 +359,24 @@ var MyClassComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    MyClassComponent.prototype.getStudentsByGroup = function (i) {
+        var _this = this;
+        return this.students.filter(function (user) {
+            return _this.groups[i].includes(user._id);
+        });
+    };
+    MyClassComponent.prototype.swap = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.layerService.swapRequest(id)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
     MyClassComponent.prototype.ngOnInit = function () {
     };
     MyClassComponent = __decorate([

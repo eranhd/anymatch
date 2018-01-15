@@ -17,7 +17,8 @@ import {
   MatNativeDateModule,
   MatProgressSpinnerModule,
   MatAutocompleteModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatTabsModule
 
 } from '@angular/material';
 // import { MatMomentDateModule } from "@angular/material-moment-adapter";
@@ -45,7 +46,8 @@ import {
     MatNativeDateModule,
     MatProgressSpinnerModule,
     MatAutocompleteModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTabsModule
   ],
   exports: [
     MatButtonModule,
@@ -65,7 +67,8 @@ import {
     MatNativeDateModule,
     MatProgressSpinnerModule,
     MatAutocompleteModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTabsModule
   ],
   declarations: []
 })

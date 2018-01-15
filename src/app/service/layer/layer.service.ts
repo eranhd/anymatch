@@ -15,11 +15,28 @@ export class LayerService extends ControlerService {
   private obLayers: Observable<Layer[]>;
   private ob;
 
+  private _swaps: any[];
+
   constructor(http: HttpService, private authService: AuthService) {
     super("layer", http);
     if (!this.obLayers)
       this.initObservable([]);
+
+
+
   }
+
+  initSocket() {
+    this.connectToSocket("notification/" + this.authService.id, "newNotification");
+
+    this.socketReplay.subscribe(res => {
+      if (res["event"] == "newNotification") {
+        console.log(res);
+      }
+
+    });
+  }
+
 
   private initObservable(data) {
     this.obLayers = new Observable(o => {
@@ -171,5 +188,45 @@ export class LayerService extends ControlerService {
     await this.updateLayer(l)
     return true;
   }
+
+  public async swapRequest(id) {
+    return await this.http.post(this.path + "swap_request", { swapId: id });
+  }
+
+  public async swapResponse(swap, answer) {
+    swap.status = answer;
+    let response = await this.http.post(this.path + "swap_response", { swap: swap });
+    if (response.success)
+      return true;
+    return false;
+  }
+
+  public get swaps() {
+    return this._swaps ? this._swaps : [];
+  }
+
+  public async allSwaps(id) {
+    // console.log("fff")
+    this._swaps = await this.http.post(this.path + "allSwaps", []);
+    // console.log("fff")
+    return this._swaps;
+  }
+
+  public get matchInProcess() {
+    if (!this._layers)
+      return 0;
+    let count = 0;
+    let d = new Date();
+    this._layers.forEach(l => {
+
+
+      let d2 = new Date(l.lockTime)
+      if (d2.toJSON().localeCompare(d.toJSON()) >= 0)
+        count++;
+    })
+    return count;
+  }
+
+
 
 }

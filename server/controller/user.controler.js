@@ -10,6 +10,7 @@ const upload = require("../config/upload");
 const convert = require("../services/xlsxToJson.service");
 
 
+
 const collection = "users";
 
 router.post('/all/', (req, res, next) => {
@@ -172,10 +173,12 @@ router.post('/addOperation/', async (req, res, next) => {
         if (err)
             res.json({ success: false, message: `Failed to update user. Error: ${err}` });
         else
-            res .write(JSON.stringify({ success: true, user: doc }, null, 2));
+            res.write(JSON.stringify({ success: true, user: doc }, null, 2));
         res.end();
     })
 })
+
+
 
 
 module.exports = router;

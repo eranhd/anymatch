@@ -1,7 +1,8 @@
 <mat-card class="card-student" [style.background-color]="color ? color : 'white'">
   <mat-card-header>
     <mat-card-title>
-      <img width="24px" matTooltip="תמונת התלמיד" [src]="user.gender ? (user.gender == 'male' ? '/assets/male.png' : '/assets/female.png') : '/assets/male.png'" /> {{user.fname}} {{user.lname}} {{user.username}}
+      <img width="24px" matTooltip="תמונת התלמיד" [src]="user.gender ? (user.gender == 'male' ? '/assets/male.png' : '/assets/female.png') : '/assets/male.png'"
+      /> {{user.fname}} {{user.lname}} {{user.username}}
     </mat-card-title>
   </mat-card-header>
 
@@ -26,9 +27,15 @@
       </mat-icon>
       <!-- פתח -->
     </button>
-    <button mat-icon-button  (click)="msgClick()">
+    <button mat-icon-button (click)="msgClick()">
       <mat-icon>
         message
+      </mat-icon>
+      <!-- שלח הודעה -->
+    </button>
+    <button mat-icon-button *ngIf="showSwap" (click)="swap.emit(user._id)">
+      <mat-icon>
+        swap_horiz
       </mat-icon>
       <!-- שלח הודעה -->
     </button>

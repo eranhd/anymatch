@@ -5,6 +5,7 @@ class MessageSocket {
 
         this.socket = [];
         this.socket["message"] = [];
+        this.socket["notification"] = []
     }
 
     addSocket(id, type) {
@@ -19,15 +20,26 @@ class MessageSocket {
 
     sendMessage(message, con, ids) {
         ids.forEach(id => {
-            if(this.socket["message"][id])
+            if (this.socket["message"][id])
                 this.socket["message"][id].emit("newMessage", { message: message, conversation: con });
         });
     }
 
-    sendNotification(message, id, type) {
-        id.forEach(id => {
-            if(this.socket["notification"][id])
-                this.socket["notification"][id].emit("newNotification", {  });
+    sendNotification(notification, ids) {
+        ids.forEach(id => {
+            if (this.socket["notification"][id]) {
+                let db = new DB();
+                let not = {
+                    notification : notification,
+                    userId: id,
+                    read: false,
+                    date: new Date()
+                }
+                db.save(not, "notification").then(d=>{
+                    this.socket["notification"][id].emit("newNotification", d);
+                })
+                
+            }
         });
     }
 }

@@ -14,7 +14,7 @@ export class HttpService {
     this.options = new RequestOptions({ headers: this.header });
   }
 
-  public post<T>(url, body: T, options?): Promise<T> {
+  public post<T>(url, body: T, options?): Promise<any> {
     return new Promise((res, rej) => {
       this.http.post(this.path + url, body, this.options).subscribe(response => {
         res(response.json());

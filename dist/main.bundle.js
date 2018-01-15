@@ -364,7 +364,7 @@ var routes = [
 /***/ "../../../../../src/app/components/card-student/card-student.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<mat-card class=\"card-student\" [style.background-color]=\"color ? color : 'white'\">\n  <mat-card-header>\n    <mat-card-title>\n      <img width=\"24px\" matTooltip=\"תמונת התלמיד\" [src]=\"user.gender ? (user.gender == 'male' ? '/assets/male.png' : '/assets/female.png') : '/assets/male.png'\" /> {{user.fname}} {{user.lname}} {{user.username}}\n    </mat-card-title>\n  </mat-card-header>\n\n  <mat-card-content>\n    <div class=\"prefer\">\n      <div class=\"positive_prefer\" matTooltip=\"התלמיד בחר העדפות חיוביות\" *ngIf=\"user.positivePrefer?.length > 0\">\n\n      </div>\n\n      <div class=\"negative_prefer\" matTooltip=\"התלמיד בחר העדפות שליליות\" *ngIf=\"user.negativePrefer?.length > 0\">\n\n\n      </div>\n      <!-- <i *ngIf=\"user?.isLogin\" matTooltip=\"משתמש ביצע כניסה ראשונית\" class=\"material-icons\">verified_user</i> -->\n    </div>\n  </mat-card-content>\n\n  <mat-card-actions>\n    <button mat-icon-button *ngIf=\"showActions\" (click)=\"open.emit(user)\">\n      <mat-icon>\n        open_in_new\n      </mat-icon>\n      <!-- פתח -->\n    </button>\n    <button mat-icon-button  (click)=\"msgClick()\">\n      <mat-icon>\n        message\n      </mat-icon>\n      <!-- שלח הודעה -->\n    </button>\n  </mat-card-actions>\n</mat-card>"
+module.exports = "<mat-card class=\"card-student\" [style.background-color]=\"color ? color : 'white'\">\n  <mat-card-header>\n    <mat-card-title>\n      <img width=\"24px\" matTooltip=\"תמונת התלמיד\" [src]=\"user.gender ? (user.gender == 'male' ? '/assets/male.png' : '/assets/female.png') : '/assets/male.png'\"\n      /> {{user.fname}} {{user.lname}} {{user.username}}\n    </mat-card-title>\n  </mat-card-header>\n\n  <mat-card-content>\n    <div class=\"prefer\">\n      <div class=\"positive_prefer\" matTooltip=\"התלמיד בחר העדפות חיוביות\" *ngIf=\"user.positivePrefer?.length > 0\">\n\n      </div>\n\n      <div class=\"negative_prefer\" matTooltip=\"התלמיד בחר העדפות שליליות\" *ngIf=\"user.negativePrefer?.length > 0\">\n\n\n      </div>\n      <!-- <i *ngIf=\"user?.isLogin\" matTooltip=\"משתמש ביצע כניסה ראשונית\" class=\"material-icons\">verified_user</i> -->\n    </div>\n  </mat-card-content>\n\n  <mat-card-actions>\n    <button mat-icon-button *ngIf=\"showActions\" (click)=\"open.emit(user)\">\n      <mat-icon>\n        open_in_new\n      </mat-icon>\n      <!-- פתח -->\n    </button>\n    <button mat-icon-button (click)=\"msgClick()\">\n      <mat-icon>\n        message\n      </mat-icon>\n      <!-- שלח הודעה -->\n    </button>\n    <button mat-icon-button *ngIf=\"showSwap\" (click)=\"swap.emit(user._id)\">\n      <mat-icon>\n        swap_horiz\n      </mat-icon>\n      <!-- שלח הודעה -->\n    </button>\n  </mat-card-actions>\n</mat-card>"
 
 /***/ }),
 
@@ -413,8 +413,10 @@ var CardStudentComponent = (function () {
         this.msgService = msgService;
         this.router = router;
         this.showActions = false;
+        this.showSwap = false;
         this.open = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
         this.message = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
+        this.swap = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
     }
     CardStudentComponent.prototype.ngOnInit = function () {
     };
@@ -436,6 +438,10 @@ var CardStudentComponent = (function () {
         __metadata("design:type", Boolean)
     ], CardStudentComponent.prototype, "showActions", void 0);
     __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"])(),
+        __metadata("design:type", Boolean)
+    ], CardStudentComponent.prototype, "showSwap", void 0);
+    __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(),
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"])
     ], CardStudentComponent.prototype, "open", void 0);
@@ -443,6 +449,10 @@ var CardStudentComponent = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(),
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"])
     ], CardStudentComponent.prototype, "message", void 0);
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"])(),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"])
+    ], CardStudentComponent.prototype, "swap", void 0);
     CardStudentComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'app-card-student',
@@ -1225,6 +1235,7 @@ var AdminGuard = (function () {
                     _this.schoolService.initSchool(_this.authService.schoolId)
                         .then(function (res) {
                         _this.layerService.getAllLayers(_this.authService.schoolId).then(function (_) {
+                            _this.layerService.initSocket();
                             _this.classService.getAllClass(_this.authService.schoolId).then(function (_) {
                                 resolve(true);
                             });
@@ -1247,6 +1258,7 @@ var AdminGuard = (function () {
                                 _this.schoolService.initSchool(_this.authService.getUser().schoolId)
                                     .then(function (res) {
                                     _this.layerService.getAllLayers(_this.authService.getUser().schoolId).then(function (_) {
+                                        _this.layerService.initSocket();
                                         _this.classService.getAllClass(_this.authService.getUser().schoolId).then(function (_) {
                                             _this.router.navigate(["/layout/admin"]);
                                             resolve(true);
@@ -1301,6 +1313,7 @@ var AuthGuard = (function () {
                 _this.schoolService.initSchool(_this.authService.getUser().schoolId)
                     .then(function (res) {
                     _this.layerService.getAllLayers(_this.authService.getUser().schoolId).then(function (_) {
+                        _this.layerService.initSocket();
                         _this.classService.getAllClass(_this.authService.getUser().schoolId).then(function (_) {
                             resolve(true);
                         });
@@ -1317,6 +1330,7 @@ var AuthGuard = (function () {
                             _this.schoolService.initSchool(_this.authService.getUser().schoolId)
                                 .then(function (res) {
                                 _this.layerService.getAllLayers(_this.authService.getUser().schoolId).then(function (_) {
+                                    _this.layerService.initSocket();
                                     _this.classService.getAllClass(_this.authService.getUser().schoolId).then(function (_) {
                                         _this.router.navigate(["/layout/client"]);
                                         resolve(true);
@@ -1823,8 +1837,8 @@ var MaterialModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["v" /* MatTableModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["o" /* MatPaginatorModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["h" /* MatDialogModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["x" /* MatTooltipModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["w" /* MatToolbarModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["y" /* MatTooltipModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["x" /* MatToolbarModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["r" /* MatSidenavModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["l" /* MatMenuModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["q" /* MatRadioModule */],
@@ -1832,7 +1846,8 @@ var MaterialModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["m" /* MatNativeDateModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["p" /* MatProgressSpinnerModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MatAutocompleteModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["t" /* MatSnackBarModule */]
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["t" /* MatSnackBarModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["w" /* MatTabsModule */]
             ],
             exports: [
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["c" /* MatButtonModule */],
@@ -1843,8 +1858,8 @@ var MaterialModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["v" /* MatTableModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["o" /* MatPaginatorModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["h" /* MatDialogModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["x" /* MatTooltipModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["w" /* MatToolbarModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["y" /* MatTooltipModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["x" /* MatToolbarModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["r" /* MatSidenavModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["l" /* MatMenuModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["q" /* MatRadioModule */],
@@ -1852,7 +1867,8 @@ var MaterialModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["m" /* MatNativeDateModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["p" /* MatProgressSpinnerModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MatAutocompleteModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["t" /* MatSnackBarModule */]
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["t" /* MatSnackBarModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["w" /* MatTabsModule */]
             ],
             declarations: []
         })
@@ -2785,6 +2801,14 @@ var LayerService = (function (_super) {
             _this.initObservable([]);
         return _this;
     }
+    LayerService.prototype.initSocket = function () {
+        this.connectToSocket("notification/" + this.authService.id, "newNotification");
+        this.socketReplay.subscribe(function (res) {
+            if (res["event"] == "newNotification") {
+                console.log(res);
+            }
+        });
+    };
     LayerService.prototype.initObservable = function (data) {
         var _this = this;
         this.obLayers = new __WEBPACK_IMPORTED_MODULE_4_rxjs__["Observable"](function (o) {
@@ -2964,6 +2988,74 @@ var LayerService = (function (_super) {
             });
         });
     };
+    LayerService.prototype.swapRequest = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.http.post(this.path + "swap_request", { swapId: id })];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    LayerService.prototype.swapResponse = function (swap, answer) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        swap.status = answer;
+                        return [4 /*yield*/, this.http.post(this.path + "swap_response", { swap: swap })];
+                    case 1:
+                        response = _a.sent();
+                        if (response.success)
+                            return [2 /*return*/, true];
+                        return [2 /*return*/, false];
+                }
+            });
+        });
+    };
+    Object.defineProperty(LayerService.prototype, "swaps", {
+        get: function () {
+            return this._swaps ? this._swaps : [];
+        },
+        enumerable: true,
+        configurable: true
+    });
+    LayerService.prototype.allSwaps = function (id) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _a;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        // console.log("fff")
+                        _a = this;
+                        return [4 /*yield*/, this.http.post(this.path + "allSwaps", [])];
+                    case 1:
+                        // console.log("fff")
+                        _a._swaps = _b.sent();
+                        // console.log("fff")
+                        return [2 /*return*/, this._swaps];
+                }
+            });
+        });
+    };
+    Object.defineProperty(LayerService.prototype, "matchInProcess", {
+        get: function () {
+            if (!this._layers)
+                return 0;
+            var count = 0;
+            var d = new Date();
+            this._layers.forEach(function (l) {
+                var d2 = new Date(l.lockTime);
+                if (d2.toJSON().localeCompare(d.toJSON()) >= 0)
+                    count++;
+            });
+            return count;
+        },
+        enumerable: true,
+        configurable: true
+    });
     LayerService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__http_http_service__["a" /* HttpService */], __WEBPACK_IMPORTED_MODULE_3__auth_auth_service__["a" /* AuthService */]])

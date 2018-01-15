@@ -29,6 +29,7 @@ var AdminGuard = (function () {
                     _this.schoolService.initSchool(_this.authService.schoolId)
                         .then(function (res) {
                         _this.layerService.getAllLayers(_this.authService.schoolId).then(function (_) {
+                            _this.layerService.initSocket();
                             _this.classService.getAllClass(_this.authService.schoolId).then(function (_) {
                                 resolve(true);
                             });
@@ -51,6 +52,7 @@ var AdminGuard = (function () {
                                 _this.schoolService.initSchool(_this.authService.getUser().schoolId)
                                     .then(function (res) {
                                     _this.layerService.getAllLayers(_this.authService.getUser().schoolId).then(function (_) {
+                                        _this.layerService.initSocket();
                                         _this.classService.getAllClass(_this.authService.getUser().schoolId).then(function (_) {
                                             _this.router.navigate(["/layout/admin"]);
                                             resolve(true);
@@ -105,6 +107,7 @@ var AuthGuard = (function () {
                 _this.schoolService.initSchool(_this.authService.getUser().schoolId)
                     .then(function (res) {
                     _this.layerService.getAllLayers(_this.authService.getUser().schoolId).then(function (_) {
+                        _this.layerService.initSocket();
                         _this.classService.getAllClass(_this.authService.getUser().schoolId).then(function (_) {
                             resolve(true);
                         });
@@ -121,6 +124,7 @@ var AuthGuard = (function () {
                             _this.schoolService.initSchool(_this.authService.getUser().schoolId)
                                 .then(function (res) {
                                 _this.layerService.getAllLayers(_this.authService.getUser().schoolId).then(function (_) {
+                                    _this.layerService.initSocket();
                                     _this.classService.getAllClass(_this.authService.getUser().schoolId).then(function (_) {
                                         _this.router.navigate(["/layout/client"]);
                                         resolve(true);

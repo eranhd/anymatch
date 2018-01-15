@@ -5122,38 +5122,4 @@ a.text-dark:focus, a.text-dark:hover {
   color: black !important;
 }
 
-.snak:after{
-  content: url('assets/connect.png') !important;
-}
 
-
-.load_img{
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.load_img img{
-  width: 250px;
-  animation: scroll 2s infinite;
-}
-
-@keyframes scroll {
-  0%   {
-    transform: rotate(0deg)
-  }
-  12.5%   {
-    transform: rotate(60deg)
-  }
-  30%   {
-    transform: rotate(180deg)
-  }
-  70%   {
-    transform: rotate(720deg)
-  }
-  100% {
-    transform: rotate(0deg)
-  }
-}

@@ -1,4 +1,5 @@
 const jsgraphs = require('js-graph-algorithms');
+const math = require('mathjs');
 
 module.exports.Graph = class Graph {
 
@@ -259,19 +260,19 @@ module.exports.Graph = class Graph {
      * @param {number} limit : num of vertex in group
      * return group with max gml
      */
-    knapsack01Dp(limit) {
+    knapsack01Dp(limit, range) {
         let table = []
         // limit = +limit
         // limit = limit.toFixed(0)
         for (let i = 0; i < this.group.length + 1; i++) { // init table
             table.push([])
-            for (let j = 0; j < limit + 1; j++) {
+            for (let j = 0; j < limit + range + 1; j++) {
                 table[i].push(new Group(this.group.length + i * this.group.length + j))
             }
         }
 
         for (let i = 1; i < this.group.length + 1; i++) {
-            for (let j = 0; j < limit + 1; j++) {
+            for (let j = 0; j < limit + range + 1; j++) {
                 if (this.group[i - 1].length <= j) {
                     let g = this.group[i - 1]
                     if (j - g.length >= 0) { // if exits group
@@ -290,7 +291,12 @@ module.exports.Graph = class Graph {
             }
         }
 
-        return table[this.group.length][limit]
+        let max = table[this.group.length][limit - range];
+        for (let i = limit - range; i < limit + range; i++) {
+            if (max.gml <= table[this.group.length][i].gml)
+                max.gml = table[this.group.length][i].gml
+        }
+        return max;
 
 
     }
@@ -305,9 +311,9 @@ module.exports.Graph = class Graph {
             let l = length % 1 == 0 ? length : (+length.toFixed(0))
             let flag = false
             Math.abs(l - length) < 0.5 && Math.abs(l - length) != 0 ? flag = true : l = l
-            let g = this.knapsack01Dp(l)
+            let g = this.knapsack01Dp(l, +(l/10).toFixed(0));
             if (g.length == 0 && flag)
-                g = this.knapsack01Dp(l + 1)
+                g = this.knapsack01Dp(l + 1, (l/10).toFixed(0));
             groups.push(g)
             this.removeChoose(g)
 
@@ -478,25 +484,50 @@ class Group {
      * calculate the gml for this group
      */
     calcGml() {
-        this.gml = 0
+        this.gml = 0;
+        // let i = 0;
+        let sign = 1;
+        let met = [];
         for (let id in this.vertices) {
-            let v = this.vertices[id]
-            let sum = 0
-            let sp = v.getSumPositive()
-            let np = v.getSumNegative()
-            v.edges.forEach(e => {
-                if (this.vertices[e.to]) {
-                    if (e.weight > 0) {
-                        sum += e.weight / sp
-                    }
-                    else
-                        sum += e.weight / np
-                }
-
-            })
-            this.gml += sum
+            // met.push([]);
+            let v = this.vertices[id];
+            for (let id2 in this.vertices) {
+                let w = v.getDegree(id2);
+                if (w != 0 && w != 1)
+                    met.push(w);
+                if (w < 0)
+                    sign = -1;
+                // met[met.length - 1].push(w);
+            }
+            // i++;
         }
-        this.gml /= this.length
+        // let a = math.matrix(met);
+        // this.gml = sign * Math.abs(math.det(a));
+        // console.log(this.gml);
+        let mult = 1;
+        met.forEach(m => {
+            mult += m;
+        });
+        this.gml = Math.abs(mult) / this.length;
+        return this.gml;
+        // for (let id in this.vertices) {
+        //     let v = this.vertices[id]
+        //     let sum = 0
+        //     let sp = v.getSumPositive()
+        //     let np = v.getSumNegative()
+        //     v.edges.forEach(e => {
+        //         if (this.vertices[e.to]) {
+        //             if (e.weight > 0) {
+        //                 sum += e.weight / sp
+        //             }
+        //             else
+        //                 sum += e.weight / np
+        //         }
+
+        //     })
+        //     this.gml += sum
+        // }
+        // this.gml /= this.length
     }
 
 
@@ -598,6 +629,13 @@ class Vertex {
 
     getGroup() {
         return this.group;
+    }
+
+    getDegree(id) {
+        for (let i = 0; i < this.edges.length; i++)
+            if (this.edges[i].to == id)
+                return this.edges[i].weight;
+        return 1;
     }
 
     addEdge(to, weight) {

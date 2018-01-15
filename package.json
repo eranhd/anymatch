@@ -38,6 +38,7 @@
     "express-session": "^1.15.6",
     "hammerjs": "^2.0.8",
     "js-graph-algorithms": "^1.0.18",
+    "mathjs": "^3.20.0",
     "method-override": "^2.3.10",
     "mongojs": "^2.4.1",
     "mongoose": "^4.13.1",

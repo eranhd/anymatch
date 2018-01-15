@@ -80,7 +80,8 @@ var AppModule = (function () {
                 auth_guard_1.AdminGuard,
                 nav_service_1.NavService,
                 service_1.MessageService,
-                size_directive_1.SizeDirective
+                size_directive_1.SizeDirective,
+                service_1.SnakService
             ],
             bootstrap: [app_component_1.AppComponent]
         })

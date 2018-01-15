@@ -14,7 +14,7 @@ router.post('/graph/', (req, res, next) => {
             g.addVertex(e._id, e.fname + " " + e.lname);
         });
 
-        let deg = [3,2,1];
+        let deg = [4,3,2], negDeg= [0.15, 0.3, 0.5];
 
         doc.forEach(e => {
             e.positivePrefer.forEach((pp, index) => {

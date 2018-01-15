@@ -14,7 +14,7 @@ var http_1 = require("@angular/http");
 var HttpService = (function () {
     function HttpService(http) {
         this.http = http;
-        this.path = (window.location.host == "localhost:3000" ? "http://" : "https://") + window.location.host + "/";
+        this.path = window.location.origin + "/";
         this.header = new http_1.Headers({ 'Content-Type': 'application/json' });
         this.options = new http_1.RequestOptions({ headers: this.header });
     }

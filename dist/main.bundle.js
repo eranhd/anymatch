@@ -1465,7 +1465,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".div_layout {\n  height: 100%;\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: start;\n      -ms-flex-pack: start;\n          justify-content: flex-start; }\n\n.main_layout {\n  background-image: url(\"http://sewuka.co/wp-content/uploads/2017/08/23310840-light-gray-rough-concrete-wall-seamless-background-a-texturedecorative-tiles--textured-paint-991x660.jpg\");\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  height: 90%; }\n  .main_layout .app-nav {\n    display: -ms-grid;\n    display: grid; }\n  .main_layout .content {\n    width: 100%;\n    overflow: scroll; }\n  .main_layout .page_title {\n    font-size: 2em;\n    font-weight: bold;\n    padding: 16px;\n    text-align: right; }\n  .main_layout .content-inner {\n    padding: 28px;\n    width: 100%;\n    height: 100%;\n    background-color: rgba(200, 194, 250, 0.3); }\n\napp-header {\n  display: block; }\n", ""]);
+exports.push([module.i, ".div_layout {\n  height: 100%;\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: start;\n      -ms-flex-pack: start;\n          justify-content: flex-start;\n  background-color: rgba(200, 194, 250, 0.3); }\n\n.main_layout {\n  background-image: url(\"http://sewuka.co/wp-content/uploads/2017/08/23310840-light-gray-rough-concrete-wall-seamless-background-a-texturedecorative-tiles--textured-paint-991x660.jpg\");\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  height: 90%; }\n  .main_layout .app-nav {\n    display: -ms-grid;\n    display: grid; }\n  .main_layout .content {\n    width: 100%;\n    overflow: scroll; }\n  .main_layout .page_title {\n    font-size: 2em;\n    font-weight: bold;\n    padding: 16px;\n    text-align: right; }\n  .main_layout .content-inner {\n    padding: 28px;\n    width: 100%;\n    height: 100%; }\n\napp-header {\n  display: block; }\n", ""]);
 
 // exports
 
@@ -3810,6 +3810,13 @@ var UserService = (function (_super) {
     UserService.prototype.getUserById = function (id) {
         return this._users.find(function (u) { return u._id == id; });
     };
+    Object.defineProperty(UserService.prototype, "hasPreferd", {
+        get: function () {
+            return this._users.filter(function (u) { return u.negativePrefer.length > 0 || u.positivePrefer.length > 0; }).length;
+        },
+        enumerable: true,
+        configurable: true
+    });
     UserService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__http_http_service__["a" /* HttpService */]])

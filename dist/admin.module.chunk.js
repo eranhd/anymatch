@@ -631,6 +631,7 @@ var LayerComponent = (function (_super) {
                     case 1:
                         _a.sent();
                         this.snakService.openSnackBar("השיבוץ נשמר ונשלח לתלמידים", "סגור");
+                        this.authService.addOperation("ביצעת חילוק לכיתות בשכבה " + this._layer.name, "group");
                         this.schoolService.addMatch();
                         return [2 /*return*/];
                 }
@@ -1191,7 +1192,7 @@ var SettingsComponent = (function () {
 /***/ "../../../../../src/app/admin/students/students.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"students\">\r\n  <mat-spinner class=\"spinner\" [diameter]=100 *ngIf=\"!students\" [strokeWidth]=\"5\"></mat-spinner>\r\n  <div class=\"div_card_student\">\r\n    <div class=\"inner_div\" *ngFor=\"let u of students\">\r\n      <app-card-student [user]=u></app-card-student>\r\n    </div>\r\n  </div>\r\n</div>"
+module.exports = "<div class=\"students\">\r\n    <app-pages-header [items]=headerCards></app-pages-header>\r\n  <mat-spinner class=\"spinner\" [diameter]=100 *ngIf=\"!students\" [strokeWidth]=\"5\"></mat-spinner>\r\n  <div class=\"div_card_student\">\r\n    <div class=\"inner_div\" *ngFor=\"let u of students\">\r\n      <app-card-student [user]=u></app-card-student>\r\n    </div>\r\n  </div>\r\n</div>"
 
 /***/ }),
 
@@ -1222,6 +1223,7 @@ module.exports = module.exports.toString();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_index__ = __webpack_require__("../../../../../src/app/service/index.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__componentBase_model__ = __webpack_require__("../../../../../src/app/componentBase.model.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__service_nav_nav_service__ = __webpack_require__("../../../../../src/app/service/nav/nav.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_index__ = __webpack_require__("../../../../../src/app/models/index.ts");
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -1245,12 +1247,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var StudentsComponent = (function (_super) {
     __extends(StudentsComponent, _super);
-    function StudentsComponent(userService, authService, navService) {
+    function StudentsComponent(userService, authService, layerService, navService) {
         var _this = _super.call(this, navService) || this;
         _this.userService = userService;
         _this.authService = authService;
+        _this.layerService = layerService;
         if (_this.userService.num == 0)
             _this.userService.getAllUsers(_this.authService.schoolId).then(function (u) {
                 _this.obs = _this.userService.users.subscribe(function (users) {
@@ -1275,6 +1279,10 @@ var StudentsComponent = (function (_super) {
         configurable: true
     });
     StudentsComponent.prototype.ngOnInit = function () {
+        this.headerCards = [
+            new __WEBPACK_IMPORTED_MODULE_4__models_index__["c" /* HeaderCard */]("group", "תלמדים שמילאו העדפות", this.userService.hasPreferd, "#ffc36d"),
+            new __WEBPACK_IMPORTED_MODULE_4__models_index__["c" /* HeaderCard */]("supervisor_account", "מספר תלמידים", this.userService.num, "#63c3ff"),
+        ];
     };
     StudentsComponent.prototype.ngOnDestroy = function () {
         if (this.obs)
@@ -1289,6 +1297,7 @@ var StudentsComponent = (function (_super) {
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__service_index__["h" /* UserService */],
             __WEBPACK_IMPORTED_MODULE_1__service_index__["a" /* AuthService */],
+            __WEBPACK_IMPORTED_MODULE_1__service_index__["d" /* LayerService */],
             __WEBPACK_IMPORTED_MODULE_3__service_nav_nav_service__["a" /* NavService */]])
     ], StudentsComponent);
     return StudentsComponent;

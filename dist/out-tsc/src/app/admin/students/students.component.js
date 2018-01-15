@@ -23,12 +23,14 @@ var core_1 = require("@angular/core");
 var index_1 = require("../../service/index");
 var componentBase_model_1 = require("../../componentBase.model");
 var nav_service_1 = require("../../service/nav/nav.service");
+var index_2 = require("../../models/index");
 var StudentsComponent = (function (_super) {
     __extends(StudentsComponent, _super);
-    function StudentsComponent(userService, authService, navService) {
+    function StudentsComponent(userService, authService, layerService, navService) {
         var _this = _super.call(this, navService) || this;
         _this.userService = userService;
         _this.authService = authService;
+        _this.layerService = layerService;
         if (_this.userService.num == 0)
             _this.userService.getAllUsers(_this.authService.schoolId).then(function (u) {
                 _this.obs = _this.userService.users.subscribe(function (users) {
@@ -53,6 +55,10 @@ var StudentsComponent = (function (_super) {
         configurable: true
     });
     StudentsComponent.prototype.ngOnInit = function () {
+        this.headerCards = [
+            new index_2.HeaderCard("group", "תלמדים שמילאו העדפות", this.userService.hasPreferd, "#ffc36d"),
+            new index_2.HeaderCard("supervisor_account", "מספר תלמידים", this.userService.num, "#63c3ff"),
+        ];
     };
     StudentsComponent.prototype.ngOnDestroy = function () {
         if (this.obs)
@@ -67,6 +73,7 @@ var StudentsComponent = (function (_super) {
         }),
         __metadata("design:paramtypes", [index_1.UserService,
             index_1.AuthService,
+            index_1.LayerService,
             nav_service_1.NavService])
     ], StudentsComponent);
     return StudentsComponent;

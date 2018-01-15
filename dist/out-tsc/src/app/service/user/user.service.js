@@ -140,6 +140,13 @@ var UserService = (function (_super) {
     UserService.prototype.getUserById = function (id) {
         return this._users.find(function (u) { return u._id == id; });
     };
+    Object.defineProperty(UserService.prototype, "hasPreferd", {
+        get: function () {
+            return this._users.filter(function (u) { return u.negativePrefer.length > 0 || u.positivePrefer.length > 0; }).length;
+        },
+        enumerable: true,
+        configurable: true
+    });
     UserService = __decorate([
         core_1.Injectable(),
         __metadata("design:paramtypes", [http_service_1.HttpService])

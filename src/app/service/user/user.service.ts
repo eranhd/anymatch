@@ -85,6 +85,10 @@ export class UserService extends ControlerService {
     return this._users.find(u => u._id == id)
   }
 
+  public get hasPreferd(){
+    return this._users.filter(u=> u.negativePrefer.length > 0 || u.positivePrefer.length > 0).length;
+  }
+
 
 
 }

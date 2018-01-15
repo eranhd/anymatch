@@ -60,10 +60,10 @@ var DashboardComponent = (function () {
     };
     DashboardComponent.prototype.ngOnInit = function () {
         this.headerCards = [
-            new models_2.HeaderCard("person", "מספר סטודנטים", this.userService.num, "#ff7676"),
+            new models_2.HeaderCard("person", "מספר תלמידים", this.userService.num, "#ff7676"),
             new models_2.HeaderCard("school", "מספר שכבות", this.layerService.num, "#796aee"),
             new models_2.HeaderCard("done", "שיבוצים שבוצעו", this.schoolService.numOfMatch, "#ffc36d"),
-            new models_2.HeaderCard("sync", "שיבוצים בתהליך", this.userService.num, "#54e69d")
+            new models_2.HeaderCard("sync", "שיבוצים בתהליך", this.layerService.matchInProcess, "#54e69d")
         ];
     };
     DashboardComponent.prototype.ngAfterViewInit = function () {

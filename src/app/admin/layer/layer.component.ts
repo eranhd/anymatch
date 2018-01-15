@@ -198,6 +198,7 @@ export class LayerComponent extends ComponentBase implements OnInit {
   public async saveMatch() {
     await this.layerService.saveMatch(this.graph, this._layer._id);
     this.snakService.openSnackBar("השיבוץ נשמר ונשלח לתלמידים", "סגור");
+    this.authService.addOperation("ביצעת חילוק לכיתות בשכבה " + this._layer.name, "group");
     this.schoolService.addMatch();
   }
 

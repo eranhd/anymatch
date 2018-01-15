@@ -307,6 +307,22 @@ var LayerService = (function (_super) {
             });
         });
     };
+    Object.defineProperty(LayerService.prototype, "matchInProcess", {
+        get: function () {
+            if (!this._layers)
+                return 0;
+            var count = 0;
+            var d = new Date();
+            this._layers.forEach(function (l) {
+                var d2 = new Date(l.lockTime);
+                if (d2.toJSON().localeCompare(d.toJSON()) >= 0)
+                    count++;
+            });
+            return count;
+        },
+        enumerable: true,
+        configurable: true
+    });
     LayerService = __decorate([
         core_1.Injectable(),
         __metadata("design:paramtypes", [http_service_1.HttpService, auth_service_1.AuthService])

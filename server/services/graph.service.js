@@ -312,7 +312,7 @@ module.exports.Graph = class Graph {
             let l = length % 1 == 0 ? length : (+length.toFixed(0))
             let flag = false
             Math.abs(l - length) < 0.5 && Math.abs(l - length) != 0 ? flag = true : l = l
-            let g = this.knapsack01Dp(l, +(l/10).toFixed(0));
+            let g = this.knapsack01Dp(l, 0);
             if (g.length == 0 && flag)
                 g = this.knapsack01Dp(l + 1, (l/10).toFixed(0));
             groups.push(g)

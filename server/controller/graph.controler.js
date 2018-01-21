@@ -48,23 +48,31 @@ router.post('/graph/', (req, res, next) => {
 
 
             doc.forEach(e => {
-                if (e.gender == "male")
+                if (e.gender == "male") {
                     e.positivePrefer.forEach((pp, index) => {
                         g1.addEdge(e._id, pp, deg[index]);
                     });
-                else
+                    e.negativePrefer.forEach((np, index) => {
+                        g1.addEdge(e._id, np, -1 * deg[index]);
+                    });
+                }
+                else {
+                    e.positivePrefer.forEach((pp, index) => {
+                        g2.addEdge(e._id, pp, deg[index]);
+                    });
                     e.negativePrefer.forEach((np, index) => {
                         g2.addEdge(e._id, np, -1 * deg[index]);
                     });
+                }
             });
-        
+
             let groups = g1.match(req.body.maleGroups)
             let groups2 = g2.match(req.body.femaleGroups)
-            groups2.forEach(g=>{
+            groups2.forEach(g => {
                 groups.push(g);
             });
 
-            return groups;
+            res.send(groups)
         }
     });
 });

@@ -28,7 +28,7 @@ export class MessageService extends ControlerService {
       this.conversations = c;
       this.numOfNewMessage.next(this.notReadCount());
     });
-    this.connectToSocket("massage/" + this.authService.id, "newMessage");
+    this.connectToSocket("message/" + this.authService.id, "newMessage");
 
     this.socketReplay.subscribe(res => {
       if (res["event"] == "newMessage") {
@@ -56,7 +56,7 @@ export class MessageService extends ControlerService {
     });
   }
 
-  public get rout(){
+  public get rout() {
     return this.authService.permission != "student" ? "admin" : "client";
   }
 
@@ -90,8 +90,8 @@ export class MessageService extends ControlerService {
     let c = this.getConversationById(id);
     // console.log(c)
     // c.messages[0].isRead[this.authService.id] = true;
-    if (!c.messages[0].isRead[this.authService.id]){
-      await this.http.post(this.path + "read", {_id : id});
+    if (!c.messages[0].isRead[this.authService.id]) {
+      await this.http.post(this.path + "read", { _id: id });
       // console.log("read");
       this.numOfNewMessage.next(this.notReadCount());
     }
@@ -109,24 +109,25 @@ export class MessageService extends ControlerService {
     conversation.messages.unshift(m);
 
     // this.socket.emit("message", conversation);
-    if (!conversation._id)
-      conversation = <Conversation>await this.create({ conversation: conversation });
-    else {
-      await this.pushToArray(m, conversation._id, "messages").then(doc => { console.log(doc) })
-    }
+    // if (!conversation._id)
+    //   conversation = <Conversation>await this.create({ conversation: conversation });
+    // else {
+    await this.pushToArray(m, conversation._id, "messages").then(doc => { console.log(doc) })
+    // }
     // await this.getAllMessages();
     this.conversations = this.sortByDate();
     return conversation;
 
   }
 
-  public startConversationWith(id: string) {
-    this.conversations = this.conversations.filter(c => c._id);
+  public async startConversationWith(id: string) {
+    // this.conversations = this.conversations.filter(c => c._id);
     let c = this.conversations.find(con => con.participants.includes(id));
     if (!c) {
       c = new Conversation();
       c.messages = [];
-      c.participants = [this.authService.id, id]
+      c.participants = [this.authService.id, id];
+      c = await <Conversation>await this.create({ conversation: c });
       this.conversations.push(c);
     }
     this.currentConversation = c;

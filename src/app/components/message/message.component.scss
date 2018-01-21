@@ -21,8 +21,8 @@
                 .buble{
                     box-shadow: 1px 1px 1px;
                     border: 1px solid #cacaca;
-                    background: #94c7e8;
-                    max-width: 60%;
+                    background: #73b3dd;
+                    width: 60%;
                     justify-content: space-between;
                     border-radius: 10px;
                     margin: 12px;
@@ -38,6 +38,10 @@
                 
             }
             .right{
+                .buble{
+                    background: #9fd0f1;
+                }
+                
                 :first-child{
                     border-radius: 10px;
                     border-top-left-radius: 0;

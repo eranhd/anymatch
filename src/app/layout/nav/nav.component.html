@@ -1,6 +1,6 @@
 <nav class="side-navbar">
 
-  <div class="sidebar-header d-flex align-items-center">
+  <div class="sidebar-header d-flex align-items-center" (click)="menuOpen.checked = !menuOpen.checked">
     <div class="avatar">
       <img src="/assets/person.png" class="img-fluid rounded-circle">
     </div>
@@ -9,6 +9,10 @@
       <p>{{title}}</p>
     </div>
   </div>
+  <span class="menu_txt">
+    תפריט
+  </span>
+  <input type="checkbox" #menuOpen id="menu_open">
 
   <button *ngFor="let item of navService.items" (click)="navService.select(item)" [style.background]="item.isSelect ? '#eef5f9' : 'white'"
     [routerLink]="item.url" mat-button class="list-unstyled">

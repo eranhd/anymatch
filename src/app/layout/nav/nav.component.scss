@@ -3,5 +3,33 @@
         width: 100%;
         text-align: start !important;
     }
+    #menu_open{
+        display: none;
+        visibility: hidden;
+    }
+    .menu_txt{
+        display: none;
+        visibility: hidden;
+    }
     height: 100%;
+}
+
+@media screen and(max-width: 500px){
+    .side-navbar{
+        height: 120px;
+        max-width: 100% !important;
+        .menu_txt{
+            visibility: visible;
+        }
+        button{
+            visibility: hidden;
+            height: 0px;
+            transition: height 1s, visibility 0.5s;
+        }
+        #menu_open:checked ~ button{
+            visibility: visible;
+            height: 40px;
+        }
+    }
+    
 }

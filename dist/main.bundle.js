@@ -889,7 +889,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".conversation_div {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  height: 80%; }\n  .conversation_div .messages {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-pack: start;\n        -ms-flex-pack: start;\n            justify-content: flex-start;\n    overflow: scroll;\n    height: 85%;\n    width: 100%; }\n    .conversation_div .messages .message {\n      display: block;\n      -webkit-box-orient: horizontal;\n      -webkit-box-direction: normal;\n          -ms-flex-direction: row;\n              flex-direction: row; }\n      .conversation_div .messages .message .inner_message {\n        width: 100%;\n        -webkit-box-pack: start;\n            -ms-flex-pack: start;\n                justify-content: flex-start;\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex; }\n        .conversation_div .messages .message .inner_message .buble {\n          box-shadow: 1px 1px 1px;\n          border: 1px solid #cacaca;\n          background: #94c7e8;\n          max-width: 60%;\n          -webkit-box-pack: justify;\n              -ms-flex-pack: justify;\n                  justify-content: space-between;\n          border-radius: 10px;\n          margin: 12px;\n          padding: 8px;\n          box-sizing: border-box;\n          min-width: 30%;\n          text-align: right;\n          border-top-right-radius: 0; }\n          .conversation_div .messages .message .inner_message .buble :last-child {\n            font-size: 60%; }\n      .conversation_div .messages .message .right {\n        -webkit-box-pack: end;\n            -ms-flex-pack: end;\n                justify-content: flex-end; }\n        .conversation_div .messages .message .right :first-child {\n          border-radius: 10px;\n          border-top-left-radius: 0; }\n  .conversation_div .send_div {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    height: 10%; }\n    .conversation_div .send_div mat-form-field {\n      width: 80%; }\n    .conversation_div .send_div button {\n      width: 10%;\n      border-radius: 10px; }\n      .conversation_div .send_div button mat-icon {\n        -webkit-transform: rotate(180deg);\n                transform: rotate(180deg); }\n\n.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-placeholder, .mat-form-field-empty.mat-form-field-placeholder {\n  text-align: right; }\n", ""]);
+exports.push([module.i, ".conversation_div {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  height: 80%; }\n  .conversation_div .messages {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-pack: start;\n        -ms-flex-pack: start;\n            justify-content: flex-start;\n    overflow: scroll;\n    height: 85%;\n    width: 100%; }\n    .conversation_div .messages .message {\n      display: block;\n      -webkit-box-orient: horizontal;\n      -webkit-box-direction: normal;\n          -ms-flex-direction: row;\n              flex-direction: row; }\n      .conversation_div .messages .message .inner_message {\n        width: 100%;\n        -webkit-box-pack: start;\n            -ms-flex-pack: start;\n                justify-content: flex-start;\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex; }\n        .conversation_div .messages .message .inner_message .buble {\n          box-shadow: 1px 1px 1px;\n          border: 1px solid #cacaca;\n          background: #73b3dd;\n          width: 60%;\n          -webkit-box-pack: justify;\n              -ms-flex-pack: justify;\n                  justify-content: space-between;\n          border-radius: 10px;\n          margin: 12px;\n          padding: 8px;\n          box-sizing: border-box;\n          min-width: 30%;\n          text-align: right;\n          border-top-right-radius: 0; }\n          .conversation_div .messages .message .inner_message .buble :last-child {\n            font-size: 60%; }\n      .conversation_div .messages .message .right {\n        -webkit-box-pack: end;\n            -ms-flex-pack: end;\n                justify-content: flex-end; }\n        .conversation_div .messages .message .right .buble {\n          background: #9fd0f1; }\n        .conversation_div .messages .message .right :first-child {\n          border-radius: 10px;\n          border-top-left-radius: 0; }\n  .conversation_div .send_div {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: horizontal;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: row;\n            flex-direction: row;\n    height: 10%; }\n    .conversation_div .send_div mat-form-field {\n      width: 80%; }\n    .conversation_div .send_div button {\n      width: 10%;\n      border-radius: 10px; }\n      .conversation_div .send_div button mat-icon {\n        -webkit-transform: rotate(180deg);\n                transform: rotate(180deg); }\n\n.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-placeholder, .mat-form-field-empty.mat-form-field-placeholder {\n  text-align: right; }\n", ""]);
 
 // exports
 
@@ -1034,7 +1034,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".messages_div {\n  height: 100%;\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n  -webkit-box-pack: start;\n      -ms-flex-pack: start;\n          justify-content: flex-start; }\n  .messages_div .members {\n    width: 24%;\n    padding: 1%;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    border-left: 1px solid #a0a0a0;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-pack: start;\n        -ms-flex-pack: start;\n            justify-content: flex-start;\n    overflow: scroll; }\n  .messages_div .messages {\n    width: 75%; }\n", ""]);
+exports.push([module.i, ".messages_div {\n  height: 100%;\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: horizontal;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: row;\n          flex-direction: row;\n  -webkit-box-pack: start;\n      -ms-flex-pack: start;\n          justify-content: flex-start;\n  background-color: aliceblue; }\n  .messages_div .members {\n    width: 24%;\n    padding: 1%;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    border-left: 1px solid #a0a0a0;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    -webkit-box-pack: start;\n        -ms-flex-pack: start;\n            justify-content: flex-start;\n    overflow: scroll; }\n  .messages_div .messages {\n    width: 75%; }\n", ""]);
 
 // exports
 
@@ -1386,7 +1386,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".header .mat-icon-button {\n  margin: 0 8px !important; }\n\n.header nav.navbar {\n  padding-bottom: 0 !important;\n  padding-top: 0 !important; }\n\n.header .search-form-field {\n  margin: 0 20px; }\n\n.header .mat-form-field-can-float.mat-form-field-should-float .mat-form-field-placeholder, .header .mat-form-field-empty.mat-form-field-placeholder {\n  color: white; }\n\n.header .badge {\n  position: absolute;\n  z-index: 9; }\n\n@media screen and (max-width: 500px) {\n  .header .search-form-field {\n    visibility: hidden; } }\n\n.logo img {\n  height: 56px; }\n", ""]);
+exports.push([module.i, ".header .mat-icon-button {\n  margin: 0 8px !important; }\n\n.header nav.navbar {\n  padding-bottom: 0 !important;\n  padding-top: 0 !important; }\n\n.header .search-form-field {\n  margin: 0 20px; }\n\n.header .mat-form-field-can-float.mat-form-field-should-float .mat-form-field-placeholder, .header .mat-form-field-empty.mat-form-field-placeholder {\n  color: white; }\n\n.header .badge {\n  position: absolute;\n  z-index: 9; }\n\n.logo img {\n  height: 56px; }\n\n@media screen and (max-width: 500px) {\n  .header {\n    width: 100%;\n    overflow: hidden; }\n  .search-form-field {\n    visibility: hidden; } }\n", ""]);
 
 // exports
 
@@ -1471,7 +1471,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".div_layout {\n  height: 100%;\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: start;\n      -ms-flex-pack: start;\n          justify-content: flex-start;\n  background-color: rgba(200, 194, 250, 0.3); }\n\n.main_layout {\n  background-image: url(\"http://sewuka.co/wp-content/uploads/2017/08/23310840-light-gray-rough-concrete-wall-seamless-background-a-texturedecorative-tiles--textured-paint-991x660.jpg\");\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  height: 90%; }\n  .main_layout .app-nav {\n    display: -ms-grid;\n    display: grid; }\n  .main_layout .content {\n    width: 100%;\n    overflow: scroll; }\n  .main_layout .page_title {\n    font-size: 2em;\n    font-weight: bold;\n    padding: 16px;\n    text-align: right; }\n  .main_layout .content-inner {\n    padding: 28px;\n    width: 100%;\n    height: 100%; }\n\napp-header {\n  display: block; }\n", ""]);
+exports.push([module.i, ".div_layout {\n  height: 100%;\n  width: 100%;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n  -webkit-box-pack: start;\n      -ms-flex-pack: start;\n          justify-content: flex-start;\n  background-color: rgba(200, 194, 250, 0.3); }\n\n.main_layout {\n  background-image: url(\"http://sewuka.co/wp-content/uploads/2017/08/23310840-light-gray-rough-concrete-wall-seamless-background-a-texturedecorative-tiles--textured-paint-991x660.jpg\");\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  height: 90%; }\n  .main_layout .app-nav {\n    display: -ms-grid;\n    display: grid; }\n  .main_layout .content {\n    width: 100%;\n    overflow: scroll; }\n  .main_layout .page_title {\n    font-size: 2em;\n    font-weight: bold;\n    padding: 16px;\n    text-align: right; }\n  .main_layout .content-inner {\n    padding: 28px;\n    width: 100%;\n    height: 100%; }\n\napp-header {\n  display: block; }\n\n@media screen and (max-width: 500px) {\n  .main_layout {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: column;\n            flex-direction: column; }\n    .main_layout .app-nav {\n      width: 100%;\n      display: -ms-grid;\n      display: grid; }\n    .main_layout .content {\n      width: 100%;\n      overflow: scroll; }\n    .main_layout .page_title {\n      font-size: 2em;\n      font-weight: bold;\n      padding: 16px;\n      text-align: right; }\n    .main_layout .content-inner {\n      padding: 28px;\n      width: 100%;\n      height: 100%; } }\n", ""]);
 
 // exports
 
@@ -1530,7 +1530,7 @@ var LayoutComponent = (function () {
 /***/ "../../../../../src/app/layout/nav/nav.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"side-navbar\">\n\n  <div class=\"sidebar-header d-flex align-items-center\">\n    <div class=\"avatar\">\n      <img src=\"/assets/person.png\" class=\"img-fluid rounded-circle\">\n    </div>\n    <div class=\"title\">\n      <h1 class=\"h4\">{{auth.displayName}}</h1>\n      <p>{{title}}</p>\n    </div>\n  </div>\n\n  <button *ngFor=\"let item of navService.items\" (click)=\"navService.select(item)\" [style.background]=\"item.isSelect ? '#eef5f9' : 'white'\"\n    [routerLink]=\"item.url\" mat-button class=\"list-unstyled\">\n    <mat-icon>{{item.icon}}</mat-icon>\n    {{item.text}}\n  </button>\n</nav>"
+module.exports = "<nav class=\"side-navbar\">\n\n  <div class=\"sidebar-header d-flex align-items-center\" (click)=\"menuOpen.checked = !menuOpen.checked\">\n    <div class=\"avatar\">\n      <img src=\"/assets/person.png\" class=\"img-fluid rounded-circle\">\n    </div>\n    <div class=\"title\">\n      <h1 class=\"h4\">{{auth.displayName}}</h1>\n      <p>{{title}}</p>\n    </div>\n  </div>\n  <span class=\"menu_txt\">\n    תפריט\n  </span>\n  <input type=\"checkbox\" #menuOpen id=\"menu_open\">\n\n  <button *ngFor=\"let item of navService.items\" (click)=\"navService.select(item)\" [style.background]=\"item.isSelect ? '#eef5f9' : 'white'\"\n    [routerLink]=\"item.url\" mat-button class=\"list-unstyled\">\n    <mat-icon>{{item.icon}}</mat-icon>\n    {{item.text}}\n  </button>\n</nav>"
 
 /***/ }),
 
@@ -1542,7 +1542,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".side-navbar {\n  height: 100%; }\n  .side-navbar .list-unstyled {\n    width: 100%;\n    text-align: start !important; }\n", ""]);
+exports.push([module.i, ".side-navbar {\n  height: 100%; }\n  .side-navbar .list-unstyled {\n    width: 100%;\n    text-align: start !important; }\n  .side-navbar #menu_open {\n    display: none;\n    visibility: hidden; }\n  .side-navbar .menu_txt {\n    display: none;\n    visibility: hidden; }\n\n@media screen and (max-width: 500px) {\n  .side-navbar {\n    height: 120px;\n    max-width: 100% !important; }\n    .side-navbar .menu_txt {\n      visibility: visible; }\n    .side-navbar button {\n      visibility: hidden;\n      height: 0px;\n      transition: height 1s, visibility 0.5s; }\n    .side-navbar #menu_open:checked ~ button {\n      visibility: visible;\n      height: 40px; } }\n", ""]);
 
 // exports
 
@@ -3166,7 +3166,7 @@ var MessageService = (function (_super) {
             _this.conversations = c;
             _this.numOfNewMessage.next(_this.notReadCount());
         });
-        _this.connectToSocket("massage/" + _this.authService.id, "newMessage");
+        _this.connectToSocket("message/" + _this.authService.id, "newMessage");
         _this.socketReplay.subscribe(function (res) {
             if (res["event"] == "newMessage") {
                 var c = _this.getConversationById(res["data"].conversation._id);
@@ -3257,16 +3257,21 @@ var MessageService = (function (_super) {
                         m.text = message;
                         m.isRead[this.authService.id] = true;
                         conversation.messages.unshift(m);
-                        if (!!conversation._id) return [3 /*break*/, 2];
-                        return [4 /*yield*/, this.create({ conversation: conversation })];
+                        // this.socket.emit("message", conversation);
+                        // if (!conversation._id)
+                        //   conversation = <Conversation>await this.create({ conversation: conversation });
+                        // else {
+                        return [4 /*yield*/, this.pushToArray(m, conversation._id, "messages").then(function (doc) { console.log(doc); })
+                            // }
+                            // await this.getAllMessages();
+                        ];
                     case 1:
-                        conversation = (_a.sent());
-                        return [3 /*break*/, 4];
-                    case 2: return [4 /*yield*/, this.pushToArray(m, conversation._id, "messages").then(function (doc) { console.log(doc); })];
-                    case 3:
+                        // this.socket.emit("message", conversation);
+                        // if (!conversation._id)
+                        //   conversation = <Conversation>await this.create({ conversation: conversation });
+                        // else {
                         _a.sent();
-                        _a.label = 4;
-                    case 4:
+                        // }
                         // await this.getAllMessages();
                         this.conversations = this.sortByDate();
                         return [2 /*return*/, conversation];
@@ -3275,16 +3280,28 @@ var MessageService = (function (_super) {
         });
     };
     MessageService.prototype.startConversationWith = function (id) {
-        this.conversations = this.conversations.filter(function (c) { return c._id; });
-        var c = this.conversations.find(function (con) { return con.participants.includes(id); });
-        if (!c) {
-            c = new __WEBPACK_IMPORTED_MODULE_1__models_index__["b" /* Conversation */]();
-            c.messages = [];
-            c.participants = [this.authService.id, id];
-            this.conversations.push(c);
-        }
-        this.currentConversation = c;
-        return c;
+        return __awaiter(this, void 0, void 0, function () {
+            var c;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        c = this.conversations.find(function (con) { return con.participants.includes(id); });
+                        if (!!c) return [3 /*break*/, 3];
+                        c = new __WEBPACK_IMPORTED_MODULE_1__models_index__["b" /* Conversation */]();
+                        c.messages = [];
+                        c.participants = [this.authService.id, id];
+                        return [4 /*yield*/, this.create({ conversation: c })];
+                    case 1: return [4 /*yield*/, _a.sent()];
+                    case 2:
+                        c = _a.sent();
+                        this.conversations.push(c);
+                        _a.label = 3;
+                    case 3:
+                        this.currentConversation = c;
+                        return [2 /*return*/, c];
+                }
+            });
+        });
     };
     MessageService.prototype.getAllMessages = function () {
         return __awaiter(this, void 0, void 0, function () {

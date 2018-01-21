@@ -21,16 +21,22 @@
         z-index: 9;
     }
     
-    @media screen and (max-width: 500px){
-        .search-form-field{
-            visibility: hidden;
-        }
-    }
+    
 }
 
 
 .logo{
     img{
         height: 56px;
+    }
+}
+
+@media screen and (max-width: 500px){
+    .header{
+        width: 100%;
+        overflow: hidden;
+    }
+    .search-form-field{
+        visibility: hidden;
     }
 }

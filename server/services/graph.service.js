@@ -32,11 +32,13 @@ module.exports.Graph = class Graph {
                 for (let i = 0; i < v.edges.length; i++) { // for each edge in v, if e has group, add v to e group
 
                     let e = v.edges[i]
-                    let ver = this.getVeretxById(e.to)
-                    if (this.groupMap[ver.id] && !flag) {
-                        flag = true
-                        this.changeGroup(ver.group, v);
-                        break;
+                    let ver = this.getVeretxById(e.to);
+                    if (ver) {
+                        if (this.groupMap[ver.id] && !flag) {
+                            flag = true
+                            this.changeGroup(ver.group, v);
+                            break;
+                        }
                     }
 
                 }
@@ -136,6 +138,11 @@ module.exports.Graph = class Graph {
                 g2.addVertex(v2)
             }
         }
+        if (g1.length == 0) {
+            let temp = g1;
+            g1 = g2;
+            g2 = temp;
+        }
 
         return { g1: g1, g2: g2 }
     }
@@ -144,27 +151,30 @@ module.exports.Graph = class Graph {
         let gs = []
         this.group.forEach(graph => {
 
-            if (graph.length > 1) {
-                let graphAndMap = this.buildDirectGraphWithWeightForFF(graph)
-                let g = graphAndMap.g
-                let arrMap = graphAndMap.arrMap
-                let count = gs.length
-                let maxGml = g.length > 1 ? this.divideGroup(arrMap, count, g[1]) : this.divideGroup(arrMap, count, g[0])
-                for (let i = 1; i < g.length; i++) {
-                    let dividedGraph = this.divideGroup(arrMap, count, g[i])
-                    if (dividedGraph.g1.getGml() > maxGml.g1.getGml())
-                        maxGml = dividedGraph
+
+            do {
+                if (graph.length > 1) {
+                    let graphAndMap = this.buildDirectGraphWithWeightForFF(graph);
+                    let g = graphAndMap.g;
+                    let arrMap = graphAndMap.arrMap;
+                    let count = gs.length;
+                    let maxGml = g.length > 1 ? this.divideGroup(arrMap, count, g[1]) : this.divideGroup(arrMap, count, g[0])
+                    for (let i = 1; i < g.length; i++) {
+                        let dividedGraph = this.divideGroup(arrMap, count, g[i]);
+                        if (dividedGraph.g1.getGml() > maxGml.g1.getGml())
+                            maxGml = dividedGraph;
+                    }
+
+                    gs.push(maxGml.g1);
+                    // gs.push(maxGml.g2);
+                    graph = maxGml.g2;
                 }
+                else
+                    gs.push(graph);
+            } while (graph.length > 1);
+        });
 
-                gs.push(maxGml.g1)
-                gs.push(maxGml.g2)
-            }
-            else
-                gs.push(graph)
-
-        })
-
-        this.group = gs
+        this.group = gs;
     }
 
     buildDirectGraphWithWeightForFF(graph, reduce) {
@@ -307,6 +317,8 @@ module.exports.Graph = class Graph {
      */
     grouping(length, numOfGroups) {
 
+        numOfGroups = +numOfGroups;
+        length = +length;
         let groups = []
         for (let i = 0; i < numOfGroups; i++) {
             let l = length % 1 == 0 ? length : (+length.toFixed(0))
@@ -320,11 +332,11 @@ module.exports.Graph = class Graph {
 
         }
 
-        let arr = []
+        let arr = [];
         groups.forEach(group => {
             arr.push(group.toArray())
-        })
-        return arr
+        });
+        return arr;
     }
 
     removeChoose(group) {

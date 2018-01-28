@@ -151,12 +151,12 @@ export class LayerService extends ControlerService {
 
   public getGraph(id, classes, maleAndFemale?, maleGroups?, femaleGroups?) {
 
-    return this.http.post("graph/graph", { 
-      layerId: id, 
-      groups: classes, 
-      maleAndFemale: maleAndFemale, 
-      maleGroups: maleGroups, 
-      femaleGroups: femaleGroups 
+    return this.http.post("graph/graph", {
+      layerId: id,
+      groups: classes,
+      maleAndFemale: maleAndFemale,
+      maleGroups: maleGroups,
+      femaleGroups: femaleGroups
     });
   }
 
@@ -231,8 +231,9 @@ export class LayerService extends ControlerService {
 
 
       let d2 = new Date(l.lockTime)
-      if (d2.toJSON().localeCompare(d.toJSON()) >= 0)
-        count++;
+      if (d2 && d2.toJSON())
+        if (d2.toJSON().localeCompare(d.toJSON()) >= 0)
+          count++;
     })
     return count;
   }

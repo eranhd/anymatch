@@ -3059,8 +3059,9 @@ var LayerService = (function (_super) {
             var d = new Date();
             this._layers.forEach(function (l) {
                 var d2 = new Date(l.lockTime);
-                if (d2.toJSON().localeCompare(d.toJSON()) >= 0)
-                    count++;
+                if (d2 && d2.toJSON())
+                    if (d2.toJSON().localeCompare(d.toJSON()) >= 0)
+                        count++;
             });
             return count;
         },

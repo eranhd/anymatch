@@ -1,6 +1,5 @@
 import { Routes } from "@angular/router";
 import { DashboardComponent } from "./dashboard/dashboard.component";
-import { LayoutComponent } from "../layout/layout.component";
 import { LayerComponent } from './layer/layer.component';
 import { LayersComponent } from './layers/layers.component';
 import { StudentsComponent } from './students/students.component';

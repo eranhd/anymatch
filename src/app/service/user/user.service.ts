@@ -3,7 +3,7 @@ import { HttpService } from "../http/http.service";
 import { ControlerService } from "../controlerService.model";
 import { path } from "../path.enum";
 import { User } from "../../models";
-import { Observable } from "rxjs";
+import { Observable } from "rxjs/Observable";
 
 
 @Injectable()

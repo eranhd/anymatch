@@ -4,7 +4,7 @@ import { Layer, User, HeaderCard } from "../../models";
 import { SchoolService, AuthService, LayerService, ClassService, UserService, SnakService } from "../../service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { RequestOptions, Headers, Http } from "@angular/http";
-import { Observable } from "rxjs";
+import { Observable } from "rxjs/Observable";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { OpenStudentDialogComponent } from './open-student-dialog/open-student-dialog.component';
 import { NewLayerChargeDialogComponent } from "./new-layer-charge/new-layer-charge-dialog.component";

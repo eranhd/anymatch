@@ -5,7 +5,7 @@ import { path } from "../path.enum";
 
 import { Layer } from "../../models";
 import { AuthService } from "../auth/auth.service";
-import { Observable } from "rxjs";
+import { Observable } from "rxjs/Observable";
 
 
 @Injectable()

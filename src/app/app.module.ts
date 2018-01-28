@@ -28,14 +28,7 @@ import { NavService } from "./service/nav/nav.service";
 import { DialogNewLayer } from "./admin/dashboard/dialog new layer/dialog-new-layer.conponent"
 import { DialogEditLayer } from "./admin/dashboard/dialog-edit-layer/dialog-edit-layerconponent";
 import { SizeDirective } from './directives/size.directive';
-import { SocketIoModule, SocketIoConfig } from 'ng2-socket-io';
 import { ChartsModule } from 'ng2-charts';
-
-
-const config: SocketIoConfig = {
-  url: (window.location.host == "localhost:3000" ? "http://" : "https://") + window.location.host + "/"
-  , options: {}
-};
 
 @NgModule({
   declarations: [
@@ -60,7 +53,6 @@ const config: SocketIoConfig = {
     RouterModule.forRoot(routes),
     ComponentsModule,
     NgbModule.forRoot(),
-    // SocketIoModule.forRoot(config)
     ChartsModule
   ],
   entryComponents: [

@@ -32,7 +32,7 @@ export class GraphComponent implements OnInit, AfterViewInit, OnChanges {
   private lines: Line[];
   context: CanvasRenderingContext2D;
 
-  private pointToCahnge: Point;
+  public pointToCahnge: Point;
 
 
   constructor() {

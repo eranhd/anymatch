@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import { Conversation, Message } from '../../models/index';
 import { AuthService } from '../auth/auth.service';
 import { UserService } from "../user/user.service";
-import { Socket } from 'ng2-socket-io';
 import { HttpService } from '../http/http.service';
 import { ControlerService } from '../controlerService.model';
-import { ReplaySubject } from "rxjs";
+import { ReplaySubject } from "rxjs/ReplaySubject";
 
 @Injectable()
 export class MessageService extends ControlerService {

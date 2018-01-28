@@ -6,7 +6,6 @@ import { RouterModule } from "@angular/router";
 import { routes } from "./admin.route";
 import { MaterialModule } from "../material/material.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-// import { LayoutComponent } from '../layout/layout.component';
 
 import { LayerComponent } from './layer/layer.component';
 import { ComponentsModule } from "../components/compontns.module";

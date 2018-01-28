@@ -1,6 +1,6 @@
 import { HttpService } from "./http/http.service";
 import * as io from 'socket.io-client';
-import { ReplaySubject } from "rxjs";
+import { ReplaySubject } from "rxjs/ReplaySubject";
 
 export class ControlerService {
     protected path: string;

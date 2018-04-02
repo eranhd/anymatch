@@ -7,7 +7,7 @@ describe('LayerComponent', () => {
   let fixture: ComponentFixture<LayerComponent>;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
+    TestBed.configureTestingModule({  
       declarations: [ LayerComponent ]
     })
     .compileComponents();

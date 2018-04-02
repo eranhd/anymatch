@@ -1,4 +1,70 @@
-<div class="login_page">
+<div fxFill fxLayout='row' fxLayoutAlign="start start">
+  <mat-card class="section_login" fxFlex="40" fxLayout=column fxLayoutAlign="space-between stretch">
+    <mat-card-header class="header" fxFlex=20 fxLayout=column fxLayoutAlign="center center">
+      <div fxFlex=60 class="img">
+        <img src="/assets/logo.png">
+      </div>
+      <h1 fxFlex=40>
+        Sign Up or Login
+      </h1>
+    </mat-card-header>
+
+    <mat-card-content fxFlex=55 fxLayout=column fxLayoutAlign="center center">
+      <form fxFill fxLayout=column fxLayoutAlign="center center" id="login-form" [formGroup]="form">
+
+        <div fxFlex formGroupName="login">
+          <mat-form-field>
+            <input matInput type="text" formControlName=username placeholder="שם משתמש">
+            <mat-icon matSuffix>person</mat-icon>
+          </mat-form-field>
+          <div fxFlex formGroupName="pass">
+            <mat-form-field>
+              <input matInput type="password" formControlName=password placeholder="סיסמה">
+              <mat-icon matSuffix>lock</mat-icon>
+            </mat-form-field>
+            <mat-form-field *ngIf="createNewSchool">
+              <input matInput type="password" formControlName=verifyPassword placeholder="אימות סיסמה">
+              <mat-icon matSuffix>done_all</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div fxFlex *ngIf="createNewSchool" formGroupName="newSchool">
+          <mat-form-field>
+            <input matInput type="text" formControlName=name placeholder="שם בית הספר">
+            <mat-icon matSuffix>account_balance</mat-icon>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput type="text" formControlName=code placeholder="קוד בית הספר">
+            <mat-icon matSuffix>label</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <mat-spinner [diameter]=24 *ngIf="showProgress" [strokeWidth]="5"></mat-spinner>
+
+      </form>
+      <mat-checkbox fxFlex=5 color=primary class="remember_me" [(ngModel)]=rememberMe>
+        זכור אותי
+      </mat-checkbox>
+    </mat-card-content>
+    <mat-card-actions fxFlex=20 fxLayout=row fxLayoutAlign="center center">
+      <button *ngIf="!createNewSchool && !showProgress" mat-raised-button color=primary (click)="login()">כניסה</button>
+      <button *ngIf="createNewSchool && !showProgress" mat-raised-button color=primary (click)="signup()">הרשמה</button>
+      <button *ngIf="!createNewSchool" mat-raised-button color=primary (click)="changeCreateSchool()">יצירת בית ספר חדש</button>
+    </mat-card-actions>
+  </mat-card>
+
+  <div class="background_login" fxFlex="60" fxLayout=column fxLayoutAlign="space-between stretch">
+    <div fxFill ></div>
+    <div class="slogen">
+      <h2>
+        חלוקת תלמידים לכיתות ע"פ העדפות בקלות
+      </h2>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="login_page">
   <mat-card class="login_card">
     <mat-card-header class="header">
       <div class="img">
@@ -45,79 +111,9 @@
         </mat-checkbox>
     </mat-card-content>
     <mat-card-actions class="action">
-      <button *ngIf="!createNewSchool && !showProgress" mat-raised-button color=primary (click)="login()">Login</button>
-      <button *ngIf="createNewSchool && !showProgress" mat-raised-button color=primary (click)="signup()">Sign Up</button>
-      <button *ngIf="!createNewSchool" mat-raised-button color=primary (click)="changeCreateSchool()">Create new school</button>
+      <button *ngIf="!createNewSchool && !showProgress" mat-raised-button color=primary (click)="login()">כניסה</button>
+      <button *ngIf="createNewSchool && !showProgress" mat-raised-button color=primary (click)="signup()">הרשמה</button>
+      <button *ngIf="!createNewSchool" mat-raised-button color=primary (click)="changeCreateSchool()">יצירת בית ספר חדש</button>
     </mat-card-actions>
   </mat-card>
-</div>
-
-<!-- #2f333e -->
-
-<!-- <div class="page login-page">
-  <div class="container d-flex align-items-center">
-    <div class="form-holder has-shadow">
-      <div class="row">
-
-        <div class="col-lg-6">
-          <div class="info d-flex align-items-center">
-            <div class="content logo">
-              
-            </div>
-          </div>
-        </div>
-        
-
-        <div class="col-lg-6 bg-white">
-          <div class="form d-flex align-items-center">
-            <div class="content">
-
-
-
-              <form id="login-form" [formGroup]="form">
-
-                <div formGroupName="login">
-                  <mat-form-field>
-                    <input matInput type="text" formControlName=username placeholder="שם משתמש">
-                  </mat-form-field>
-                  <div formGroupName="pass">
-                    <mat-form-field>
-                      <input matInput type="password" formControlName=password placeholder="סיסמה">
-                    </mat-form-field>
-                    <mat-form-field *ngIf="createNewSchool">
-                      <input matInput type="password" formControlName=verifyPassword placeholder="אימות סיסמה">
-                    </mat-form-field>
-                  </div>
-                </div>
-
-                <div *ngIf="createNewSchool" formGroupName="newSchool">
-                  <mat-form-field>
-                    <input matInput type="text" formControlName=name placeholder="שם בית הספר">
-                  </mat-form-field>
-                  <mat-form-field>
-                    <input matInput type="text" formControlName=code placeholder="קוד בית הספר">
-                  </mat-form-field>
-                </div>
-
-                <mat-spinner [diameter]=24 *ngIf="showProgress" [strokeWidth]="5"></mat-spinner>
-                <button *ngIf="!createNewSchool && !showProgress" id="login" class="btn btn-primary" (click)="login()">Login</button>
-                <button *ngIf="createNewSchool && !showProgress" mat-raised-button color=primary (click)="signup()">Sign Up</button>
-
-
-              </form>
-
-
-
-              <a href="#" class="forgot-pass">Forgot Password?</a>
-              <br>
-              <small *ngIf="!createNewSchool">Do not have an account? </small>
-              <button *ngIf="!createNewSchool" class="signup" class="btn btn-primary" (click)="changeCreateSchool()">Create new school</button>
-
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
 </div> -->

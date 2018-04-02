@@ -1,4 +1,182 @@
-<div class="dashboard_client container">
+<div class="dashboard_client" fxLayout=column fxLayoutAlign="start stretch">
+    <app-pages-header fxFlex [items]=headerCards></app-pages-header>
+
+    <div fxFlex fxLayout=row fxLayout.xs=column fxLayoutAlign="start start">
+        <section fxFlex=50 fxFlex.xs=100 fxLayout=column fxLayoutAlign="start stretch">
+            <mat-card fxFlex>
+                <mat-card-header>
+                    <mat-card-title>
+                        <mat-icon>
+                            access_time
+                        </mat-icon>
+                        תאריך אחרון לבחירת העדפות
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="timer_data">
+                    <h1>{{timer ?( timer | date:"dd.MM.yyy") : "שיבוץ נעול"}}</h1>
+                </mat-card-content>
+            </mat-card>
+            <mat-card fxFlex>
+                <mat-card-header>
+                    <mat-card-title>
+                        <mat-icon>
+                            person
+                        </mat-icon>
+                        הבחירות שלי
+                    </mat-card-title>
+                </mat-card-header>
+
+                <mat-card-content class="prefers">
+                    <div class="inner_div" *ngFor="let u of positive">
+                        <app-card-student [color]="'#54e69d'" [user]=u></app-card-student>
+                    </div>
+                    <div class="inner_div" *ngFor="let u of negative">
+                        <app-card-student [user]=u [color]="'#ff7676'"></app-card-student>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+            <mat-card fxFlex>
+                <mat-card-header>
+                    <mat-card-title>
+                        <mat-icon>
+                            help
+                        </mat-icon>
+                        עזרה וטיפים
+                    </mat-card-title>
+                </mat-card-header>
+                <ul>
+                    <li>
+                        כדי לבחור תלמידים שברצונך להשתבץ איתם, כנסו לעמוד "השכבה שלי" והתחילו לבחור
+                    </li>
+                    <li>
+                        לאחר שחלוקה לכיתות הסתיימה, תוכלו לראות את הכיתה שלכם בדף "הכיתה שלי"
+                    </li>
+                    <li>
+                        שיבוץ חכם יותר יתבצע אם תמלאו בהגדרות את שדה התחביבים
+                    </li>
+                </ul>
+                <mat-card-content>
+
+                </mat-card-content>
+            </mat-card>
+        </section>
+        <section fxFlex=50 fxFlex.xs=100  fxLayout=column fxLayoutAlign="start stretch">
+            <mat-card fxFlex>
+                <mat-card-header>
+                    <mat-card-title>
+                        <mat-icon>
+                            swap_horiz
+                        </mat-icon>
+                        בקשות החלפה
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <div *ngIf="swaps.length == 0">
+                        <h1>
+                            אין בקשות החלפה כרגע
+                        </h1>
+                    </div>
+                    <table *ngIf="swaps.length != 0">
+                        <thead>
+                            <th>
+                                שם
+                            </th>
+                            <th>
+                                כיתה
+                            </th>
+                            <th>
+                                תשובתך
+                            </th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let s of swaps">
+                                <td>
+                                    {{s.name}}
+                                </td>
+                                <td>
+                                    {{s.class}}
+                                </td>
+                                <td>
+                                    <button matTooltip="אשר הצעה" mat-icon-button (click)="swapResponse(s.id, 1)">
+                                        <mat-icon>
+                                            done
+                                        </mat-icon>
+                                    </button>
+                                    <button matTooltip="דחה הצעה" mat-icon-button (click)="swapResponse(s.id, 2)">
+                                        <mat-icon>
+                                            cancel
+                                        </mat-icon>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </mat-card-content>
+            </mat-card>
+            <mat-card fxFlex>
+                <mat-card-header>
+                    <mat-card-title>
+                        <mat-icon>
+                            feedback
+                        </mat-icon>
+                        משוב
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="last_feedback_content">
+
+                    <div class="feedback" [class.odd]="i%2 != 0" *ngFor="let f of feedback; let i = index">
+                        <strong>
+                            {{f}}
+                        </strong>
+                        <mat-radio-group [(ngModel)]="result[i]">
+                            <mat-radio-button *ngFor="let j of grade" [value]="j">
+                                {{j}}
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-raised-button (click)="authService.sendFeedback(result)">
+                        <mat-icon class="send_icon">
+                            send
+                        </mat-icon>
+                        שלח
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+            <mat-card fxFlex>
+                <mat-card-header>
+                    <mat-card-title>
+                        <mat-icon>
+                            info
+                        </mat-icon>
+                        פעולות אחרונות
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    בפיתוח
+                </mat-card-content>
+            </mat-card>
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>
+                        <mat-icon>
+                            message
+                        </mat-icon>
+                        הודעות אחרונות
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    בפיתוח
+                </mat-card-content>
+            </mat-card>
+        </section>
+    </div>
+
+</div>
+
+<!-- <div class="dashboard_client container">
     <app-pages-header class="row" [items]=headerCards></app-pages-header>
 
     <div class="two_column row">
@@ -175,4 +353,4 @@
         </section>
     </div>
 
-</div>
+</div> -->

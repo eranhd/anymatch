@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { HttpModule } from "@angular/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
 import { HttpService, SchoolService, AuthService, ClassService, LayerService, UserService, MessageService, SnakService } from "./service";
@@ -53,7 +54,8 @@ import { ChartsModule } from 'ng2-charts';
     RouterModule.forRoot(routes),
     ComponentsModule,
     NgbModule.forRoot(),
-    ChartsModule
+    ChartsModule,
+    FlexLayoutModule
   ],
   entryComponents: [
     LayoutComponent,

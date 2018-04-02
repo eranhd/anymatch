@@ -9,6 +9,7 @@ import { ComponentsModule } from "../components/compontns.module";
 import { SettingsComponent } from "./settings/settings.component";
 import { MyLayerComponent } from './my-layer/my-layer.component';
 import { MyClassComponent } from './my-class/my-class.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { MyClassComponent } from './my-class/my-class.component';
     RouterModule.forChild(routes),
     FormsModule,
     ReactiveFormsModule,
-    ComponentsModule
+    ComponentsModule,
+    FlexLayoutModule
   ],
   declarations: [
     DashboardComponent,

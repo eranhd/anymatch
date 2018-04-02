@@ -14,6 +14,10 @@ const convert = require("../services/xlsxToJson.service");
 const collection = "users";
 
 router.post('/all/', (req, res, next) => {
+    if (!req.user) {
+        res.status(401).send({ success: false, message: "auth flase" })
+        return 
+    }
     let db = new DB();
     let projection = {};
     let query = { schoolId: req.user[0].schoolId }

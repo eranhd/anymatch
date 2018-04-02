@@ -1,19 +1,9 @@
 .page_header{
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-between;
         padding: 28px;
         .section{
-            width: 25%;
+            padding: 16px;
             border-left: 1px solid #eeeeee;
             border-right: 1px solid #eeeeee;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-around;
-            .title{
-                
-            }
             .number{
                 font-weight: bold;
                 font-size: 2em;

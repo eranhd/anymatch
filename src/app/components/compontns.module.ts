@@ -8,6 +8,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { MessageComponent } from './message/message.component';
 import { ContactComponent } from './contact/contact.component';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { FlexLayoutModule } from "@angular/flex-layout";
 @NgModule({
     declarations: [
         CardStudentComponent,
@@ -27,7 +28,8 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
         CommonModule,
         MaterialModule,
         FormsModule, 
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        FlexLayoutModule
     ]
 })
 export class ComponentsModule { }

@@ -1,4 +1,4 @@
-.login_page{
+/*.login_page{
     display: flex;
     justify-content: center;
     height: 100%;
@@ -38,5 +38,31 @@
             text-align: center;
             margin: 16px;
         }
+    }
+}
+*/
+//change desing
+.section_login{
+    height: 100%;
+    .header{
+        .img{
+            text-align: center;
+            width: 100%;
+            img{
+                height: 100%;
+                width: auto;
+            }
+        }
+        border-bottom: 1px solid #cacaca;
+    }   
+}
+.background_login{
+    position: relative;
+    height: 100%;
+    background-image: url("https://www.walldevil.com/wallpapers/a51/white-blanket-background-cute-wallpaper-backgrounds.jpg");
+    .slogen{
+        position: absolute;
+        bottom: 10%;
+        text-align: center;
     }
 }

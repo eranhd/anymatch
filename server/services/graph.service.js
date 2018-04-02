@@ -61,7 +61,7 @@ module.exports.Graph = class Graph {
         let hasMore = false
         this.reduceGroup()
         let numVerInGroup = this.vertices.length / numOfGroups
-        this.buildDirectGraphWithWeight()
+        this.buildDirectGraphWithWeight(numVerInGroup)
 
         let dGroups = []
         this.group.forEach((graph, i) => {
@@ -84,15 +84,50 @@ module.exports.Graph = class Graph {
                         dGroups.push(g2);
                     else
                         graph = g2;
-                } while (g2.length > numVerInGroup)
+                } while (g2.length > numVerInGroup);
             }
         })
         if (dGroups.length > 0) {
-            dGroups.forEach(g => { this.group.push(g) })
+            dGroups.forEach(g => { this.group.push(g) });
         }
 
-        this.reduceGroup()
-        return this.grouping(numVerInGroup, numOfGroups)
+        this.reduceGroup();
+
+        //brute force
+        let vs = this.vertices.slice(0);
+
+        /*let arra = [];
+        let vers = this.vertices.slice(0);
+        arra.push(this.cc(this.vertices.slice(0), numVerInGroup, new Group(), 0));
+        for (let i = 1; i < numOfGroups; i++) {
+            let tempg = arra[0].toArray();
+            vers = vers.filter(v => {
+                return !tempg.find(t => t.id == v.id);
+            })
+            arra.unshift(this.cc(vers, numVerInGroup, new Group(), 0))
+        }
+*/
+        // let bbb = this.recursiveMatch(new Array(numOfGroups), numVerInGroup, numVerInGroup, 0, 1, vs);
+
+
+        return this.grouping(numVerInGroup, numOfGroups);
+    }
+
+    cc(arr, numVerInGroup, g, i) {
+        if (g.length >= +numVerInGroup.toFixed(0)) {
+            return g;
+        }
+        if (arr.length == i || g.length + (arr.length - i) < numVerInGroup)
+            return null;
+        let a = g.clone();
+        a.addVertex(arr[i]);
+        let b = this.cc(arr, numVerInGroup, g, i + 1);
+        let c = this.cc(arr, numVerInGroup, a, i + 1);
+        if (!b)
+            return c;
+        else if (!c)
+            return b;
+        return c.getGml() > b.getGml() ? c : b;
     }
 
     divideGroup(arrMap, count, g) {
@@ -100,10 +135,35 @@ module.exports.Graph = class Graph {
         let target = 1
         let ff = new jsgraphs.FordFulkerson(g, source, target);
         let minCut = ff.minCut(g);
+
         let arrChoose = []
         let g1 = new Group(count)
         let g2 = new Group(count + 1)
 
+
+        let flag = true;
+        for (let i = 2; i < ff.marked.length; i++) {
+            let id = this.getIdFromArrMap(arrMap, i);
+            let v2 = this.getVeretxById(id);
+            if (ff.marked[i]) {
+                v2.group = count;
+                g1.addVertex(v2);
+            }
+            else {
+                flag = false;
+                g2.addVertex(v2);
+                v2.group = count + 1;
+            }
+        }
+        if (flag) {
+            g.adjList.forEach(a => {
+                a.forEach(e => {
+                    e.capacity--;
+                });
+            });
+            return this.divideGroup(arrMap, count, g);
+        }
+        /*
         for (let i = minCut.length - 1; i >= 0; i--) {
             let e = minCut[i];
 
@@ -138,6 +198,7 @@ module.exports.Graph = class Graph {
                 g2.addVertex(v2)
             }
         }
+        */
         if (g1.length == 0) {
             let temp = g1;
             g1 = g2;
@@ -147,31 +208,46 @@ module.exports.Graph = class Graph {
         return { g1: g1, g2: g2 }
     }
 
-    buildDirectGraphWithWeight(reduce) {
+    buildDirectGraphWithWeight(numVerInGroup) {
         let gs = []
         this.group.forEach(graph => {
 
 
+            let q = [graph];
             do {
-                if (graph.length > 1) {
-                    let graphAndMap = this.buildDirectGraphWithWeightForFF(graph);
+                if (q[0].length > numVerInGroup) {
+                    let graphAndMap = this.buildDirectGraphWithWeightForFF(q[0]);
                     let g = graphAndMap.g;
                     let arrMap = graphAndMap.arrMap;
                     let count = gs.length;
-                    let maxGml = g.length > 1 ? this.divideGroup(arrMap, count, g[1]) : this.divideGroup(arrMap, count, g[0])
-                    for (let i = 1; i < g.length; i++) {
-                        let dividedGraph = this.divideGroup(arrMap, count, g[i]);
-                        if (dividedGraph.g1.getGml() > maxGml.g1.getGml())
-                            maxGml = dividedGraph;
-                    }
+                    // let maxGml = g.length > 1 ? this.divideGroup(arrMap, count, g[1]) : this.divideGroup(arrMap, count, g[0])
+                    let maxGml = this.divideGroup(arrMap, count, g)
+                    // for (let i = 1; i < g.length; i++) {
+                    //     let dividedGraph = this.divideGroup(arrMap, count, g[i]);
+                    //     if (dividedGraph.g1.getGml() > maxGml.g1.getGml())
+                    //         maxGml = dividedGraph;
+                    // }
 
-                    gs.push(maxGml.g1);
+                    // if (maxGml.g1.length > numVerInGroup)
+                    //     q.unshift(maxGml.g1);
+                    // else
+                    if (maxGml.g1.length > numVerInGroup && maxGml.g1.length != q[0].length)
+                        q.push(maxGml.g1);
+                    else
+                        gs.push(maxGml.g1);
+
+
+
+                    if (maxGml.g2.length > 0)
+                        q.push(maxGml.g2);
+                    // else
                     // gs.push(maxGml.g2);
-                    graph = maxGml.g2;
                 }
                 else
-                    gs.push(graph);
-            } while (graph.length > 1);
+                    gs.push(q[0]);
+                q = q.slice(1, q.length);
+
+            } while (q.length >= 1);
         });
 
         this.group = gs;
@@ -196,10 +272,10 @@ module.exports.Graph = class Graph {
                         toMap[e.to] ? toMap[e.to] += e.weight : toMap[e.to] = e.weight
                     }
                     else if (e.weight <= 0) {
-                        negative[e.to] = true
-                        negative[v.id.toString()] = true
+                        negative[e.to] = true;
+                        negative[v.id.toString()] = true;
                     }
-                    g.addEdge(new jsgraphs.FlowEdge(arrMap[v.id], arrMap[e.to], e.weight));
+                    g.addEdge(new jsgraphs.FlowEdge(arrMap[v.id], arrMap[e.to], e.weight > 0 ? e.weight : 0));
                 }
             })
             //add edge from start to v
@@ -209,7 +285,7 @@ module.exports.Graph = class Graph {
 
         })
 
-        let graphs = []
+        // let graphs = []
 
         arr.forEach(v => {//add edge from v to last 
 
@@ -221,7 +297,7 @@ module.exports.Graph = class Graph {
                 g.addEdge(new jsgraphs.FlowEdge(arrMap[v.id], 1, w ? w : -1));
             }
         })
-        graphs.push(g)
+        /*graphs.push(g)
         for (let key in negative) {
 
             let w = toMap[key]
@@ -233,8 +309,8 @@ module.exports.Graph = class Graph {
                     temp.addEdge(new jsgraphs.FlowEdge(arrMap[id], 1, w ? w : -1));
             }
             graphs.push(temp)
-        }
-        return { g: graphs, arrMap: arrMap }
+        }*/
+        return { g: g, arrMap: arrMap }
     }
 
 
@@ -305,7 +381,7 @@ module.exports.Graph = class Graph {
         let max = table[this.group.length][limit - range];
         for (let i = limit - range; i < limit + range; i++) {
             if (max.gml <= table[this.group.length][i].gml)
-                max.gml = table[this.group.length][i].gml
+                max = table[this.group.length][i];
         }
         return max;
 
@@ -326,7 +402,7 @@ module.exports.Graph = class Graph {
             Math.abs(l - length) < 0.5 && Math.abs(l - length) != 0 ? flag = true : l = l
             let g = this.knapsack01Dp(l, 0);
             if (g.length == 0 && flag)
-                g = this.knapsack01Dp(l + 1, (l / 10).toFixed(0));
+                g = this.knapsack01Dp(l + 1, +(l / 10).toFixed(0));
             groups.push(g)
             this.removeChoose(g)
 
@@ -498,32 +574,32 @@ class Group {
      * calculate the gml for this group
      */
     calcGml() {
-        this.gml = 0;
-        // let i = 0;
-        let sign = 1;
-        let met = [];
-        for (let id in this.vertices) {
-            // met.push([]);
-            let v = this.vertices[id];
-            for (let id2 in this.vertices) {
-                let w = v.getDegree(id2);
-                if (w != 0 && w != 1)
-                    met.push(w);
-                if (w < 0)
-                    sign = -1;
-                // met[met.length - 1].push(w);
-            }
-            // i++;
-        }
-        // let a = math.matrix(met);
-        // this.gml = sign * Math.abs(math.det(a));
-        // console.log(this.gml);
-        let mult = 1;
-        met.forEach(m => {
-            mult += m;
-        });
-        this.gml = Math.abs(mult) / this.length;
-        return this.gml;
+        // this.gml = 0;
+        // // let i = 0;
+        // let sign = 1;
+        // let met = [];
+        // for (let id in this.vertices) {
+        //     // met.push([]);
+        //     let v = this.vertices[id];
+        //     for (let id2 in this.vertices) {
+        //         let w = v.getDegree(id2);
+        //         if (w != 0 && w != 1)
+        //             met.push(w);
+        //         if (w < 0)
+        //             sign = -1;
+        //         // met[met.length - 1].push(w);
+        //     }
+        //     // i++;
+        // }
+        // // let a = math.matrix(met);
+        // // this.gml = sign * Math.abs(math.det(a));
+        // // console.log(this.gml);
+        // let mult = 1;
+        // met.forEach(m => {
+        //     mult += m;
+        // });
+        // this.gml = Math.abs(mult) / this.length;
+        // return this.gml;
         // for (let id in this.vertices) {
         //     let v = this.vertices[id]
         //     let sum = 0
@@ -542,6 +618,15 @@ class Group {
         //     this.gml += sum
         // }
         // this.gml /= this.length
+
+        this.gml = 0;
+        for (let id in this.vertices) {
+            let v = this.vertices[id];
+            this.gml += this.calcGmlToVertex(v);
+        }
+        this.gml /= this.length;
+        this.gml = +this.gml.toFixed(0);
+        return this.gml;
     }
 
 
@@ -576,15 +661,26 @@ class Group {
             if (to.exist(v)) {
                 count++
                 gml += to.getWeight(v)
-
             }
         }
-
-
-
         return count / gml
     }
 
+
+    /**
+     * @param {*Vertex} to 
+     */
+
+    calcGmlToVertex(to) {
+        let gml = 0;
+        let pos = 0, neg = 0;
+        for (let id in this.vertices) {
+            let w = to.weightTo(id);
+            w > 0 ? pos += (w / (to.getSumPositive() > 0 ? to.getSumPositive() : 1)) : neg += (w / (to.getSumNegative() > 0 ? to.getSumNegative() : 1));
+        }
+        gml = pos * 0.5 + neg * 0.5 + 0.5;
+        return +(gml * 100).toFixed(0);
+    }
     /**
      * 
      * @param {*Group} other 
@@ -680,6 +776,11 @@ class Vertex {
             e.weight < 0 ? sum += -1 * e.weight : sum += 0
         })
         return sum
+    }
+
+    weightTo(to) {
+        let edge = this.edges.find(e => to == e.to);
+        return edge ? edge.weight : 0;
     }
 }
 

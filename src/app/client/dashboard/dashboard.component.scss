@@ -1,4 +1,38 @@
 .dashboard_client{
+    overflow: scroll;
+    section{
+        padding: 16px;
+    }
+    mat-card{
+        margin: 16px 0;
+    }
+    .last_feedback_content{
+    
+        .feedback{
+            padding: 8px;
+            text-align: right;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            background-color: rgba($color: #9b9ba5, $alpha: .6);
+            border-bottom: 1px solid white;
+        }
+        .odd{
+            background-color: rgba($color: #9b9ba5, $alpha: .3);
+        }
+        :first-child{
+            border-top-right-radius: 10px;
+            border-top-left-radius: 10px;
+        }
+        :last-child{
+            border-bottom-right-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+    }
+    
+}
+
+/*.dashboard_client{
     .two_column{
         display: flex;
         flex-direction: row;
@@ -61,3 +95,4 @@ table{
     width: 100%;
     font-size: 20px;
 }
+*/

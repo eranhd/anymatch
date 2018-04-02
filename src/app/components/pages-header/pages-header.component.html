@@ -1,15 +1,15 @@
-<mat-card class="page_header">
-  <div *ngFor="let item of items" class="section">
+<mat-card class="page_header" fxLayout=row fxLayout.xs=column fxLayoutAlign="space-between center" fxLayoutWrap=wrap> 
+  <div fxFlex=25 fxFlex.xs=100 *ngFor="let item of items" class="section" fxLayout=row fxLayoutAlign="center space-around">
 
-    <div class="circle_icon" [style.background]="item.color">
+    <div fxFlex=40px class="circle_icon" [style.background]="item.color">
       <mat-icon>
         {{item.icon}}
       </mat-icon>
     </div>
-    <div class="title">
+    <div fxFlex class="title">
       {{item.title}}
     </div>
-    <div class="number">
+    <div fxFlex class="number">
       {{item.num}}
     </div>
   </div>

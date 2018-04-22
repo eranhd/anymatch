@@ -17,6 +17,7 @@ import { HelpComponent } from './help/help.component';
 import { OpenStudentDialogComponent } from './layer/open-student-dialog/open-student-dialog.component';
 import { NewLayerChargeDialogComponent } from "./layer/new-layer-charge/new-layer-charge-dialog.component";
 import { ChartsModule } from 'ng2-charts';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { ChartsModule } from 'ng2-charts';
     ReactiveFormsModule,
     ComponentsModule,
     NgbModule,
-    ChartsModule
+    ChartsModule,
+    FlexLayoutModule
   ],
   declarations: [
     DashboardComponent,

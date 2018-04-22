@@ -50,4 +50,20 @@ describe('post all users', function () {
 
     });
 
+    it('', (done) => {
+        chai.request("http://localhost:3000/login")
+            .post("")
+            .send({ username: "203514633", password: "1" })
+            .then((err, res) => {
+                // console.log(res.body)
+                if (err)
+                    done(err)
+                else {
+                    res.should.have.status(200);
+                    done()
+                }
+            });
+
+    });
+
 });

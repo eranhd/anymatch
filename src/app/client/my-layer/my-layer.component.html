@@ -13,8 +13,8 @@
     </mat-card-header>
 
     <mat-card-content>
-      <div class="div_card_student">
-        <div class="inner_div" *ngFor="let u of positive">
+      <div class="div_card_student" fxFill fxLayout=row fxLayoutWrap=wrap>
+        <div class="inner_div" *ngFor="let u of positive" fxFlex="30" fxFlex.xs=100 >
           <app-card-student [color]="'#54e69d'" [user]=u></app-card-student>
         </div>
       </div>
@@ -33,8 +33,8 @@
     </mat-card-header>
 
     <mat-card-content>
-      <div class="div_card_student">
-        <div class="inner_div" *ngFor="let u of negative">
+      <div class="div_card_student" fxFill fxLayout=row fxLayoutWrap=wrap>
+        <div class="inner_div" *ngFor="let u of negative" fxFlex="30" fxFlex.xs=100>
           <app-card-student [user]=u [color]="'#ff7676'"></app-card-student>
         </div>
       </div>
@@ -67,8 +67,8 @@
       </div>
     </mat-card-header>
     <mat-card-content>
-      <div class="div_card_student">
-        <div class="inner_div" *ngFor="let u of students">
+      <div class="div_card_student" fxFill fxLayout=row fxLayoutWrap=wrap>
+        <div class="inner_div" *ngFor="let u of students" fxFlex="30" fxFlex.xs=100>
           <app-card-student [user]=u (contextmenu)="addToNegative(u._id)" (click)="addToPositive(u._id)"></app-card-student>
         </div>
       </div>

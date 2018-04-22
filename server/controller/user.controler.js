@@ -63,12 +63,6 @@ router.post('/all/', (req, res, next) => {
     });
 });
 
-
-router.post('/', (req, res, next) => {
-    res.send("POST");
-
-});
-
 router.post("/update/", (req, res, next) => {
     // let db = new DB();
 
@@ -175,7 +169,7 @@ router.post('/addOperation/', async (req, res, next) => {
     let u = new user(req.body.user);
     i.addOperation(u, req.body.operation, (err, doc) => {
         if (err)
-            res.json({ success: false, message: `Failed to update user. Error: ${err}` });
+            res.json({ success: false, message: `Failed to add opertion user. Error: ${err}` });
         else
             res.write(JSON.stringify({ success: true, user: doc }, null, 2));
         res.end();

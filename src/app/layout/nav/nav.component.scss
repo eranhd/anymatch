@@ -1,34 +1,14 @@
-.side-navbar{
-    .list-unstyled{
-        width: 100%;
-        text-align: start !important;
-    }
-    #menu_open{
-        display: none;
-        visibility: hidden;
-    }
-    .menu_txt{
-        display: none;
-        visibility: hidden;
-    }
+.side_navbar{
     height: 100%;
-}
-
-@media screen and(max-width: 500px){
-    .side-navbar{
-        height: 120px;
-        max-width: 100% !important;
-        .menu_txt{
-            visibility: visible;
-        }
+    .avatar img{
+        width: 52px !important;
+    }
+    .buttons{
+        transition: display 1s;
+        width: 100%;
+        background: #fff;
         button{
-            visibility: hidden;
-            height: 0px;
-            transition: height 1s, visibility 0.5s;
-        }
-        #menu_open:checked ~ button{
-            visibility: visible;
-            height: 40px;
+            text-align: start;
         }
     }
     

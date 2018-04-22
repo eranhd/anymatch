@@ -1,36 +1,23 @@
 .card-student{
     box-sizing: border-box;
     width: 100%;
-    // display: flex;
-    // flex-direction: row;
-    // .img{
-    //     width: 20%;
-    // }
-    // .data{
-    //     display: flex;
-    //     flex-direction: column;
-    //     flex-wrap: wrap;
-    //     width: 80%;
-
-    mat-card-title{
-
+    .negative_num, .positive_num{
+        color: #454545;
     }
-        .prefer{
-            display: flex;
-            justify-content: flex-start;
-            .positive_prefer, .negative_prefer{
-                width: 8px;
-                height: 8px;
-                border-radius: 100%;
-                margin: 2px;
-            }
-            .positive_prefer{
-                background-color: green;
-                
-            }
-            .negative_prefer{
-                background-color: red;
-            }
+
+    .lable{
+        width: 100%;   
+    }
+
+    .mat-card-title{
+        h4{
+            font-size: 10px !important;
+            color: #454545;
         }
-    // }
+        .title, .mat-card-header-text {
+            width: 100% !important;    
+        }
+        width: 100%;
+        border-bottom: 1px solid #454545;
+    }
 }

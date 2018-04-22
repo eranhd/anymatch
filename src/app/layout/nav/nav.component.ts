@@ -11,6 +11,7 @@ import { AuthService } from '../../service/index';
 })
 export class NavComponent implements OnInit {
 
+  open: boolean = false
   title: string = ""
   constructor(public navService: NavService, public auth: AuthService) {
     if(this.auth.permission != ""){

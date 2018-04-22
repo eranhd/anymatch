@@ -4,33 +4,12 @@
         (search)="navService.search($event)"
         [newMessage]="msgService.numOfNewMessage | async"></app-header>
     <div class="main_layout" fxFlex=90vh fxLayout.xs=column fxLayout=row fxLayoutAlign="start stretch">
-        <app-nav fxFlex=15 class="app-nav"></app-nav>
+        <app-nav fxFlex=15 fxFlex.xs=5 class="app-nav"></app-nav>
         <div fxFlex=85 fxFlex.xs=100 fxLayout=column fxLayoutAlign="start space-between" class="content" fxLayoutWrap=nowrap>
-            <mat-card fxFlex=7 fxHide.xs=true class="page_title">
-                {{navService.pageName}}
-            </mat-card>
-            <div fxFlex=93 class="content-inner">
+            <div fxFill class="content-inner">
                 <router-outlet></router-outlet>
             </div>
 
         </div>
     </div>
 </div>
-
-<!-- <div class="div_layout">
-    <app-header 
-        (search)="navService.search($event)"
-        [newMessage]="msgService.numOfNewMessage | async"></app-header>
-    <div class="main_layout">
-        <app-nav class="app-nav"></app-nav>
-        <div class="content">
-            <mat-card class="page_title">
-                {{navService.pageName}}
-            </mat-card>
-            <div class="content-inner">
-                <router-outlet></router-outlet>
-            </div>
-
-        </div>
-    </div>
-</div> -->

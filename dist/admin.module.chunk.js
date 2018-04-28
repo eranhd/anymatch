@@ -800,7 +800,7 @@ var NewLayerChargeDialogComponent = (function () {
 /***/ "../../../../../src/app/admin/layer/open-student-dialog/open-student-dialog.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<mat-card class=\"show-student-card\">\n  <mat-card-header>\n    <mat-card-title>\n      {{data?.user?.fname}} {{data?.user?.lname}}\n    </mat-card-title>\n    <mat-card-subtitle>\n      בלחיצה על אחד הכרטיסיות יוסר התלמיד מהרשימה\n    </mat-card-subtitle>\n  </mat-card-header>\n\n  <mat-card-content>\n    <h3>\n      <form class=\"example-form\">\n        <mat-form-field class=\"example-full-width\">\n          <input type=\"text\" placeholder=\"הוסף לרשימה\" matInput name=\"addUserInput\" [(ngModel)]=addUser [matAutocomplete]=\"auto\">\n          <mat-autocomplete #auto=\"matAutocomplete\">\n            <mat-option *ngFor=\"let u of students\" [value]=\"u.username \">\n              {{u.fname + ' ' + u.lname }}\n            </mat-option>\n          </mat-autocomplete>\n        </mat-form-field>\n        <button mat-icon-button matTooltip=\"הוסף לרשימת העדפות חיוביות\" (click)=addtoPositive()>\n          <mat-icon>\n            arrow_drop_up\n          </mat-icon>\n        </button>\n        <button mat-icon-button matTooltip=\"הוסף לרשימת העדפות שליליות\" (click)=addToNegative()>\n          <mat-icon>\n            arrow_drop_down\n          </mat-icon>\n        </button>\n        <button mat-icon-button matTooltip=\"מנע משני הסטודנטים להשתבץ יחד\">\n          <mat-icon>\n            block\n          </mat-icon>\n        </button>\n      </form>\n    </h3>\n    <h3 *ngIf=\"data?.positive?.length != 0 || data?.negative?.length != 0 \">\n      תלמידים שנבחרו\n    </h3>\n    <div class=\"div_card_student\">\n      <div class=\"inner_div\" *ngFor=\"let u of pos\">\n        <app-card-student (click)=\"removeStudent(u._id, true)\" [user]=u [color]=\"'#54e69d'\"></app-card-student>\n      </div>\n      <div class=\"inner_div\" *ngFor=\"let u of neg\">\n        <app-card-student (click)=\"removeStudent(u._id, false)\" [user]=u [color]=\"'#ff7676'\"></app-card-student>\n      </div>\n      <div *ngIf=\"data?.positive?.length == 0 && data?.negative?.length == 0 \">\n        לא נבחרו תלמידים\n      </div>\n    </div>\n  </mat-card-content>\n\n  <mat-card-actions>\n    <button mat-raised-button (click)=\"save()\">\n      שמור\n    </button>\n    <button mat-raised-button (click)=\"onNoClick()\">\n      בטל\n    </button>\n  </mat-card-actions>\n</mat-card>"
+module.exports = "<mat-card class=\"show-student-card\">\n  <mat-card-header>\n    <mat-card-title>\n      {{data?.user?.fname}} {{data?.user?.lname}}\n    </mat-card-title>\n    <mat-card-subtitle>\n      בלחיצה על אחד הכרטיסיות יוסר התלמיד מהרשימה\n    </mat-card-subtitle>\n  </mat-card-header>\n\n  <mat-card-content>\n    <h3>\n      <form class=\"example-form\">\n        <mat-form-field class=\"example-full-width\">\n          <input type=\"text\" placeholder=\"הוסף לרשימה\" matInput name=\"addUserInput\" [(ngModel)]=addUser [matAutocomplete]=\"auto\">\n          <mat-autocomplete #auto=\"matAutocomplete\">\n            <mat-option *ngFor=\"let u of students\" [value]=\"u\">\n              {{u.fname + ' ' + u.lname }}\n            </mat-option>\n          </mat-autocomplete>\n        </mat-form-field>\n        <button mat-icon-button matTooltip=\"הוסף לרשימת העדפות חיוביות\" (click)=addtoPositive()>\n          <mat-icon>\n            arrow_drop_up\n          </mat-icon>\n        </button>\n        <button mat-icon-button matTooltip=\"הוסף לרשימת העדפות שליליות\" (click)=addToNegative()>\n          <mat-icon>\n            arrow_drop_down\n          </mat-icon>\n        </button>\n        <button mat-icon-button matTooltip=\"מנע משני הסטודנטים להשתבץ יחד\">\n          <mat-icon>\n            block\n          </mat-icon>\n        </button>\n      </form>\n    </h3>\n    <h3 *ngIf=\"data?.positive?.length != 0 || data?.negative?.length != 0 \">\n      תלמידים שנבחרו\n    </h3>\n    <div class=\"div_card_student\">\n      <div class=\"inner_div\" *ngFor=\"let u of pos\">\n        <app-card-student (click)=\"removeStudent(u._id, true)\" [user]=u [color]=\"'#54e69d'\"></app-card-student>\n      </div>\n      <div class=\"inner_div\" *ngFor=\"let u of neg\">\n        <app-card-student (click)=\"removeStudent(u._id, false)\" [user]=u [color]=\"'#ff7676'\"></app-card-student>\n      </div>\n      <div *ngIf=\"data?.positive?.length == 0 && data?.negative?.length == 0 \">\n        לא נבחרו תלמידים\n      </div>\n    </div>\n  </mat-card-content>\n\n  <mat-card-actions>\n    <button mat-raised-button (click)=\"save()\">\n      שמור\n    </button>\n    <button mat-raised-button (click)=\"onNoClick()\">\n      בטל\n    </button>\n  </mat-card-actions>\n</mat-card>"
 
 /***/ }),
 
@@ -906,7 +906,7 @@ var OpenStudentDialogComponent = (function () {
     };
     Object.defineProperty(OpenStudentDialogComponent.prototype, "students", {
         get: function () {
-            return this.data.students;
+            return this._students;
             // return this.data.students.map(u =>  u.fname + " " + u.lname );
         },
         enumerable: true,
@@ -914,39 +914,51 @@ var OpenStudentDialogComponent = (function () {
     });
     Object.defineProperty(OpenStudentDialogComponent.prototype, "addUser", {
         get: function () {
+            if (typeof this._addUser !== "string" && this._addUser) {
+                return this._addUser.fname + " " + this._addUser.lname;
+            }
             return this._addUser;
         },
         set: function (u) {
-            console.log(u);
-            this._addUser = u;
+            if (typeof u === "string") {
+                this._students = this.data.students.filter(function (user) { return user.fname.includes(u) || user.lname.includes(u); });
+                // this._addUser = u
+                this._addUser = null;
+            }
+            else
+                this._addUser = u;
         },
         enumerable: true,
         configurable: true
     });
     OpenStudentDialogComponent.prototype.addtoPositive = function () {
-        var _this = this;
-        var u = this.students.find(function (u) { return u.username == _this._addUser; });
-        // console.log(u)
-        this.data.user.positivePrefer.push(u._id);
-        this.data.positivePrefer ? this.data.positivePrefer.push(u) : this.data.positivePrefer = [u];
-        console.log(this.data.user);
-        this._addUser = "";
+        if (typeof this._addUser !== "string" && this._addUser) {
+            var u = this._addUser;
+            this.data.user.positivePrefer.push(u._id);
+            this.data.positivePrefer ? this.data.positivePrefer.push(u) : this.data.positivePrefer = [u];
+            console.log(this.data.user);
+            this._addUser = "";
+        }
     };
     OpenStudentDialogComponent.prototype.addToNegative = function () {
-        var _this = this;
-        var u = this.students.find(function (u) { return u.username == _this._addUser; });
-        this.data.user.negativePrefer.push(u._id);
-        this.data.negativePrefer ? this.data.negativePrefer.push(u) : this.data.negativePrefer = [u];
-        this._addUser = "";
+        if (typeof this._addUser !== "string" && this._addUser) {
+            var u = this._addUser;
+            this.data.user.negativePrefer.push(u._id);
+            this.data.negativePrefer ? this.data.negativePrefer.push(u) : this.data.negativePrefer = [u];
+            this._addUser = "";
+        }
     };
     OpenStudentDialogComponent.prototype.addForbidden = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.layerService.forbidden(this._addUser, this.data.user._id, this.data.layerId)];
+                    case 0:
+                        if (!(typeof this._addUser !== "string" && this._addUser)) return [3 /*break*/, 2];
+                        return [4 /*yield*/, this.layerService.forbidden(this._addUser, this.data.user._id, this.data.layerId)];
                     case 1:
                         _a.sent();
-                        return [2 /*return*/];
+                        _a.label = 2;
+                    case 2: return [2 /*return*/];
                 }
             });
         });

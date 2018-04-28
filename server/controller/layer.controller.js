@@ -11,6 +11,9 @@ const collection = "layers";
 router.post('/all/', (req, res, next) => {
     let db = new DB();
     let query = {};
+    if (!req.user || req.user[0].permission === "student") {
+        res.send({success: false, resone: "user havn't permission"})
+    }
     if (req.user[0].permission === "charge") {
         query._id = req.user[0].layerId;
         db.findOne(query, collection, req.body.id).then(doc => {
@@ -23,15 +26,8 @@ router.post('/all/', (req, res, next) => {
         });
 });
 
-//POST HTTP method to /bucketlist
-
-router.post('/', (req, res, next) => {
-    res.send("POST");
-
-});
 
 router.post("/create/", (req, res, next) => {
-    // console.log(req.body.schoolId +", "+ collection);
     let db = new DB();
     db.save(req.body.layer, collection, req.body.schoolId).then(resolve => {
         res.send(resolve);

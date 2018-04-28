@@ -52,23 +52,26 @@
   </mat-card-content>
 
   <mat-card-actions>
-    <button mat-icon-button *ngIf="showActions" (click)="open.emit(user)">
+    <button mat-raised-button *ngIf="showActions" (click)="open.emit(user)">
+      פתח
       <mat-icon>
         open_in_new
       </mat-icon>
       <!-- פתח -->
     </button>
-    <button mat-icon-button (click)="msgClick()">
+    <button mat-raised-button (click)="msgClick()">
+      הודעה
       <mat-icon>
         message
       </mat-icon>
       <!-- שלח הודעה -->
     </button>
-    <button mat-icon-button *ngIf="showSwap" (click)="swap.emit(user._id)">
+    <button mat-raised-button *ngIf="showSwap" (click)="swap.emit(user._id)">
+      בקשת חילוף
       <mat-icon>
         swap_horiz
       </mat-icon>
-      <!-- שלח הודעה -->
+      
     </button>
   </mat-card-actions>
 </mat-card>

@@ -34,7 +34,7 @@ describe('post all users', function () {
                 }
             });
     });
-    it('request for all user auth should return status 200', (done) => {
+    it('login should return status 200', (done) => {
         chai.request("http://localhost:3000/login")
             .post("")
             .send({ username: "203514633", password: "1" })
@@ -50,7 +50,7 @@ describe('post all users', function () {
 
     });
 
-    it('', (done) => {
+    it('request for all user', (done) => {
         chai.request("http://localhost:3000/login")
             .post("")
             .send({ username: "203514633", password: "1" })

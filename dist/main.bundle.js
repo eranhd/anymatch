@@ -368,7 +368,7 @@ var routes = [
 /***/ "../../../../../src/app/components/card-student/card-student.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<mat-card class=\"card-student\" [style.background-color]=\"color ? color : 'white'\">\n  <mat-card-header fxLayout=row class=\"mat-card-header-text\">\n    <mat-card-title fxFill>\n      <!-- <img width=\"24px\" matTooltip=\"תמונת התלמיד\" [src]=\"user.gender ? (user.gender == 'male' ? '/assets/male.png' : '/assets/female.png') : '/assets/male.png'\"\n      /> {{user.fname}} {{user.lname}} {{user.username}} -->\n      <div fxFill class=\"title\" fxLayout=row fxLayoutAlign=\"start space-between\" >\n        <h2 fxFlex=80>\n          {{user.fname}} {{user.lname}}\n        </h2>\n        <h4 fxFlex=20>\n          {{user.username}}\n        </h4>\n      </div>\n    </mat-card-title>\n  </mat-card-header>\n\n  <mat-card-content>\n    <div fxFill fxLayout=column fxLayoutAlign=\"start start\">\n      <div  class=\"lable\" fxFlex fxLayout=row fxLaoutAlign=\"start strat\">\n        <div fxFlex=\"70\">\n          <b>\n            העדפות חיוביות\n          </b>\n        </div>\n\n        <div fxFlex=\"15\" class=\"positive_num\">\n          {{user.positivePrefer ? user.positivePrefer.length : 0}}\n        </div>\n      </div>\n      <div class=\"lable\" fxFlex fxLayout=row>\n        <div fxFlex=\"70\">\n          <b>\n            העדפות שליליות\n          </b>\n        </div>\n        <div fxFleax=15 class=\"negative_num\">\n          {{user.negativePrefer ? user.negativePrefer.length : 0}}\n        </div>\n      </div>\n    </div>\n    <!-- <div class=\"prefer\">\n      <div class=\"positive_prefer\" matTooltip=\"התלמיד בחר העדפות חיוביות\" *ngIf=\"user.positivePrefer?.length > 0\">\n\n      </div>\n\n      <div class=\"negative_prefer\" matTooltip=\"התלמיד בחר העדפות שליליות\" *ngIf=\"user.negativePrefer?.length > 0\">\n\n\n      </div> -->\n    <!-- <i *ngIf=\"user?.isLogin\" matTooltip=\"משתמש ביצע כניסה ראשונית\" class=\"material-icons\">verified_user</i> -->\n    <!-- </div> -->\n  </mat-card-content>\n\n  <mat-card-actions>\n    <button mat-raised-button *ngIf=\"showActions\" (click)=\"open.emit(user)\">\n      פתח\n      <mat-icon>\n        open_in_new\n      </mat-icon>\n      <!-- פתח -->\n    </button>\n    <button mat-raised-button (click)=\"msgClick()\">\n      הודעה\n      <mat-icon>\n        message\n      </mat-icon>\n      <!-- שלח הודעה -->\n    </button>\n    <button mat-raised-button *ngIf=\"showSwap\" (click)=\"swap.emit(user._id)\">\n      בקשת חילוף\n      <mat-icon>\n        swap_horiz\n      </mat-icon>\n      \n    </button>\n  </mat-card-actions>\n</mat-card>"
+module.exports = "<!--\n<mat-card class=\"card-student\" [style.background-color]=\"color ? color : 'white'\">\n  <mat-card-header fxLayout=row class=\"mat-card-header-text\">\n    <mat-card-title fxFill>\n      <div fxFill class=\"title\" fxLayout=row fxLayoutAlign=\"start space-between\" >\n        <h2 fxFlex=80>\n          {{user.fname}} {{user.lname}}\n        </h2>\n        <h4 fxFlex=20>\n          {{user.username}}\n        </h4>\n      </div>\n    </mat-card-title>\n  </mat-card-header>\n\n  <mat-card-content>\n    <div fxFill fxLayout=column fxLayoutAlign=\"start start\">\n      <div  class=\"lable\" fxFlex fxLayout=row fxLaoutAlign=\"start strat\" >\n        <div fxFlex=\"70\">\n          <b>\n            העדפות חיוביות\n          </b>\n        </div>\n\n        <div fxFlex=\"15\" class=\"positive_num\">\n          {{user.positivePrefer ? user.positivePrefer.length : 0}}\n        </div>\n      </div>\n      <div class=\"lable\" fxFlex fxLayout=row>\n        <div fxFlex=\"70\">\n          <b>\n            העדפות שליליות\n          </b>\n        </div>\n        <div fxFleax=15 class=\"negative_num\">\n          {{user.negativePrefer ? user.negativePrefer.length : 0}}\n        </div>\n      </div>\n    </div>\n  </mat-card-content>\n\n  <mat-card-actions>\n    <button mat-raised-button *ngIf=\"showActions\" (click)=\"open.emit(user)\">\n      פתח\n      <mat-icon>\n        open_in_new\n      </mat-icon>\n    \n    </button>\n    <button mat-raised-button (click)=\"msgClick()\">\n      הודעה\n      <mat-icon>\n        message\n      </mat-icon>\n      \n    </button>\n    <button mat-raised-button *ngIf=\"showSwap\" (click)=\"swap.emit(user._id)\">\n      בקשת חילוף\n      <mat-icon>\n        swap_horiz\n      </mat-icon>\n      \n    </button>\n  </mat-card-actions>\n</mat-card>\n-->\n\n<div class=\"main_div\" fxLayout=column fxLayoutAlign=\"start start\">\n\n  <div fxFlex>\n    <h4>{{user.fname}} {{user.lname}}</h4>\n    <p>{{user.username}}</p>\n  </div>\n\n  <div class=\"content\" fxFlex fxLayout=row fxLayoutAlign=\"space-between start\">\n    <div fxFlex=70 fxLayout=row fxLayoutAlign=\"start start\">\n      <p fxFlex>\n        העדפות חיוביות {{user.positivePrefer ? user.positivePrefer.length : 0}}\n      </p>\n      <p fxFlex>\n        העדפות שליליות {{user.negativePrefer ? user.negativePrefer.length : 0}}\n      </p>\n\n    </div>\n\n    <div fxFlex=30 fxLayout=row fxLayoutAlign=\"end start\">\n      <button class=b_icon mat-icon-button *ngIf=\"showActions\" (click)=\"open.emit(user)\">\n        <mat-icon>\n          open_in_new\n        </mat-icon>\n      </button>\n\n      <button class=b_icon mat-icon-button (click)=\"msgClick()\">\n        <mat-icon>\n          message\n        </mat-icon>\n      </button>\n\n      <button class=b_icon mat-icon-button *ngIf=\"showSwap\" (click)=\"swap.emit(user._id)\">\n        <mat-icon>\n          swap_horiz\n        </mat-icon>\n      </button>\n\n    </div>\n  </div>\n\n\n\n\n</div>\n\n\n<!-- <mat-list>\n    <h3 mat-subheader>Folders</h3>\n    <mat-list-item *ngFor=\"let folder of folders\">\n      <mat-icon mat-list-icon>folder</mat-icon>\n      <h4 mat-line>{{folder.name}}</h4>\n      <p mat-line> {{folder.updated | date}} </p>\n    </mat-list-item>\n    <mat-divider></mat-divider>\n    <h3 mat-subheader>Notes</h3>\n    <mat-list-item *ngFor=\"let note of notes\">\n      <mat-icon mat-list-icon>note</mat-icon>\n      <h4 mat-line>{{note.name}}</h4>\n      <p mat-line> {{note.updated | date}} </p>\n    </mat-list-item>\n  </mat-list> -->"
 
 /***/ }),
 
@@ -380,7 +380,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, ".card-student {\n  box-sizing: border-box;\n  width: 100%; }\n  .card-student .negative_num, .card-student .positive_num {\n    color: #454545; }\n  .card-student .lable {\n    width: 100%; }\n  .card-student .mat-card-title {\n    width: 100%;\n    border-bottom: 1px solid #454545; }\n    .card-student .mat-card-title h4 {\n      font-size: 10px !important;\n      color: #454545; }\n    .card-student .mat-card-title .title, .card-student .mat-card-title .mat-card-header-text {\n      width: 100% !important; }\n", ""]);
+exports.push([module.i, ".content {\n  width: 100%; }\n\n.main_div {\n  overflow: hidden;\n  border-bottom: 1px solid #cacaca; }\n\n.b_icon {\n  color: #8f8f8f; }\n  .b_icon:hover {\n    color: #444444; }\n", ""]);
 
 // exports
 
@@ -1839,20 +1839,20 @@ var MaterialModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["k" /* MatInputModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["d" /* MatCardModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatIconModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["v" /* MatTableModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["o" /* MatPaginatorModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["w" /* MatTableModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["p" /* MatPaginatorModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["h" /* MatDialogModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["y" /* MatTooltipModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["x" /* MatToolbarModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["r" /* MatSidenavModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["l" /* MatMenuModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["q" /* MatRadioModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["z" /* MatTooltipModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["y" /* MatToolbarModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["s" /* MatSidenavModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["m" /* MatMenuModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["r" /* MatRadioModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["f" /* MatDatepickerModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["m" /* MatNativeDateModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["p" /* MatProgressSpinnerModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["n" /* MatNativeDateModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["q" /* MatProgressSpinnerModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MatAutocompleteModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["t" /* MatSnackBarModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["w" /* MatTabsModule */]
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["u" /* MatSnackBarModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["x" /* MatTabsModule */]
             ],
             exports: [
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["c" /* MatButtonModule */],
@@ -1860,20 +1860,21 @@ var MaterialModule = (function () {
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["k" /* MatInputModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["d" /* MatCardModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["j" /* MatIconModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["v" /* MatTableModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["o" /* MatPaginatorModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["w" /* MatTableModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["p" /* MatPaginatorModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["h" /* MatDialogModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["y" /* MatTooltipModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["x" /* MatToolbarModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["r" /* MatSidenavModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["l" /* MatMenuModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["q" /* MatRadioModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["z" /* MatTooltipModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["y" /* MatToolbarModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["s" /* MatSidenavModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["m" /* MatMenuModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["r" /* MatRadioModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["f" /* MatDatepickerModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["m" /* MatNativeDateModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["p" /* MatProgressSpinnerModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["n" /* MatNativeDateModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["q" /* MatProgressSpinnerModule */],
                 __WEBPACK_IMPORTED_MODULE_1__angular_material__["b" /* MatAutocompleteModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["t" /* MatSnackBarModule */],
-                __WEBPACK_IMPORTED_MODULE_1__angular_material__["w" /* MatTabsModule */]
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["u" /* MatSnackBarModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["x" /* MatTabsModule */],
+                __WEBPACK_IMPORTED_MODULE_1__angular_material__["l" /* MatListModule */]
             ],
             declarations: []
         })
@@ -3678,7 +3679,7 @@ var SnakService = (function () {
     };
     SnakService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_material__["s" /* MatSnackBar */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_material__["t" /* MatSnackBar */]])
     ], SnakService);
     return SnakService;
 }());

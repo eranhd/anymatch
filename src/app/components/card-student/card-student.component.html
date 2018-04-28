@@ -1,8 +1,7 @@
+<!--
 <mat-card class="card-student" [style.background-color]="color ? color : 'white'">
   <mat-card-header fxLayout=row class="mat-card-header-text">
     <mat-card-title fxFill>
-      <!-- <img width="24px" matTooltip="תמונת התלמיד" [src]="user.gender ? (user.gender == 'male' ? '/assets/male.png' : '/assets/female.png') : '/assets/male.png'"
-      /> {{user.fname}} {{user.lname}} {{user.username}} -->
       <div fxFill class="title" fxLayout=row fxLayoutAlign="start space-between" >
         <h2 fxFlex=80>
           {{user.fname}} {{user.lname}}
@@ -16,7 +15,7 @@
 
   <mat-card-content>
     <div fxFill fxLayout=column fxLayoutAlign="start start">
-      <div  class="lable" fxFlex fxLayout=row fxLaoutAlign="start strat">
+      <div  class="lable" fxFlex fxLayout=row fxLaoutAlign="start strat" >
         <div fxFlex="70">
           <b>
             העדפות חיוביות
@@ -38,17 +37,6 @@
         </div>
       </div>
     </div>
-    <!-- <div class="prefer">
-      <div class="positive_prefer" matTooltip="התלמיד בחר העדפות חיוביות" *ngIf="user.positivePrefer?.length > 0">
-
-      </div>
-
-      <div class="negative_prefer" matTooltip="התלמיד בחר העדפות שליליות" *ngIf="user.negativePrefer?.length > 0">
-
-
-      </div> -->
-    <!-- <i *ngIf="user?.isLogin" matTooltip="משתמש ביצע כניסה ראשונית" class="material-icons">verified_user</i> -->
-    <!-- </div> -->
   </mat-card-content>
 
   <mat-card-actions>
@@ -57,14 +45,14 @@
       <mat-icon>
         open_in_new
       </mat-icon>
-      <!-- פתח -->
+    
     </button>
     <button mat-raised-button (click)="msgClick()">
       הודעה
       <mat-icon>
         message
       </mat-icon>
-      <!-- שלח הודעה -->
+      
     </button>
     <button mat-raised-button *ngIf="showSwap" (click)="swap.emit(user._id)">
       בקשת חילוף
@@ -75,3 +63,66 @@
     </button>
   </mat-card-actions>
 </mat-card>
+-->
+
+<div class="main_div" fxLayout=column fxLayoutAlign="start start">
+
+  <div fxFlex>
+    <h4>{{user.fname}} {{user.lname}}</h4>
+    <p>{{user.username}}</p>
+  </div>
+
+  <div class="content" fxFlex fxLayout=row fxLayoutAlign="space-between start">
+    <div fxFlex=70 fxLayout=row fxLayoutAlign="start start">
+      <p fxFlex>
+        העדפות חיוביות {{user.positivePrefer ? user.positivePrefer.length : 0}}
+      </p>
+      <p fxFlex>
+        העדפות שליליות {{user.negativePrefer ? user.negativePrefer.length : 0}}
+      </p>
+
+    </div>
+
+    <div fxFlex=30 fxLayout=row fxLayoutAlign="end start">
+      <button class=b_icon mat-icon-button *ngIf="showActions" (click)="open.emit(user)">
+        <mat-icon>
+          open_in_new
+        </mat-icon>
+      </button>
+
+      <button class=b_icon mat-icon-button (click)="msgClick()">
+        <mat-icon>
+          message
+        </mat-icon>
+      </button>
+
+      <button class=b_icon mat-icon-button *ngIf="showSwap" (click)="swap.emit(user._id)">
+        <mat-icon>
+          swap_horiz
+        </mat-icon>
+      </button>
+
+    </div>
+  </div>
+
+
+
+
+</div>
+
+
+<!-- <mat-list>
+    <h3 mat-subheader>Folders</h3>
+    <mat-list-item *ngFor="let folder of folders">
+      <mat-icon mat-list-icon>folder</mat-icon>
+      <h4 mat-line>{{folder.name}}</h4>
+      <p mat-line> {{folder.updated | date}} </p>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <h3 mat-subheader>Notes</h3>
+    <mat-list-item *ngFor="let note of notes">
+      <mat-icon mat-list-icon>note</mat-icon>
+      <h4 mat-line>{{note.name}}</h4>
+      <p mat-line> {{note.updated | date}} </p>
+    </mat-list-item>
+  </mat-list> -->

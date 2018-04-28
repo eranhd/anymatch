@@ -95,10 +95,16 @@
       </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <div *ngIf="!showTable" class="div_card_student" fxFill fxLayout=row fxLayoutWrap=wrap>
-        <div class="inner_div" *ngFor="let u of students" fxFlex="30" fxFlex.xs=100>
+      <!-- <div *ngIf="!showTable" class="div_card_student" fxFill fxLayout=row fxLayoutWrap=wrap> -->
+        <!-- <div class="inner_div" *ngFor="let u of students" fxFlex="30" fxFlex.xs=100>
           <app-card-student [showActions]=true [user]=u [color]="colors[u.group]" (open)="openStudent($event)"></app-card-student>
-        </div>
+        </div> -->
+        <!-- <div> -->
+            <div *ngIf="!showTable" class="div_card_student" fxFill fxLayout=column>
+            <app-card-student *ngFor="let u of students" fxFlex=100 [showActions]=true [user]=u [color]="colors[u.group]" (open)="openStudent($event)"></app-card-student>
+          
+        <!-- </div> -->
+
 
       </div>
       <div class="inner_div" *ngIf="layer.groups && showTable">

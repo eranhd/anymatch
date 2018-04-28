@@ -1,23 +1,38 @@
-.card-student{
-    box-sizing: border-box;
+// .card-student{
+//     box-sizing: border-box;
+//     width: 100%;
+//     .negative_num, .positive_num{
+//         color: #454545;
+//     }
+
+//     .lable{
+//         width: 100%;   
+//     }
+
+//     .mat-card-title{
+//         h4{
+//             font-size: 10px !important;
+//             color: #454545;
+//         }
+//         .title, .mat-card-header-text {
+//             width: 100% !important;    
+//         }
+//         width: 100%;
+//         border-bottom: 1px solid #454545;
+//     }
+// }
+
+.content{
     width: 100%;
-    .negative_num, .positive_num{
-        color: #454545;
-    }
+}
+.main_div{
+    overflow: hidden;
+    border-bottom: 1px solid #cacaca;
+}
 
-    .lable{
-        width: 100%;   
-    }
-
-    .mat-card-title{
-        h4{
-            font-size: 10px !important;
-            color: #454545;
-        }
-        .title, .mat-card-header-text {
-            width: 100% !important;    
-        }
-        width: 100%;
-        border-bottom: 1px solid #454545;
+.b_icon{
+    color: #8f8f8f;
+    &:hover{
+        color: #444444;
     }
 }

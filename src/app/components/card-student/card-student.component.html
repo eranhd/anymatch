@@ -1,4 +1,4 @@
-<!--
+
 <mat-card class="card-student" [style.background-color]="color ? color : 'white'">
   <mat-card-header fxLayout=row class="mat-card-header-text">
     <mat-card-title fxFill>
@@ -63,9 +63,9 @@
     </button>
   </mat-card-actions>
 </mat-card>
--->
 
-<div class="main_div" fxLayout=column fxLayoutAlign="start start">
+
+<!-- <div class="main_div" fxLayout=column fxLayoutAlign="start start">
 
   <div fxFlex>
     <h4>{{user.fname}} {{user.lname}}</h4>
@@ -74,10 +74,10 @@
 
   <div class="content" fxFlex fxLayout=row fxLayoutAlign="space-between start">
     <div fxFlex=70 fxLayout=row fxLayoutAlign="start start">
-      <p fxFlex>
+      <p fxFlex *ngIf="showDetails">
         העדפות חיוביות {{user.positivePrefer ? user.positivePrefer.length : 0}}
       </p>
-      <p fxFlex>
+      <p fxFlex *ngIf="showDetails">
         העדפות שליליות {{user.negativePrefer ? user.negativePrefer.length : 0}}
       </p>
 
@@ -108,7 +108,7 @@
 
 
 
-</div>
+</div> -->
 
 
 <!-- <mat-list>

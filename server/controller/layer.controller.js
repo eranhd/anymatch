@@ -8,22 +8,23 @@ const swapEnum = require("../enum/swapStatus.enum");
 const collection = "layers";
 
 
-router.post('/all/', (req, res, next) => {
+router.post('/all/', async (req, res, next) => {
     let db = new DB();
     let query = {};
-    if (!req.user || req.user[0].permission === "student") {
-        res.send({success: false, resone: "user havn't permission"})
+    if (!req.user) {
+        res.send({ success: false, resone: "user havn't permission" })
     }
-    if (req.user[0].permission === "charge") {
+    if (req.user[0].permission === "charge" || req.user[0].permission === "student") {
         query._id = req.user[0].layerId;
-        db.findOne(query, collection, req.body.id).then(doc => {
-            res.send([doc]);
-        });
+        let doc = await db.findOne(query, collection, req.body.id)
+        res.send([doc]);
+
     }
-    else
-        db.find(collection, req.body.id).then(doc => {
-            res.send(doc);
-        });
+    else {
+        let doc = await db.find(collection, req.body.id)
+        res.send(doc);
+    }
+
 });
 
 

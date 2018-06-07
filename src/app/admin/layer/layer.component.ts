@@ -99,9 +99,9 @@ export class LayerComponent extends ComponentBase implements OnInit {
   }
 
   public get students() {
-    return this.searchTerm != "" ? this._students.filter(s =>
+    return this.searchTerm != "" ? this._students.filter(u => u.permission == 'student').filter(s =>
       s.fname.includes(this.searchTerm) || s.lname.includes(this.searchTerm) || s.username.includes(this.searchTerm)
-    ) : this._students
+    ) : this._students.filter(u => u.permission == 'student')
   }
 
   public changeFlag() {

@@ -13,10 +13,10 @@
               <img src="/assets/logo.png">
             </div>
             <div class="brand-text brand-small logo">
-                <img src="/assets/logo.png">
+              <img src="/assets/logo.png">
             </div>
           </a>
-          
+
         </div>
         <!-- Navbar Menu -->
         <div class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
@@ -30,39 +30,15 @@
           </mat-form-field>
 
 
-
-          <!-- <span class="badge bg-orange">10</span> -->
-          <button mat-icon-button [matMenuTriggerFor]="menuNotification">
-            <mat-icon>notifications_none</mat-icon>
-          </button>
-          <mat-menu #menuNotification="matMenu">
-            <div class="notification">
-              <div>You have 6 new messages</div>
-              <small>4 minutes ago</small>
-            </div>
-            <button mat-menu-item disabled>
-              <mat-icon>voicemail</mat-icon>
-              <span>Check voicemail</span>
-            </button>
-            <button mat-menu-item>
-              <mat-icon>notifications_off</mat-icon>
-              <strong>view all notifications </strong>
-            </button>
-          </mat-menu>
-
           <div>
             <span class="badge bg-orange" *ngIf="newMessage != 0">{{newMessage}}</span>
-            <button mat-icon-button [matMenuTriggerFor]="menuMessage">
+            <button mat-icon-button class="header-button" [matMenuTriggerFor]="menuMessage">
               <mat-icon>message</mat-icon>
             </button>
           </div>
           <mat-menu #menuMessage="matMenu">
-            <app-contact *ngFor="let c of msgService.recent | async" 
-              [name]="getName(c)" 
-              [time]="c.messages[0]?.date" 
-              [lastMessage]="c.messages[0]?.text" 
-              (open)="open(c)"
-              [routerLink]="authService.permission != 'student' ? 'admin/messages' : 'client/messages'">
+            <app-contact *ngFor="let c of msgService.recent | async" [name]="getName(c)" [time]="c.messages[0]?.date" [lastMessage]="c.messages[0]?.text"
+              (open)="open(c)" [routerLink]="authService.permission != 'student' ? 'admin/messages' : 'client/messages'">
             </app-contact>
             <button mat-menu-item [routerLink]="authService.permission != 'student' ? 'admin/messages' : 'client/messages'">
               <mat-icon>notifications_off</mat-icon>
@@ -74,7 +50,7 @@
 
           <!-- Logout    -->
 
-          <button mat-icon-button [routerLink]="'/login'">התנתק
+          <button mat-icon-button class="header-button" [routerLink]="'/login'">התנתק
             <mat-icon>exit_to_app</mat-icon>
           </button>
 

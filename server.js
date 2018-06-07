@@ -30,6 +30,7 @@ let useControler = () => {
     message = require("./server/controller/message.controler");
     const feedback = require("./server/controller/feedback.controler");
 
+    
     app.use("/school", school);
     app.use("/layer", layer);
     app.use("/student", student);

@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class CardStudentComponent implements OnInit {
 
+  @Input() showDetails: boolean = false
   @Input() user: User;
   @Input() color: string;
   @Input() showActions: boolean = false;

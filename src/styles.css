@@ -1006,7 +1006,7 @@ ul, li{
   .mat-fab.mat-accent,
   .mat-mini-fab.mat-accent,
   .mat-raised-button.mat-accent {
-    color: #fff
+    color: #2c2c2c
   }
 
   .mat-fab.mat-warn,
@@ -2754,10 +2754,10 @@ nav.side-navbar.shrinked .sidebar-header .title {
 * ==========================================================
 */
 nav.navbar {
-  background: #2f333e;
+  background: #fff;
   padding-top: 15px;
   padding-bottom: 15px;
-  color: #fff;
+  color: #2c2c2c;
   position: relative;
   border-radius: 0;
   -webkit-box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);

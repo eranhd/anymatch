@@ -130,7 +130,7 @@ module.exports.Graph = class Graph {
         return c.getGml() > b.getGml() ? c : b;
     }
 
-    divideGroup(arrMap, count, g) {
+    divideGroup(arrMap, count, g, numVerInGroup, factor = 1) {
         let source = 0;
         let target = 1
         let ff = new jsgraphs.FordFulkerson(g, source, target);
@@ -142,70 +142,103 @@ module.exports.Graph = class Graph {
 
 
         let flag = true;
-        for (let i = 2; i < ff.marked.length; i++) {
-            let id = this.getIdFromArrMap(arrMap, i);
-            let v2 = this.getVeretxById(id);
-            if (ff.marked[i]) {
-                v2.group = count;
-                g1.addVertex(v2);
-            }
-            else {
-                flag = false;
-                g2.addVertex(v2);
-                v2.group = count + 1;
+        const markedCount = ff.marked.filter(m => m).length;
+        if (markedCount > 2) {
+            for (let i = 2; i < ff.marked.length; i++) {
+                let id = this.getIdFromArrMap(arrMap, i);
+                let v2 = this.getVeretxById(id);
+                if (ff.marked[i]) {
+                    v2.group = count;
+                    g1.addVertex(v2);
+                }
+                else {
+                    flag = false;
+                    g2.addVertex(v2);
+                    v2.group = count + 1;
+                }
             }
         }
-        if (flag) {
-            g.adjList.forEach(a => {
-                a.forEach(e => {
-                    e.capacity--;
-                });
-            });
-            return this.divideGroup(arrMap, count, g);
-        }
-        /*
-        for (let i = minCut.length - 1; i >= 0; i--) {
-            let e = minCut[i];
+        else {
+            for (let i = minCut.length - 1; i >= 0; i--) {
+                let e = minCut[i];
+                if (e.from() != 0) {
+                    if (arrChoose.find(a => a == e.from()))
+                        continue;
+                    let f = e.from()
+                    arrChoose.push(f)
+                    let id = this.getIdFromArrMap(arrMap, f)
+                    let v2 = this.getVeretxById(id)
+                    v2.group = count
+                    g1.addVertex(v2)
+                }
+                else if (!arrChoose.find(a => a == e.to())) {
+                    // if (arrChoose.find(a => a == e.to()))
+                    //     continue;
+                    let f = e.to()
+                    arrChoose.push(f)
+                    let id = this.getIdFromArrMap(arrMap, f)
 
-            if (e.from() != 0) {
-                if (arrChoose.find(a => a == e.from()))
-                    continue;
-                let f = e.from()
-                arrChoose.push(f)
-                let id = this.getIdFromArrMap(arrMap, f)
-                let v2 = this.getVeretxById(id)
-                v2.group = count
-                g1.addVertex(v2)
+                    let v2 = this.getVeretxById(id)
+                    v2.group = count + 1
+                    g2.addVertex(v2)
+                }
             }
-            else if (!arrChoose.find(a => a == e.to())) {
-                // if (arrChoose.find(a => a == e.to()))
-                //     continue;
-                let f = e.to()
-                arrChoose.push(f)
-                let id = this.getIdFromArrMap(arrMap, f)
+            for (let key in arrMap) {
+                if (!arrChoose.find(a => arrMap[key] == a)) {
+                    arrChoose.push(arrMap[key])
+                    let v2 = this.getVeretxById(key)
+                    v2.group = count + 1
+                    g2.addVertex(v2)
+                }
+            }
 
-                let v2 = this.getVeretxById(id)
-                v2.group = count + 1
-                g2.addVertex(v2)
-            }
         }
 
-        for (let key in arrMap) {
-            if (!arrChoose.find(a => arrMap[key] == a)) {
-                arrChoose.push(arrMap[key])
-                let v2 = this.getVeretxById(key)
-                v2.group = count + 1
-                g2.addVertex(v2)
-            }
+        if (g1.length == 0 || (g1.length < numVerInGroup && g2.length > numVerInGroup)) {
+            return [...this.cutEdges(g2, count, numVerInGroup, factor), g1.length != 0 && g1];
         }
-        */
+        else if (g2.length == 0 || (g2.length < numVerInGroup && g1.length > numVerInGroup)) {
+            return [...this.cutEdges(g1, count, numVerInGroup, factor), g2.length != 0 && g2];
+        }
+        else if (g1.length > numVerInGroup && g2.length > numVerInGroup) {
+            return [...this.cutEdges(g2, count, numVerInGroup, factor), ...this.cutEdges(g1, count, numVerInGroup, factor)];
+        }
+
+
         if (g1.length == 0) {
             let temp = g1;
             g1 = g2;
             g2 = temp;
         }
 
-        return { g1: g1, g2: g2 }
+        if (typeof g1 == "Array" && typeof g2 == "Array")
+            return [...g1, ...g2];
+        else if (typeof g1 == "Array")
+            return [...g1, g2];
+        else if (typeof g2 == "Array")
+            return [g1, ...g2];
+        else
+            return [g1, g2];
+    }
+
+    cutEdges(g2, count, numVerInGroup, factor) {
+        const graphAndMap = this.buildDirectGraphWithWeightForFF(g2);
+        const g = graphAndMap.g;
+        let isBigFactor = true;
+        g.adjList.forEach(a => {
+            a.forEach(e => {
+                if (isBigFactor && e.capacity > factor)
+                    isBigFactor = false;
+                if (e.w != 0 && e.v != 0 && e.capacity != 0 && e.w != 0 && e.v != 0 && e.capacity != 0)
+                    e.capacity -= factor;
+            });
+        });
+        if (isBigFactor) {
+            factor = 1;
+            return this.divideGroup(graphAndMap.arrMap, count, g, numVerInGroup, factor);
+        }
+        else
+            return this.divideGroup(graphAndMap.arrMap, count, g, numVerInGroup, factor + 1);
     }
 
     buildDirectGraphWithWeight(numVerInGroup) {
@@ -221,25 +254,17 @@ module.exports.Graph = class Graph {
                     let arrMap = graphAndMap.arrMap;
                     let count = gs.length;
                     // let maxGml = g.length > 1 ? this.divideGroup(arrMap, count, g[1]) : this.divideGroup(arrMap, count, g[0])
-                    let maxGml = this.divideGroup(arrMap, count, g)
-                    // for (let i = 1; i < g.length; i++) {
-                    //     let dividedGraph = this.divideGroup(arrMap, count, g[i]);
-                    //     if (dividedGraph.g1.getGml() > maxGml.g1.getGml())
-                    //         maxGml = dividedGraph;
-                    // }
-
-                    // if (maxGml.g1.length > numVerInGroup)
-                    //     q.unshift(maxGml.g1);
+                    let maxGml = this.divideGroup(arrMap, count, g, numVerInGroup)
+                    gs.push(...maxGml);
+                    // if (maxGml.g1.length > numVerInGroup && maxGml.g1.length != q[0].length)
+                    //     q.push(maxGml.g1);
                     // else
-                    if (maxGml.g1.length > numVerInGroup && maxGml.g1.length != q[0].length)
-                        q.push(maxGml.g1);
-                    else
-                        gs.push(maxGml.g1);
+                    //     gs.push(maxGml.g1);
 
 
 
-                    if (maxGml.g2.length > 0)
-                        q.push(maxGml.g2);
+                    // if (maxGml.g2.length > 0)
+                    //     q.push(maxGml.g2);
                     // else
                     // gs.push(maxGml.g2);
                 }
@@ -395,19 +420,41 @@ module.exports.Graph = class Graph {
 
         numOfGroups = +numOfGroups;
         length = +length;
-        let groups = []
+        let groups = [];
+        let groupNotComplete = [];
+        let l = length % 1 == 0 ? length : (+length.toFixed(0))
         for (let i = 0; i < numOfGroups; i++) {
-            let l = length % 1 == 0 ? length : (+length.toFixed(0))
+
             let flag = false
             Math.abs(l - length) < 0.5 && Math.abs(l - length) != 0 ? flag = true : l = l
             let g = this.knapsack01Dp(l, 0);
-            if (g.length == 0 && flag)
+            if (g.length < l && flag)
                 g = this.knapsack01Dp(l + 1, +(l / 10).toFixed(0));
-            groups.push(g)
+            if (g.length < l + 1 + (l / 10).toFixed(0) || g.length > l + 1 + (l / 10).toFixed(0)) {
+                groupNotComplete.push(g);
+            }
+            else {
+                groups.push(g)
+            }
             this.removeChoose(g)
 
         }
 
+        if (this.group.length) {
+            const array = [];
+            this.group.forEach(gta => array.push(...gta.toArray()));
+            groupNotComplete = groupNotComplete.sort((a, b) => a.length > b.length);
+            array.forEach(a => {
+                groupNotComplete[0].addVertex(array.pop());
+                if (!(groupNotComplete[0].length < l + 1 + (l / 10).toFixed(0) || groupNotComplete[0].length > l - 1 - (l / 10).toFixed(0))) {
+                    if (groupNotComplete.length != 1) {
+                        groups.push(g);
+                        groupNotComplete.splice(0, 1);
+                    }
+                }
+            });
+        }
+        groups.push(...groupNotComplete)
         let arr = [];
         groups.forEach(group => {
             arr.push(group.toArray())
@@ -418,7 +465,7 @@ module.exports.Graph = class Graph {
     removeChoose(group) {
         let arr = []
         if (!group)
-            return
+            return;
         for (let i = 0; i < this.group.length; i++) {
             for (let k in this.group[i].vertices) {
                 if (group.contain(k)) {

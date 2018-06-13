@@ -12,4 +12,7 @@ describe('NavService', () => {
   it('should be created', inject([NavService], (service: NavService) => {
     expect(service).toBeTruthy();
   }));
+  it('should return array', inject([NavService], (service: NavService) => {
+    expect(service.items).toBeDefined();
+  }));
 });

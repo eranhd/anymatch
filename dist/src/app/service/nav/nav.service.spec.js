@@ -11,5 +11,8 @@ describe('NavService', function () {
     it('should be created', testing_1.inject([nav_service_1.NavService], function (service) {
         expect(service).toBeTruthy();
     }));
+    it('should return array', testing_1.inject([nav_service_1.NavService], function (service) {
+        expect(service.items).toBeDefined();
+    }));
 });
 //# sourceMappingURL=nav.service.spec.js.map

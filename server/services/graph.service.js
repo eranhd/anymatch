@@ -130,7 +130,7 @@ module.exports.Graph = class Graph {
         return c.getGml() > b.getGml() ? c : b;
     }
 
-    divideGroup(arrMap, count, g, numVerInGroup, factor = 1) {
+    divideGroup(arrMap, count, g, numVerInGroup, factor = 1, time = 0) {
         let source = 0;
         let target = 1
         let ff = new jsgraphs.FordFulkerson(g, source, target);
@@ -195,13 +195,13 @@ module.exports.Graph = class Graph {
         }
 
         if (g1.length == 0 || (g1.length < numVerInGroup && g2.length > numVerInGroup)) {
-            return [...this.cutEdges(g2, count, numVerInGroup, factor), g1.length != 0 && g1];
+            return [...this.cutEdges(g2, count, numVerInGroup, factor, time), g1.length != 0 && g1];
         }
         else if (g2.length == 0 || (g2.length < numVerInGroup && g1.length > numVerInGroup)) {
-            return [...this.cutEdges(g1, count, numVerInGroup, factor), g2.length != 0 && g2];
+            return [...this.cutEdges(g1, count, numVerInGroup, factor, time), g2.length != 0 && g2];
         }
         else if (g1.length > numVerInGroup && g2.length > numVerInGroup) {
-            return [...this.cutEdges(g2, count, numVerInGroup, factor), ...this.cutEdges(g1, count, numVerInGroup, factor)];
+            return [...this.cutEdges(g2, count, numVerInGroup, factor, time), ...this.cutEdges(g1, count, numVerInGroup, factor)];
         }
 
 
@@ -221,7 +221,7 @@ module.exports.Graph = class Graph {
             return [g1, g2];
     }
 
-    cutEdges(g2, count, numVerInGroup, factor) {
+    cutEdges(g2, count, numVerInGroup, factor, time) {
         const graphAndMap = this.buildDirectGraphWithWeightForFF(g2);
         const g = graphAndMap.g;
         let isBigFactor = true;
@@ -233,12 +233,31 @@ module.exports.Graph = class Graph {
                     e.capacity -= factor;
             });
         });
-        if (isBigFactor) {
+        if (isBigFactor && !time) {
             factor = 1;
-            return this.divideGroup(graphAndMap.arrMap, count, g, numVerInGroup, factor);
+            return this.divideGroup(graphAndMap.arrMap, count, g, numVerInGroup, factor, time + 1);
+        }
+        else if (isBigFactor && time) {
+            factor = 1;
+            time = 0;
+            const newGroup = new Group(count + 1);
+            const newGroup2 = new Group(count + 2);
+
+            g2.toArray().forEach(ver => {
+                const randomChice = Math.random();
+                if(randomChice > 0.5){
+                    newGroup.addVertex(ver);
+                }
+                else{
+                    newGroup2.addVertex(ver);
+                }
+            });
+            const graphAndMapForRand = this.buildDirectGraphWithWeightForFF(newGroup);
+            const graphAndMapForRand2 = this.buildDirectGraphWithWeightForFF(newGroup2);
+            return [...this.divideGroup(graphAndMapForRand.arrMap, count, graphAndMapForRand.g, numVerInGroup, factor, time), ...this.divideGroup(graphAndMapForRand2.arrMap, count, graphAndMapForRand2.g, numVerInGroup, factor, time)]
         }
         else
-            return this.divideGroup(graphAndMap.arrMap, count, g, numVerInGroup, factor + 1);
+            return this.divideGroup(graphAndMap.arrMap, count, g, numVerInGroup, factor + 1, time);
     }
 
     buildDirectGraphWithWeight(numVerInGroup) {

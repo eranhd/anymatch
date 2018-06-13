@@ -8,7 +8,6 @@ describe('defult get', function () {
         chai.request("http://localhost:3000")
             .get('')
             .end((err, res) => {
-                // expect(res.status).to.equal(200);
                 if (err)
                     done(err)
                 else {
@@ -24,11 +23,9 @@ describe('post all users', function () {
         chai.request("http://localhost:3000/user/all")
             .post('')
             .end((err, res) => {
-                // expect(res.status).to.equal(200);
                 if (err)
                     done(err)
                 else {
-                    // res.body.success
                     res.should.have.status(401);
                     done()
                 }

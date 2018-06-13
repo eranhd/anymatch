@@ -1,5 +1,6 @@
 # anymatch
 **softwer engineer final project , jce 2018.**
+![](https://github.com/eranhd/anymatch/blob/master/src/assets/logo.png?raw=true)
 <br>
 **by Eran Hadad**
 
@@ -7,6 +8,10 @@
 **Goal**<p> to divide a number of organs into groups, where each organ prefers to belong to group with a particular organ, also each organ may prefer not to belong to group with specific organ.  
 The number of the groups is known and for each group has a certain capacity.  
 _The distribution should be to performed optimally._</p>
+
+## Deployments Diagram
+![Deployments ](https://github.com/eranhd/anymatch/blob/master/images/DeploymentDiagram1.png?raw=true)
+For more diagrams visit [here](https://github.com/eranhd/anymatch/tree/master/images)
 
 ## Links
 * [Wiki](https://github.com/eranhd/anymatch/wiki)

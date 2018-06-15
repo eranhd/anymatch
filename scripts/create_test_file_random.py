@@ -148,14 +148,18 @@ names = [
        'Carla Martinez',
        'Lorraine Wade',
 ]
+
+size = 80
+
 array = []
 gender = ['female', 'male']
+counter = 0
 #init array
-for number in range(60):
+for number in range(80):
     ts = time.time()
     person = {
-        'fname': names[number].split(' ', 1)[0],
-        'lname': names[number].split(' ', 1)[1],
+        'fname': names[counter].split(' ', 1)[0],
+        'lname': names[counter].split(' ', 1)[1],
         'username': '{}'.format(random.randint(12345,90000)),
         'positivePrefer': [],
         'negativePrefer': [],
@@ -166,27 +170,27 @@ for number in range(60):
         '_id': '{}{}{}'.format(random.randint(100, 999), ts, random.randint(100, 999))
     }
     array.append(person)
+    counter += 1
+
 
 #init prefer
-
 for person in array:
     choose = []
     for number in range(3):
-        index = random.randint(0, 59)
-        negative_inedx = random.randint(0, 59)
+        index = random.randint(0, size -1)
+        # negative_inedx = random.randint(0, 59)
         random_choice = random.randint(0, 1)
         if (not index == number) and not index in choose:
             choose.append(index)
             person['positivePrefer'].append(array[index]['_id'])
-            if (not negative_inedx == number) and not negative_inedx in choose and random_choice == 1:
-                person['negativePrefer'].append(array[negative_inedx]['_id'])
+            # if (not negative_inedx == number) and not negative_inedx in choose and random_choice == 1:
+            #     person['negativePrefer'].append(array[negative_inedx]['_id'])
     
 data_file = open('data.json', 'w+')
 data_file.write(json.dumps(array))
 client = MongoClient('localhost', 27017)
 db = client.anymatch
 users = db.users
-users.remove({layerId: '5b200bc63cd980e1be7de9a2'})
-users.insertMany(array)
-
-print(array)
+users.remove({'layerId': '5b200bc63cd980e1be7de9a2'})
+users.insert_many(array)
+db.layers5b200a733cd980e1be7de9a1.update({}, {'$unset': {'groups':1}}, multi=True)

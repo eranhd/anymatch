@@ -40,7 +40,7 @@ testem.log
 /e2e/*.map
 
 # config
-/server/config
+/server/config/*.js
 
 # System Files
 .DS_Store

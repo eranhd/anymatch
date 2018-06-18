@@ -72,7 +72,7 @@ app.post('/signup', (req, res, next) => {
             return next(err); // will generate a 500 error
         }
         if (!user) {
-            return res.send({ success: false, message: 'authentication failed' });
+            return res.status(401).send({ success: false, message: 'authentication failed' });
         }
         req.login(user, loginErr => {
             if (loginErr) {

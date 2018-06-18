@@ -3810,7 +3810,7 @@ var SnakService = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__http_http_service__ = __webpack_require__("../../../../../src/app/service/http/http.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__controlerService_model__ = __webpack_require__("../../../../../src/app/service/controlerService.model.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__ = __webpack_require__("../../../../rxjs/_esm5/Observable.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_ReplaySubject__ = __webpack_require__("../../../../rxjs/_esm5/ReplaySubject.js");
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -3873,6 +3873,7 @@ var UserService = (function (_super) {
     __extends(UserService, _super);
     function UserService(http) {
         var _this = _super.call(this, "user", http) || this;
+        _this.obUsers = new __WEBPACK_IMPORTED_MODULE_3_rxjs_ReplaySubject__["a" /* ReplaySubject */]();
         if (!_this.obUsers)
             _this.initObservable([]);
         return _this;
@@ -3884,26 +3885,27 @@ var UserService = (function (_super) {
         var _this = this;
         return new Promise(function (res, rej) {
             _this.update(user).then(function (updateduser) {
-                _this._users = _this._users.map(function (u) {
-                    if (u._id != user._id)
-                        return u;
-                    return user;
-                });
-                // this._users.push(user);
-                _this.ob.next(_this._users);
-                res(updateduser);
+                if (updateduser['user']) {
+                    if (!_this._users.find(function (u) { return u._id == updateduser['user']._id; }))
+                        _this._users.push(updateduser['user']);
+                    else
+                        _this._users = _this._users.map(function (u) {
+                            if (u._id != user._id)
+                                return u;
+                            return user;
+                        });
+                    _this.obUsers.next(_this._users);
+                    res(updateduser);
+                }
+                rej('update failed');
             });
         });
     };
     UserService.prototype.initObservable = function (data) {
-        var _this = this;
-        this.obUsers = new __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__["a" /* Observable */](function (o) {
-            _this.ob = o;
-            if (_this._users)
-                _this.ob.next(_this._users);
-            else
-                o.next(data);
-        });
+        if (this._users)
+            this.obUsers.next(this._users);
+        else
+            this.obUsers.next(data);
     };
     UserService.prototype.getAllUsers = function (schoolId) {
         return __awaiter(this, void 0, void 0, function () {
@@ -3921,7 +3923,7 @@ var UserService = (function (_super) {
                             return res;
                         });
                         if (this.ob)
-                            this.ob.next(this._users);
+                            this.obUsers.next(this._users);
                         return [2 /*return*/, this._users];
                 }
             });
@@ -3929,8 +3931,7 @@ var UserService = (function (_super) {
     };
     Object.defineProperty(UserService.prototype, "users", {
         get: function () {
-            if (this.ob)
-                this.ob.next(this._users ? this._users : []);
+            this.obUsers.next(this._users ? this._users : []);
             return this.obUsers;
         },
         enumerable: true,

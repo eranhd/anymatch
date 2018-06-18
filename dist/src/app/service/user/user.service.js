@@ -57,11 +57,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var http_service_1 = require("../http/http.service");
 var controlerService_model_1 = require("../controlerService.model");
-var Observable_1 = require("rxjs/Observable");
+var ReplaySubject_1 = require("rxjs/ReplaySubject");
 var UserService = (function (_super) {
     __extends(UserService, _super);
     function UserService(http) {
         var _this = _super.call(this, "user", http) || this;
+        _this.obUsers = new ReplaySubject_1.ReplaySubject();
         if (!_this.obUsers)
             _this.initObservable([]);
         return _this;
@@ -73,26 +74,27 @@ var UserService = (function (_super) {
         var _this = this;
         return new Promise(function (res, rej) {
             _this.update(user).then(function (updateduser) {
-                _this._users = _this._users.map(function (u) {
-                    if (u._id != user._id)
-                        return u;
-                    return user;
-                });
-                // this._users.push(user);
-                _this.ob.next(_this._users);
-                res(updateduser);
+                if (updateduser['user']) {
+                    if (!_this._users.find(function (u) { return u._id == updateduser['user']._id; }))
+                        _this._users.push(updateduser['user']);
+                    else
+                        _this._users = _this._users.map(function (u) {
+                            if (u._id != user._id)
+                                return u;
+                            return user;
+                        });
+                    _this.obUsers.next(_this._users);
+                    res(updateduser);
+                }
+                rej('update failed');
             });
         });
     };
     UserService.prototype.initObservable = function (data) {
-        var _this = this;
-        this.obUsers = new Observable_1.Observable(function (o) {
-            _this.ob = o;
-            if (_this._users)
-                _this.ob.next(_this._users);
-            else
-                o.next(data);
-        });
+        if (this._users)
+            this.obUsers.next(this._users);
+        else
+            this.obUsers.next(data);
     };
     UserService.prototype.getAllUsers = function (schoolId) {
         return __awaiter(this, void 0, void 0, function () {
@@ -110,7 +112,7 @@ var UserService = (function (_super) {
                             return res;
                         });
                         if (this.ob)
-                            this.ob.next(this._users);
+                            this.obUsers.next(this._users);
                         return [2 /*return*/, this._users];
                 }
             });
@@ -118,8 +120,7 @@ var UserService = (function (_super) {
     };
     Object.defineProperty(UserService.prototype, "users", {
         get: function () {
-            if (this.ob)
-                this.ob.next(this._users ? this._users : []);
+            this.obUsers.next(this._users ? this._users : []);
             return this.obUsers;
         },
         enumerable: true,

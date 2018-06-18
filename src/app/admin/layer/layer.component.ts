@@ -99,6 +99,8 @@ export class LayerComponent extends ComponentBase implements OnInit {
   }
 
   public get students() {
+    if (!this._students)
+      return [];
     return this.searchTerm != "" ? this._students.filter(u => u.permission == 'student').filter(s =>
       s.fname.includes(this.searchTerm) || s.lname.includes(this.searchTerm) || s.username.includes(this.searchTerm)
     ) : this._students.filter(u => u.permission == 'student')
@@ -131,7 +133,7 @@ export class LayerComponent extends ComponentBase implements OnInit {
     user.username = name;
     user.layerId = this._layer._id;
 
-    let res = await this.userService.addUser(user, user.schoolId)
+    let res = await this.userService.addUser(user, user.schoolId);
 
     if (res["user"]) {
       let u = res["user"];
@@ -144,7 +146,6 @@ export class LayerComponent extends ComponentBase implements OnInit {
       await this.userService.updateUser(u);
       this.form.reset();
       this.snakService.openSnackBar("נוסף תלמיד בהצלחה", "סגור");
-
     }
 
   }
@@ -189,7 +190,7 @@ export class LayerComponent extends ComponentBase implements OnInit {
   public async startMatch() {
     this.snakService.openSnackBar("השרת מבצע שיבוץ, אנא המתן", "סגור");
     this.graph = await this.layerService.getGraph(
-      this._layer._id, 
+      this._layer._id,
       this._layer.classes > 0 ? this._layer.classes : 1,
       this._layer.maleAndFemale ? this._layer.maleAndFemale : null,
       this._layer.maleClasses ? this._layer.maleClasses : null,

@@ -507,6 +507,8 @@ var LayerComponent = (function (_super) {
     Object.defineProperty(LayerComponent.prototype, "students", {
         get: function () {
             var _this = this;
+            if (!this._students)
+                return [];
             return this.searchTerm != "" ? this._students.filter(function (u) { return u.permission == 'student'; }).filter(function (s) {
                 return s.fname.includes(_this.searchTerm) || s.lname.includes(_this.searchTerm) || s.username.includes(_this.searchTerm);
             }) : this._students.filter(function (u) { return u.permission == 'student'; });

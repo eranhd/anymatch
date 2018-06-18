@@ -111,7 +111,7 @@ router.post('/create/', (req, res, next) => {
 let create = (req, res, next, user) => {
 
 
-    console.log(req.body)
+    // console.log(req.body)
     if (!user) {
         let user = req.body;
         user.password = user.username;
@@ -128,7 +128,7 @@ let create = (req, res, next, user) => {
             return next(err); // will generate a 500 error
         }
         if (!user) {
-            return res.send({ success: false, message: 'authentication failed' });
+            return res.status(401).send({ success: false, message: 'authentication failed' });
         }
         req.login(user, loginErr => {
             if (loginErr) {

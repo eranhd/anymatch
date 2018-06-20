@@ -19,6 +19,7 @@ import { ComponentBase } from "../../componentBase.model";
 })
 export class LayerComponent extends ComponentBase implements OnInit {
 
+  showWait = false;
   private _layer: Layer;
   private _addStudentFlag: boolean = false;
   public addStudentButtonText = "הוסף תלמיד";
@@ -188,6 +189,7 @@ export class LayerComponent extends ComponentBase implements OnInit {
 
 
   public async startMatch() {
+    this.showWait = true;
     this.snakService.openSnackBar("השרת מבצע שיבוץ, אנא המתן", "סגור");
     this.graph = await this.layerService.getGraph(
       this._layer._id,
@@ -195,7 +197,8 @@ export class LayerComponent extends ComponentBase implements OnInit {
       this._layer.maleAndFemale ? this._layer.maleAndFemale : null,
       this._layer.maleClasses ? this._layer.maleClasses : null,
       this._layer.femaleClasses ? this._layer.femaleClasses : null
-    )
+    );
+    this.showWait = false;
     this._students.forEach(u => {
       this.graph.forEach((g, i) => {
         let group = g.find(v => v.id == u._id);
@@ -203,6 +206,7 @@ export class LayerComponent extends ComponentBase implements OnInit {
           u.group = i;
       });
     });
+    
     this._students = this._students.sort((a, b) => a.group > b.group ? 1 : -1);
   }
 

@@ -77,7 +77,7 @@ export class UserService extends ControlerService {
 }
 
   public get num() {
-  return this._users ? this._users.length : 0;
+  return this._users ? this._users.filter(u => u.permission == 'student').length : 0;
 }
 
   public getUsersByLayer(id: string) {

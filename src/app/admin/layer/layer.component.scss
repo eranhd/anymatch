@@ -44,3 +44,27 @@
         width: 100%;
     }
 }
+
+.wait{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.inner_div{
+    width: 100%;
+    overflow-x: scroll;
+    table{
+        width: 100%;
+        font-size: 30px;
+        thead{
+            th{
+                font-weight: bold;
+            }
+        }
+        tr{
+            height: 40px;
+            // border-top: 1px solid #acacac;
+        }
+    }
+}

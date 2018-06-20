@@ -1,4 +1,7 @@
-<div class="layer">
+<div class="wait">
+  <img *ngIf="showWait" src="/assets/loading.gif">
+</div>
+<div class="layer" *ngIf="!showWait">
   <app-pages-header [items]=headerCards></app-pages-header>
 
 
@@ -95,7 +98,7 @@
       </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <div *ngIf="!showTable" class="div_card_student" fxFill fxLayout=row fxLayoutWrap=wrap> 
+      <div *ngIf="!showTable" class="div_card_student" fxFill fxLayout=row fxLayoutWrap=wrap>
         <div class="inner_div" *ngFor="let u of students" fxFlex="30" fxFlex.xs=100>
           <app-card-student [showActions]=true [user]=u [color]="colors[u.group]" (open)="openStudent($event)"></app-card-student>
         </div>
@@ -118,7 +121,7 @@
           <tbody>
             <td *ngFor="let name of classesName; let i = index">
               <table>
-                <tr *ngFor="let g of layer.groups[i]">
+                <tr *ngFor="let g of layer.groups[i]" [class.odd]="i%2!=0" [class.even]="i%2==0">
                   {{displayName(g)}}
                 </tr>
               </table>
@@ -129,7 +132,7 @@
     </mat-card-content>
   </mat-card>
 
-  <mat-card>
+  <mat-card *ngIf=false>
     <mat-card-header>
       <mat-card-title>
         <mat-icon>

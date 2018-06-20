@@ -197,7 +197,7 @@ module.exports.Graph = class Graph {
         if (g1.length == 0 || (g1.length < numVerInGroup && g2.length > numVerInGroup)) {
             return [...this.cutEdges(g2, count, numVerInGroup, factor, time), g1.length != 0 && g1];
         }
-        else if (g2.length == 0 || (g2.length < numVerInGroup && g1.length > numVerInGroup)) {
+        else if (g2.length < numVerInGroup && g1.length > numVerInGroup) {
             return [...this.cutEdges(g1, count, numVerInGroup, factor, time), g2.length != 0 && g2];
         }
         else if (g1.length > numVerInGroup && g2.length > numVerInGroup) {
@@ -245,10 +245,10 @@ module.exports.Graph = class Graph {
 
             g2.toArray().forEach(ver => {
                 const randomChice = Math.random();
-                if(randomChice > 0.5){
+                if (randomChice > 0.5) {
                     newGroup.addVertex(ver);
                 }
-                else{
+                else {
                     newGroup2.addVertex(ver);
                 }
             });
